@@ -9,7 +9,7 @@ git pull origin main || { echo "Error al hacer git pull"; exit 1; }
 
 # Instalar dependencias de Composer
 echo "Instalando dependencias de Composer..."
-composer install --no-interaction --prefer-dist --optimize-autoloader || { echo "Error en composer install"; exit 1; }
+composer install --optimize-autoloader || { echo "Error en composer install"; exit 1; }
 
 # Instalar dependencias de npm
 echo "Instalando dependencias de npm..."
