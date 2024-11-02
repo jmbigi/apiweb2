@@ -1,11 +1,8 @@
-{{-- resources/views/music_scores/show.blade.php --}}
-
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <base href="/web">
+    <base href="{{ asset('web') }}/">
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +17,7 @@
     <meta property="og:title" content="Faristol - Partituras para Músicos y Compositores - {{ $musicScore->name }}">
     <meta property="og:description"
         content="Con Faristol, conecta con partituras musicales exclusivas. Ideal para músicos y compositores con planes de suscripción y protección de derechos de autor. {{ $musicScore->description }}">
-    <meta property="og:image" content="https://web.faristol.net/web/icons/Icon-512.png">
+    <meta property="og:image" content="{{ asset('web/icons/Icon-512.png') }}">
     <meta property="og:url" content="https://web.faristol.net">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -32,18 +29,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Faristol">
-    <link rel="apple-touch-icon" href="web/icons/Icon-192.png">
+    <link rel="apple-touch-icon" href="{{ asset('web/icons/Icon-192.png') }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="web/favicon.png" />
+    <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />
 
     <title>Faristol - Plataforma de Partituras para Músicos y Compositores - {{ $musicScore->name }}</title>
-    <link rel="manifest" href="web/manifest.json">
+    <link rel="manifest" href="{{ asset('web/manifest.json') }}">
 
     <script>
         const serviceWorkerVersion = '"977713622"';
     </script>
-    <script src="web/flutter.js?v=1730518024" defer></script>
+    <script src="{{ asset('web/flutter.js?v=1730518024') }}" defer></script>
 
     <style>
         html {
@@ -66,25 +63,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('web/faristol_splash.jpg');
-            /* Ruta a tu imagen */
+            background-image: url('{{ asset('web/faristol_splash.jpg') }}');
             background-size: cover;
-            /* Asegura que la imagen cubra todo */
             background-position: center;
-            /* Centra la imagen */
             z-index: 9999;
-            /* Mantiene el splash screen por encima de otros elementos */
             opacity: 1;
-            /* Opacidad inicial */
             transition: opacity 3s ease 0s;
-            /* Transición para el efecto de desvanecimiento */
         }
 
         #title {
             opacity: 0;
-            /* Opacidad inicial */
             transition: opacity 2s ease 0s;
-            /* Transición para el efecto de desvanecimiento */
         }
     </style>
     <div id="splash-screen"></div>
@@ -100,8 +89,8 @@
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                     title.style.display = 'none';
-                }, 2500); // Asegúrate de que coincide con el tiempo de la transición en CSS
-            }, 1000); // Asegúrate de que coincide con el tiempo de la transición en CSS
+                }, 2500);
+            }, 1000);
         });
     </script>
     <h1 id="title">Faristol - {{ $musicScore->name }}</h1>
@@ -119,6 +108,7 @@
             _flutter.loader.loadEntrypoint({
                 serviceWorker: {
                     serviceWorkerVersion: serviceWorkerVersion,
+                    serviceWorkerPath: "{{ asset('web/flutter_service_worker.js') }}",
                 },
                 onEntrypointLoaded: function(engineInitializer) {
                     engineInitializer.initializeEngine().then(function(appRunner) {
