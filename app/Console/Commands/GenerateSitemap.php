@@ -22,11 +22,13 @@ class GenerateSitemap extends Command
         $musicScores = MusicScore::all();
 
         foreach ($musicScores as $musicScore) {
-            $sitemap->add(
-                Url::create(route('score-viewbyname', ['name' => $musicScore->name]))
-                    ->setPriority(0.8) // Puedes ajustar el valor de prioridad según la relevancia
-                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-            );
+            $url = Url::create(route('score-viewbyname', ['name' => $musicScore->name]))
+                ->setPriority(0.8) // Puedes ajustar el valor de prioridad según la relevancia
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY);
+
+            $sitemap->add($url);
+            // Imprimir la URL en la consola
+            $this->info($url->url);
         }
 
         // Guardar el sitemap en la carpeta public
