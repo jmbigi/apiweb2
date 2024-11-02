@@ -13,7 +13,7 @@ composer install --optimize-autoloader || { echo "Error en composer install"; ex
 
 # Instalar dependencias de npm
 echo "Instalando dependencias de npm..."
-npm install || { echo "Error en npm install"; exit 1; }
+npm install --no-optional || { echo "Error en npm install"; exit 1; }
 
 # Opcional: limpiar y cachear configuración
 echo "Limpiando caché de configuración..."
