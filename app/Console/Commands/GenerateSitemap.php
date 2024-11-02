@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
+use App\Models\MusicScore; // Asegúrate de que la clase esté importada
+
 class GenerateSitemap extends Command
 {
     protected $signature = 'sitemap:generate';
@@ -14,13 +16,20 @@ class GenerateSitemap extends Command
     public function handle()
     {
         $sitemap = Sitemap::create();
-
-        // Agrega tus rutas aquí
         $sitemap->add(Url::create('/')->setPriority(1.0));
-        $sitemap->add(Url::create('/about')->setPriority(0.8));
-        // Agrega más rutas según sea necesario
 
+        // Obtener todas las partituras y añadir cada una al sitemap
+        $musicScores = MusicScore::all();
+
+        foreach ($musicScores as $musicScore) {
+            $sitemap->add(
+                Url::create(route('score-viewbyname', ['name' => $musicScore->name]))
+                    ->setPriority(0.8) // Puedes ajustar el valor de prioridad según la relevancia
+                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+            );
+        }
+
+        // Guardar el sitemap en la carpeta public
         $sitemap->writeToFile(public_path('sitemap.xml'));
-        $this->info('Sitemap generado: public/sitemap.xml');
     }
 }
