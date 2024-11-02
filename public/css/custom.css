@@ -1,0 +1,84 @@
+#user_datatable span.bootstrap-switch-label {
+    display: none !important;
+}
+#user_datatable .bootstrap-switch-off span.bootstrap-switch-handle-on {
+    min-width: 100px !important;
+}
+.bootstrap-switch-undefined.bootstrap-switch-undefined.bootstrap-switch-undefined.bootstrap-switch-undefined.bootstrap-switch-undefined.bootstrap-switch.bootstrap-switch-wrapper.bootstrap-switch-animate {
+    width: 100px !important;
+}
+.bootstrap-switch-container {
+    width: 100px !important;
+}
+/* .dataTables_wrapper #user_datatable.dataTable th, .dataTables_wrapper #user_datatable.dataTable td,
+.dataTables_wrapper #composer_request_datatable.dataTable th, .dataTables_wrapper #composer_request_datatable.dataTable td,
+.dataTables_wrapper #composer_datatable.dataTable th, .dataTables_wrapper #composer_datatable.dataTable td {
+    font-size: 1.2rem !important;
+} */
+.dataTables_wrapper #user_datatable.dataTable td a, .dataTables_wrapper #composer_request_datatable.dataTable td a {
+    color: #3699FF !important;
+}
+.user_toggle .btn.btn-light, #user_datatable .toggle-group .btn.btn-light, #composer_request_datatable .toggle-group .btn.btn-light,#subscription_datatable .toggle-group .btn.btn-light, #style_music_datatable .toggle-group .btn.btn-light, #instrument_datatable .toggle-group .btn.btn-light, #family_instrument_datatable .toggle-group .btn.btn-light, .btn.btn-light, #musicscore_datatable .toggle-group .btn.btn-light{
+    display: none !important;
+}
+#style_music_datatable .toggle.btn, #user_datatable .toggle.btn, #instrument_datatable .toggle.btn, #family_instrument_datatable .toggle.btn, #musicscore_datatable tbody td .toggle{
+    width: 99px !important;
+}
+.user_toggle .toggle-off.btn  {
+    padding-left: 1rem !important;
+}
+#user_datatable tbody td .toggle, #composer_request_datatable tbody td .toggle, #musicscore_datatable tbody td .toggle{
+    width: 96px !important;
+}
+.login-signin h3, .login-signin p {
+    color: #000 !important;
+}
+#kt_login_signin_form2 input, #kt_login_signin_form2 input::placeholder, .login-signup input::placeholder{
+    color: #000 !important;
+}
+.alert.alert-success {
+    color: #FFFFFF !important;
+    background-color: #99D161 !important;
+    border-color: #bfefed !important;
+}
+
+#kt_content .card-title .request_header {
+    color: #3F4254 !important;
+}
+#kt_content a.card_title:hover, .card_title:hover {
+    color: #3F4254 !important;
+    cursor: default; 
+}
+
+/* .dataTables_wrapper #composer_request_datatable.dataTable .active_status td a, .dataTables_wrapper #composer_request_datatable.dataTable .active_status td {
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+.dataTables_wrapper #composer_request_datatable.dataTable .active_status {
+    background-color: #28A745;
+}
+
+.dataTables_wrapper #composer_request_datatable.dataTable .pending_status {
+    background-color: #ffffff;
+} */
+
+.card.card-custom.card-stretch.card-stretch-half.gutter-b.info_width{
+    height: calc(100% - 25px) !important;
+}
+#subscription_datatable .toggle.btn-sm {
+    width: 100px !important;
+}
+form div.plan_price{
+    flex-wrap: wrap;
+    display: flex;
+    gap: 30px;
+}
+form div.plan_price .toggle-off.btn {
+    padding-left: 1rem !important;
+}
+form div.plan_price .toggle.btn{
+    width: 80px !important;
+}
+form div.plan_price .toggle-on.btn{
+    padding-right: 1rem !important;
+}
