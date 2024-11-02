@@ -38,9 +38,9 @@
     <link rel="manifest" href="{{ asset('web/manifest.json') }}">
 
     <script>
-        const serviceWorkerVersion = '"977713622"';
+        const serviceWorkerVersion = '"4244391272"';
     </script>
-    <script src="{{ asset('web/flutter.js?v=1730518024') }}" defer></script>
+    <script src="{{ asset('web/flutter.js') }}?v={{ date('YmdH') }}" defer></script>
 
     <style>
         html {
@@ -108,7 +108,7 @@
             _flutter.loader.loadEntrypoint({
                 serviceWorker: {
                     serviceWorkerVersion: serviceWorkerVersion,
-                    serviceWorkerPath: "{{ asset('web/flutter_service_worker.js') }}",
+                    serviceWorkerPath: "{{ asset('web/flutter_service_worker.js') }}?v={{ date('YmdH') }}",
                 },
                 onEntrypointLoaded: function(engineInitializer) {
                     engineInitializer.initializeEngine().then(function(appRunner) {
