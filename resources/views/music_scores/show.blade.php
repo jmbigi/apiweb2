@@ -31,6 +31,8 @@
     <meta name="apple-mobile-web-app-title" content="Faristol">
     <link rel="apple-touch-icon" href="{{ asset('web/icons/Icon-192.png') }}">
 
+    <meta name="mobile-web-app-capable" content="yes">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />
 
@@ -38,7 +40,7 @@
     <link rel="manifest" href="{{ asset('web/manifest.json') }}">
 
     <script>
-        const serviceWorkerVersion = '"4244391272"';
+        const serviceWorkerVersion = '"1311637842"';
     </script>
     <script src="{{ asset('web/flutter.js') }}?v={{ date('YmdH') }}" defer></script>
 
