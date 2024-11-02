@@ -17,7 +17,10 @@ npm install --omit=optional || { echo "Error en npm install"; exit 1; }
 
 # Opcional: limpiar y cachear configuración
 echo "Limpiando caché de configuración..."
+php artisan cache:clear
+php artisan route:clear
 php artisan config:clear
+
 php artisan config:cache
 
 echo "Actualización completada exitosamente."
