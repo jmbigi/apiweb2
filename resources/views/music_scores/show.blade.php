@@ -9,9 +9,9 @@
 
     <!-- Meta Description with Keywords -->
     <meta name="description"
-        content="Faristol es una plataforma para músicos y compositores, ofreciendo acceso a partituras musicales con diferentes planes de suscripción y herramientas exclusivas. Protege los derechos de autor. {{ $musicScore->name }}. {{ $musicScore->description }}">
+        content="Faristol es una plataforma para músicos y compositores, ofreciendo acceso a partituras musicales con diferentes planes de suscripción y herramientas exclusivas. Protege los derechos de autor. {{ $musicScore->name }}. {{ $musicScore->description }}. @if ($musicScore->style_musics->isNotEmpty()) {{ $musicScore->style_musics->first()->name }}. @endif @if ($musicScore->instruments->isNotEmpty()) {{ $musicScore->instruments->first()->name }}. @endif">
     <meta name="keywords"
-        content="Faristol, música, compositores, partituras, suscripción, música en línea, protección de derechos de autor, {{ $musicScore->name }}, {{ $musicScore->description }}">
+        content="Faristol, música, compositores, partituras, suscripción, música en línea, protección de derechos de autor, {{ $musicScore->name }}, {{ $musicScore->description }}, @if ($musicScore->style_musics->isNotEmpty()) {{ $musicScore->style_musics->first()->name }}, @endif @if ($musicScore->instruments->isNotEmpty()) {{ $musicScore->instruments->first()->name }} @endif">
 
     <!-- Social Media / Open Graph -->
     <meta property="og:title" content="Faristol - Partituras para Músicos y Compositores - {{ $musicScore->name }}">
@@ -47,11 +47,15 @@
     <style>
         html {
             background-color: #0C1934;
+            color: antiquewhite;
         }
 
         h1 {
-            text-align: center;
-            color: antiquewhite;
+            /*text-align: center;*/
+        }
+
+        a {
+            color: antiquewhite
         }
     </style>
 </head>
@@ -74,8 +78,8 @@
         }
 
         #title {
-            opacity: 0;
-            transition: opacity 2s ease 0s;
+            /* opacity: 0; */
+            transition: margin-top 2s ease 0s;
         }
     </style>
     <div id="splash-screen"></div>
@@ -84,18 +88,53 @@
             // Oculta el splash screen cuando la página ha cargado
             const splashScreen = document.getElementById('splash-screen');
             const title = document.getElementById('title');
-            title.style.opacity = 1;
+            // title.style.opacity = 1;
             setTimeout(() => {
                 splashScreen.style.opacity = 0;
-                title.style.opacity = 0;
+                // title.style.opacity = 0;
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                    title.style.display = 'none';
+                    // title.style.display = 'none';
+                    title.style.marginTop = '100vh';
                 }, 2500);
             }, 1000);
         });
     </script>
-    <h1 id="title">Faristol - {{ $musicScore->name }}</h1>
+
+    <!-- Título -->
+    <h1 id="title">Faristol</h1>
+
+    <h2><a href="{{ route('score-viewbyname', ['name' => $musicScore->name]) }}">{{ $musicScore->name }}</a></h2>
+
+    <!-- Descripción de la partitura -->
+    <section>
+        <h3>Descripción</h3>
+        <p>{{ $musicScore->description }}</p>
+    </section>
+
+    <!-- Lista de estilos -->
+    <section>
+        <h3>Estilos</h3>
+        <ul>
+            @forelse($musicScore->style_musics as $style)
+                <li>{{ $style->name }}</li>
+            @empty
+                <li>No hay estilos disponibles para esta partitura.</li>
+            @endforelse
+        </ul>
+    </section>
+
+    <!-- Lista de instrumentos -->
+    <section>
+        <h3>Instrumentos</h3>
+        <ul>
+            @forelse($musicScore->instruments as $instrument)
+                <li>{{ $instrument->name }}</li>
+            @empty
+                <li>No hay instrumentos disponibles para esta partitura.</li>
+            @endforelse
+        </ul>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js" type="text/javascript"></script>
     <script type="text/javascript">

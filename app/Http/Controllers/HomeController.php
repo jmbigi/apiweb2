@@ -26,10 +26,10 @@ class HomeController extends Controller
 
         // Si se encontró un musicScore más visitado, obtener el objeto correspondiente
         if ($musicScoreId) {
-            $musicScore = MusicScore::find($musicScoreId);
+            $musicScore = MusicScore::with(['instruments', 'style_musics'])->find($musicScoreId);
         } else {
             // Obtener el musicScore más reciente si no hay visitas registradas
-            $musicScore = MusicScore::latest()->first(); // Cambiado para obtener el más reciente
+            $musicScore = MusicScore::with(['instruments', 'style_musics'])->latest()->first(); // Cambiado para obtener el más reciente
         }
 
         // Verificar si se encontró el MusicScore
