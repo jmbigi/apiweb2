@@ -11,9 +11,79 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Minimalism/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Contrabass/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/Quotidiania</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Granada%20Op.%2047%20n%C2%BA1</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Granada%20Op.%2047%20n%C2%BA1</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Granada%20Op.%2047%20n%C2%BA1</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/Granada%20Op.%2047%20n%C2%BA1</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Pdf</loc>
@@ -26,9 +96,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/pdfa</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Juan</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Classicism/Juan</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/Juan</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Juan</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Juan</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/prueba2</loc>
@@ -36,9 +131,54 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/instruments/Oboe/prueba2</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/my%20music3</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Jazz/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Bass%20Clarinet/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/my%20music3</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Borra</loc>
@@ -46,9 +186,109 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Serialism/Borra</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Borra</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Pepe%20Toni%20Caragol</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Folk/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Bass%20Clarinet/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Basson/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Snare/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Timpani/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Pepe%20Toni%20Caragol</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Vois%20Sur%20Ton%20Chemi</loc>
@@ -56,9 +296,69 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/BSO/Vois%20Sur%20Ton%20Chemi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Vois%20Sur%20Ton%20Chemi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Vois%20Sur%20Ton%20Chemi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Vois%20Sur%20Ton%20Chemi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Vois%20Sur%20Ton%20Chemi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/test</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Jazz/test</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/test</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Basson/test</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/test</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/test</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Snare/test</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/test</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
@@ -66,9 +366,199 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Bass%20Clarinet/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Basson/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Multipercussion/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Snare/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Timpani/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Antonio%20%E2%80%9CLa%20Cometa%E2%80%9D</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Dos%20Amics</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Bass%20Clarinet/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Basson/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Multipercussion/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Snare/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Timpani/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Dos%20Amics</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Bola%20De%20Drac</loc>
@@ -76,9 +566,139 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Bola%20De%20Drac</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Coraz%C3%B3n%20Part%C3%ADo</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Coraz%C3%B3n%20Part%C3%ADo</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Esperan%C3%A7a</loc>
@@ -86,9 +706,139 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Esperan%C3%A7a</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Hello</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Hello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/La%20Vida%20Sense%20Tu</loc>
@@ -96,9 +846,139 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/La%20Vida%20Sense%20Tu</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/M%C3%BAsic%20De%20Carrer</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/M%C3%BAsic%20De%20Carrer</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Still%20Young</loc>
@@ -106,9 +986,139 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Still%20Young</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Txarango%20Mix</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Txarango%20Mix</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Welcome%20To%20The%20Jungle</loc>
@@ -116,9 +1126,89 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Euphonium/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tuba/Welcome%20To%20The%20Jungle</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/The%20Way%20We%20Were</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Rock/The%20Way%20We%20Were</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/The%20Way%20We%20Were</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/The%20Way%20We%20Were</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Danz%C3%B3n%20n%C2%BA%202</loc>
@@ -126,9 +1216,69 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Folk/Danz%C3%B3n%20n%C2%BA%202</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Danz%C3%B3n%20n%C2%BA%202</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Danz%C3%B3n%20n%C2%BA%202</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Danz%C3%B3n%20n%C2%BA%202</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Danz%C3%B3n%20n%C2%BA%202</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Danz%C3%B3n%20n%C2%BA%202</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Liebesleid</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Liebesleid</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Liebesleid</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Contrabass/Liebesleid</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Liebesleid</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/Liebesleid</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Liebesleid</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Dream</loc>
@@ -136,9 +1286,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Minimalism/Dream</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Dream</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Filo%20de%20Luna</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Minimalism/Filo%20de%20Luna</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Filo%20de%20Luna</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Filo%20de%20Luna</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/The%20jazz%20Girl</loc>
@@ -146,9 +1321,59 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Jazz/The%20jazz%20Girl</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Contrabass/The%20jazz%20Girl</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/The%20jazz%20Girl</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/The%20jazz%20Girl</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/The%20jazz%20Girl</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/The%20jazz%20Girl</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Neow</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Minimalism/Neow</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Neow</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Neow</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Neow</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Nilfgard</loc>
@@ -156,9 +1381,54 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Nilfgard</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Basson/Nilfgard</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Contrabass/Nilfgard</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Drum%20Set/Nilfgard</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Marimba/Nilfgard</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Nilfgard</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Nilfgard</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/F%C3%BCr%20Elise-%20Beethoven</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/F%C3%BCr%20Elise-%20Beethoven</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/F%C3%BCr%20Elise-%20Beethoven</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Little%20Serenade-%20Haydn</loc>
@@ -166,9 +1436,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Little%20Serenade-%20Haydn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Little%20Serenade-%20Haydn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Minuet%20in%20G%20Major%20BWV.%20Ah.%20114%20J.S%20Bach</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Minuet%20in%20G%20Major%20BWV.%20Ah.%20114%20J.S%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Minuet%20in%20G%20Major%20BWV.%20Ah.%20114%20J.S%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Invention%20n8%20J.S.Bach.</loc>
@@ -176,9 +1466,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Baroque/Invention%20n8%20J.S.Bach.</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Invention%20n8%20J.S.Bach.</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Prelude%20No.5%20in%20E%20minor%20BWV%20855a%20Bach.%20Johan%20Sebastian%20Bach.</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Prelude%20No.5%20in%20E%20minor%20BWV%20855a%20Bach.%20Johan%20Sebastian%20Bach.</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Prelude%20No.5%20in%20E%20minor%20BWV%20855a%20Bach.%20Johan%20Sebastian%20Bach.</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20n15%20K545%201st%20MOV.%20W.A.Mozart</loc>
@@ -186,9 +1496,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Sonata%20n15%20K545%201st%20MOV.%20W.A.Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20n15%20K545%201st%20MOV.%20W.A.Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Rondo%20Alla%20Turca%20%28Turkish%20March%29%20W.A.Mozart</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Classicism/Rondo%20Alla%20Turca%20%28Turkish%20March%29%20W.A.Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Rondo%20Alla%20Turca%20%28Turkish%20March%29%20W.A.Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Le%20Coucou-%20L.C.%20Daquin</loc>
@@ -196,9 +1526,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Baroque/Le%20Coucou-%20L.C.%20Daquin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Le%20Coucou-%20L.C.%20Daquin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Marcia%20alla%20Turca-%20Beethoven</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Marcia%20alla%20Turca-%20Beethoven</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Marcia%20alla%20Turca-%20Beethoven</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20caprichosa</loc>
@@ -206,9 +1556,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Sonata%20caprichosa</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20caprichosa</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Una%20Luz%20en%20la%20Noche</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Pop/Una%20Luz%20en%20la%20Noche</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Una%20Luz%20en%20la%20Noche</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Claire%20de%20Lune-Debussy</loc>
@@ -216,9 +1586,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Claire%20de%20Lune-Debussy</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Claire%20de%20Lune-Debussy</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/concerto%20Korsavov%20Trombone</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/concerto%20Korsavov%20Trombone</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/concerto%20Korsavov%20Trombone</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/concerto%20Korsavov%20Trombone</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Elegy%20G%20minor%20op.44%20Glazunov</loc>
@@ -226,9 +1621,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Elegy%20G%20minor%20op.44%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Elegy%20G%20minor%20op.44%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/Elegy%20G%20minor%20op.44%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Elegie%20G%20minor%20op.44%20Glazunov</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Elegie%20G%20minor%20op.44%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Elegie%20G%20minor%20op.44%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Elegie%20G%20minor%20op.44%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Fantasie-impromptu%20C#%20minor%20Chopin</loc>
@@ -236,9 +1661,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Fantasie-impromptu%20C#%20minor%20Chopin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Fantasie-impromptu%20C#%20minor%20Chopin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/La%20campanela%20Paganini%20%28Lizst%29</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/La%20campanela%20Paganini%20%28Lizst%29</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/La%20campanela%20Paganini%20%28Lizst%29</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20arpeggione%20Schubert</loc>
@@ -246,9 +1691,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Sonata%20arpeggione%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Sonata%20arpeggione%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20arpeggione%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Arpeggione%20sonata%20Schubert%20Alto%20sax</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Arpeggione%20sonata%20Schubert%20Alto%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Arpeggione%20sonata%20Schubert%20Alto%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Arpeggione%20sonata%20Schubert%20Alto%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Concerto%20K622%20Mozart</loc>
@@ -256,9 +1731,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Concerto%20K622%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Concerto%20K622%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Orchestra/Concerto%20K622%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Pavane%20pour%20un%20infant%20defunt%20Ravel</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Pavane%20pour%20un%20infant%20defunt%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Pavane%20pour%20un%20infant%20defunt%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Concerto%20No3%20in%20E%20flat%20K.447%20Mozart</loc>
@@ -266,9 +1766,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Concerto%20No3%20in%20E%20flat%20K.447%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Concerto%20No3%20in%20E%20flat%20K.447%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Orchestra/Concerto%20No3%20in%20E%20flat%20K.447%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Recuerdos%20de%20la%20Alhambra-%20Francisco%20T%C3%A1rrega</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Recuerdos%20de%20la%20Alhambra-%20Francisco%20T%C3%A1rrega</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/Recuerdos%20de%20la%20Alhambra-%20Francisco%20T%C3%A1rrega</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Capricho%20%C3%81rabe-%20Francisco%20T%C3%A1rrega</loc>
@@ -276,9 +1801,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Capricho%20%C3%81rabe-%20Francisco%20T%C3%A1rrega</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/Capricho%20%C3%81rabe-%20Francisco%20T%C3%A1rrega</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Fantasie%20sur%20un%20th%C3%A9me%20original%20-J.%20Demersseman</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Fantasie%20sur%20un%20th%C3%A9me%20original%20-J.%20Demersseman</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Fantasie%20sur%20un%20th%C3%A9me%20original%20-J.%20Demersseman</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Fantasie%20sur%20un%20th%C3%A9me%20original%20-J.%20Demersseman</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Viva%20la%20vida%20Coldplay%20saxof%C3%B3n%20ensemble</loc>
@@ -286,9 +1836,54 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Rock/Viva%20la%20vida%20Coldplay%20saxof%C3%B3n%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Viva%20la%20vida%20Coldplay%20saxof%C3%B3n%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Viva%20la%20vida%20Coldplay%20saxof%C3%B3n%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Viva%20la%20vida%20Coldplay%20saxof%C3%B3n%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Viva%20la%20vida%20Coldplay%20saxof%C3%B3n%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Carmen%20Fantasy%20Op.25%20Pablo%20Sarasate</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Carmen%20Fantasy%20Op.25%20Pablo%20Sarasate</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Carmen%20Fantasy%20Op.25%20Pablo%20Sarasate</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Orchestra/Carmen%20Fantasy%20Op.25%20Pablo%20Sarasate</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Carmen%20Fantasy%20Op.25%20Pablo%20Sarasate</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Concerto%20un%20D%20Major%20K314-%20Mozart</loc>
@@ -296,9 +1891,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Concerto%20un%20D%20Major%20K314-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/Concerto%20un%20D%20Major%20K314-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concerto%20un%20D%20Major%20K314-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/3%20Romanzas-%20Shumann</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/3%20Romanzas-%20Shumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/3%20Romanzas-%20Shumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/3%20Romanzas-%20Shumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/3%20Romanzas-%20Schumann%20soprano%20sax</loc>
@@ -306,9 +1931,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/3%20Romanzas-%20Schumann%20soprano%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/3%20Romanzas-%20Schumann%20soprano%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Trumpet%20concerto%20Op.18%20Oskar%20B%C3%B6hme</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Trumpet%20concerto%20Op.18%20Oskar%20B%C3%B6hme</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Trumpet%20concerto%20Op.18%20Oskar%20B%C3%B6hme</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Trumpet%20concerto%20Op.18%20Oskar%20B%C3%B6hme</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Chaconne%20Tomaso%20Vitali</loc>
@@ -316,9 +1966,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Baroque/Chaconne%20Tomaso%20Vitali</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Chaconne%20Tomaso%20Vitali</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Chaconne%20Tomaso%20Vitali</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Chaconne-%20Vitali%20Sax</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Chaconne-%20Vitali%20Sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Chaconne-%20Vitali%20Sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Chaconne-%20Vitali%20Sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20in%20A%20Major%20C%C3%A9sar%20Franck</loc>
@@ -326,9 +2006,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Sonata%20in%20A%20Major%20C%C3%A9sar%20Franck</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20in%20A%20Major%20C%C3%A9sar%20Franck</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Sonata%20in%20A%20Major%20C%C3%A9sar%20Franck</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Sonata%20C%C3%A9sar%20Franck%20alto%20Sax</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Sonata%20C%C3%A9sar%20Franck%20alto%20Sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Sonata%20C%C3%A9sar%20Franck%20alto%20Sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Pavane%20Op.50%20Gabriel%20Faur%C3%A9</loc>
@@ -336,9 +2041,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Pavane%20Op.50%20Gabriel%20Faur%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Orchestra/Pavane%20Op.50%20Gabriel%20Faur%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Pavane%20op50%20Faur%C3%A9%20saxo%20ensemble</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Pavane%20op50%20Faur%C3%A9%20saxo%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Pavane%20op50%20Faur%C3%A9%20saxo%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Pavane%20op50%20Faur%C3%A9%20saxo%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Pavane%20op50%20Faur%C3%A9%20saxo%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Pavane%20op50%20Faur%C3%A9%20saxo%20ensemble</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Wind%20Quintet%20Franz%20Danzi%20op56%20n%C2%BA2</loc>
@@ -346,9 +2086,49 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Wind%20Quintet%20Franz%20Danzi%20op56%20n%C2%BA2</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Basson/Wind%20Quintet%20Franz%20Danzi%20op56%20n%C2%BA2</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Wind%20Quintet%20Franz%20Danzi%20op56%20n%C2%BA2</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Wind%20Quintet%20Franz%20Danzi%20op56%20n%C2%BA2</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/French%20Horn/Wind%20Quintet%20Franz%20Danzi%20op56%20n%C2%BA2</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/Wind%20Quintet%20Franz%20Danzi%20op56%20n%C2%BA2</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/2%20Arabesques%20Debussy</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/2%20Arabesques%20Debussy</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/2%20Arabesques%20Debussy</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Concerto%20in%20Eb-%20Haydn</loc>
@@ -356,9 +2136,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Concerto%20in%20Eb-%20Haydn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concerto%20in%20Eb-%20Haydn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trumpet/Concerto%20in%20Eb-%20Haydn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Menuetto%20Luigi%20Boccherini</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Classicism/Menuetto%20Luigi%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Menuetto%20Luigi%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/Menuetto%20Luigi%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Menuetto%20Luigi%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Menuetto%20Boccherini</loc>
@@ -366,9 +2181,49 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Menuetto%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Menuetto%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Menuetto%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Menuetto%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Menuetto%20Boccherini</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Sonata%20op%20120%20n2%20Brahms</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Sonata%20op%20120%20n2%20Brahms</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Sonata%20op%20120%20n2%20Brahms</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20op%20120%20n2%20Brahms</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20op120%20n2%20Brahms%20alto%20sax</loc>
@@ -376,9 +2231,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Sonata%20op120%20n2%20Brahms%20alto%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Sonata%20op120%20n2%20Brahms%20alto%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20op120%20n2%20Brahms%20alto%20sax</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Fantasia%20un%20D%20minor%20K397-%20Mozart</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Classicism/Fantasia%20un%20D%20minor%20K397-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Fantasia%20un%20D%20minor%20K397-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20n16%20K545%20-%20Mozart</loc>
@@ -386,9 +2266,49 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Sonata%20n16%20K545%20-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20n16%20K545%20-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Quintet%20un%20A%20Major%20k581-%20Mozart</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Classicism/Quintet%20un%20A%20Major%20k581-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Quintet%20un%20A%20Major%20k581-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Quintet%20un%20A%20Major%20k581-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Contrabass/Quintet%20un%20A%20Major%20k581-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/Quintet%20un%20A%20Major%20k581-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Quintet%20un%20A%20Major%20k581-%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Vocalisme%20op34%20n16-%20Rachmaninoff</loc>
@@ -396,9 +2316,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Vocalisme%20op34%20n16-%20Rachmaninoff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Vocalisme%20op34%20n16-%20Rachmaninoff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Vocalisme%20op34%20n16-%20Rachmaninoff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Vocalise%20op34%20n16-%20Rachmaninoff</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Vocalise%20op34%20n16-%20Rachmaninoff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Vocalise%20op34%20n16-%20Rachmaninoff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Vocalise%20op34%20n16-%20Rachmaninoff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Vocalise%20op34%20n16-%20Rachmaninoff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20D%20960</loc>
@@ -406,9 +2361,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Sonata%20D%20960</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%20D%20960</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Meditaci%C3%B3n%20de%20Thais</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/Meditaci%C3%B3n%20de%20Thais</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Meditaci%C3%B3n%20de%20Thais</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Meditaci%C3%B3n%20de%20Thais</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Concerto%20in%20D%20minor-%20Alessandro%20Marcello</loc>
@@ -416,9 +2396,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Baroque/Concerto%20in%20D%20minor-%20Alessandro%20Marcello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concerto%20in%20D%20minor-%20Alessandro%20Marcello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Concerto%20in%20D%20minor-%20Alessandro%20Marcello</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Quartet%20n14%20D%20minor-%20Schubert</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Quartet%20n14%20D%20minor-%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Quartet%20n14%20D%20minor-%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/Quartet%20n14%20D%20minor-%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Quartet%20n14%20D%20minor-%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Chant%20Sacr%C3%A9%20Berlioz</loc>
@@ -426,9 +2441,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/Chant%20Sacr%C3%A9%20Berlioz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Chant%20Sacr%C3%A9%20Berlioz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Chant%20Sacr%C3%A9%20Berlioz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Chant%20Sacr%C3%A9%20Berlioz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Chant%20Sacr%C3%A9%20Berlioz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Fantasia%201-%20Telemann</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Fantasia%201-%20Telemann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Fantasia%201-%20Telemann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/12%20Fantas%C3%ADas-%20Telemann</loc>
@@ -436,9 +2486,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Baroque/12%20Fantas%C3%ADas-%20Telemann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/12%20Fantas%C3%ADas-%20Telemann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/The%20Year%20%28Das%20Jahr%29-Fany%20Mendelssohn</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/The%20Year%20%28Das%20Jahr%29-Fany%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/The%20Year%20%28Das%20Jahr%29-Fany%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Venetian%20Boat%20Song%20Op30%20n%C2%BA6-%20Mendelssohn</loc>
@@ -446,9 +2516,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Venetian%20Boat%20Song%20Op30%20n%C2%BA6-%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Venetian%20Boat%20Song%20Op30%20n%C2%BA6-%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Concert%C3%B3%20op64-%20Mendelssohn</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Concert%C3%B3%20op64-%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concert%C3%B3%20op64-%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Concert%C3%B3%20op64-%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/8%20Vald%C3%A9s%20po%C3%A9ticos-%20Granadis</loc>
@@ -456,9 +2551,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Nationalism/8%20Vald%C3%A9s%20po%C3%A9ticos-%20Granadis</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/8%20Vald%C3%A9s%20po%C3%A9ticos-%20Granadis</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Concert%C3%B3%20N1%20in%20g%20minor%20op25%20Mendelssohn</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Concert%C3%B3%20N1%20in%20g%20minor%20op25%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Orchestra/Concert%C3%B3%20N1%20in%20g%20minor%20op25%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concert%C3%B3%20N1%20in%20g%20minor%20op25%20Mendelssohn</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint%20sa%C3%ABns</loc>
@@ -466,9 +2586,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint%20sa%C3%ABns</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint%20sa%C3%ABns</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint%20sa%C3%ABns</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint-sa%C3%ABns</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint-sa%C3%ABns</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint-sa%C3%ABns</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Introducci%C3%B3n%20y%20Rondo%20Caprichoso%20op28-%20Saint-sa%C3%ABns</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%201%20in%20B%20minor-%20BWV%201030%20Bach</loc>
@@ -476,9 +2626,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Baroque/Sonata%201%20in%20B%20minor-%20BWV%201030%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Sonata%201%20in%20B%20minor-%20BWV%201030%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Sonata%201%20in%20B%20minor-%20BWV%201030%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Sonata%20in%20A%20minor%20H562%20C.P.E.%20Bach</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Sonata%20in%20A%20minor%20H562%20C.P.E.%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Sonata%20in%20A%20minor%20H562%20C.P.E.%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Recorder%20Concert%C3%B3%20RV%20443%20Vivaldi</loc>
@@ -486,9 +2661,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Baroque/Recorder%20Concert%C3%B3%20RV%20443%20Vivaldi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Recorder%20Concert%C3%B3%20RV%20443%20Vivaldi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Recorder%20Concert%C3%B3%20RV%20443%20Vivaldi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Recorder%20Concerto%20RV%20443%20A.Vivaldi</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Recorder%20Concerto%20RV%20443%20A.Vivaldi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Orchestra/Recorder%20Concerto%20RV%20443%20A.Vivaldi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piccolo/Recorder%20Concerto%20RV%20443%20A.Vivaldi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Introduction%20and%20Variations%20D.802%20Schubert</loc>
@@ -496,9 +2701,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Introduction%20and%20Variations%20D.802%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Introduction%20and%20Variations%20D.802%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Introduction%20and%20Variations%20D.802%20Schubert</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/String%20Quartet%20N1%20Glazunov</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/String%20Quartet%20N1%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/String%20Quartet%20N1%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/String%20Quartet%20N1%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/String%20Quartet%20N1%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Saxophobia%20Rudy%20Wiedoeft</loc>
@@ -506,9 +2746,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Jazz/Saxophobia%20Rudy%20Wiedoeft</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Saxophobia%20Rudy%20Wiedoeft</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Saxophobia%20Rudy%20Wiedoeft</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/cinco%20danzas%20gitanas%20Op%2055%20Turina</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/cinco%20danzas%20gitanas%20Op%2055%20Turina</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/cinco%20danzas%20gitanas%20Op%2055%20Turina</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Sonata%20Op61%20Turina</loc>
@@ -516,9 +2781,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Sonata%20Op61%20Turina</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/Sonata%20Op61%20Turina</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Chantal%20d%27Espagne%20Alb%C3%A9niz</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Chantal%20d%27Espagne%20Alb%C3%A9niz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Chantal%20d%27Espagne%20Alb%C3%A9niz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Contrabass/Chantal%20d%27Espagne%20Alb%C3%A9niz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/Chantal%20d%27Espagne%20Alb%C3%A9niz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/Chantal%20d%27Espagne%20Alb%C3%A9niz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/24%20Etudes%20f%C3%A1ciles%20Op35-%20Fernando%20Sor</loc>
@@ -526,9 +2826,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Nationalism/24%20Etudes%20f%C3%A1ciles%20Op35-%20Fernando%20Sor</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/24%20Etudes%20f%C3%A1ciles%20Op35-%20Fernando%20Sor</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Introducci%C3%B3n%20al%20estudio%20de%20Guitarra%20Op60%20Fernando%20sor</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Introducci%C3%B3n%20al%20estudio%20de%20Guitarra%20Op60%20Fernando%20sor</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/Introducci%C3%B3n%20al%20estudio%20de%20Guitarra%20Op60%20Fernando%20sor</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Introducci%C3%B3n%20y%20Variaciones%20sobre%20un%20tema%20de%20Mozart%20op9%20Fernando%20sor</loc>
@@ -536,9 +2856,29 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Introducci%C3%B3n%20y%20Variaciones%20sobre%20un%20tema%20de%20Mozart%20op9%20Fernando%20sor</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Guitar/Introducci%C3%B3n%20y%20Variaciones%20sobre%20un%20tema%20de%20Mozart%20op9%20Fernando%20sor</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Suite%20Espa%C3%B1ola%20op47%20Albeniz</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Suite%20Espa%C3%B1ola%20op47%20Albeniz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Suite%20Espa%C3%B1ola%20op47%20Albeniz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Concierto%20N2%20i%20D%20major%20%20K314%20Mozart</loc>
@@ -546,9 +2886,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Concierto%20N2%20i%20D%20major%20%20K314%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Flute/Concierto%20N2%20i%20D%20major%20%20K314%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concierto%20N2%20i%20D%20major%20%20K314%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Suite%201%20BVW%201007%20Bach</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Baroque/Suite%201%20BVW%201007%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/Suite%201%20BVW%201007%20Bach</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Minuetto%20Mozart</loc>
@@ -556,9 +2921,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Classicism/Minuetto%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Minuetto%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Minuetto%20Mozart</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/String%20quartet%20n2%20mov%203%20Nocturne.%20-%20A.%20Borodin</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/String%20quartet%20n2%20mov%203%20Nocturne.%20-%20A.%20Borodin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/String%20quartet%20n2%20mov%203%20Nocturne.%20-%20A.%20Borodin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Viola/String%20quartet%20n2%20mov%203%20Nocturne.%20-%20A.%20Borodin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Violin/String%20quartet%20n2%20mov%203%20Nocturne.%20-%20A.%20Borodin</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Petite%20piece%20-C.%20Debussy</loc>
@@ -566,9 +2966,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Petite%20piece%20-C.%20Debussy</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Petite%20piece%20-C.%20Debussy</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Petite%20piece%20-C.%20Debussy</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Fantasiestucke%20op73-%20R.Schumann</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/Fantasiestucke%20op73-%20R.Schumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Fantasiestucke%20op73-%20R.Schumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Fantasiestucke%20op73-%20R.Schumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Fantasiest%C3%BCcke%20op73%20Shumann</loc>
@@ -576,9 +3006,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/Fantasiest%C3%BCcke%20op73%20Shumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Fantasiest%C3%BCcke%20op73%20Shumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Fantasiest%C3%BCcke%20op73%20Shumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Fantasiest%C3%BCcke%20op73%20Shumann</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Piece%20en%20forme%20de%20habanera.%20Ravel</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Piece%20en%20forme%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Oboe/Piece%20en%20forme%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Piece%20en%20forme%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Pi%C3%A8ce%20en%20forma%20de%20habanera.%20Ravel</loc>
@@ -586,9 +3051,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Pi%C3%A8ce%20en%20forma%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Pi%C3%A8ce%20en%20forma%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Pi%C3%A8ce%20en%20forma%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Pi%C3%A8ce%20en%20forma%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Pieza%20en%20forma%20de%20habanera.%20Ravel</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Pieza%20en%20forma%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Pieza%20en%20forma%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Pieza%20en%20forma%20de%20habanera.%20Ravel</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/El%20moldava.%20Smetana</loc>
@@ -596,9 +3096,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Postromanticism/El%20moldava.%20Smetana</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/El%20moldava.%20Smetana</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/El%20moldava.%20Smetana</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/El%20moldava.%20Smetana</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/El%20moldava.%20Smetana</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Evocaci%C3%B3n%20%28suite%20Iberia%29.%20Albeniz</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Nationalism/Evocaci%C3%B3n%20%28suite%20Iberia%29.%20Albeniz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Evocaci%C3%B3n%20%28suite%20Iberia%29.%20Albeniz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/El%20puerto%20%28%20suite%20Iberia%29%20Albeniz</loc>
@@ -606,9 +3141,44 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Nationalism/El%20puerto%20%28%20suite%20Iberia%29%20Albeniz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/El%20puerto%20%28%20suite%20Iberia%29%20Albeniz</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Introduccion%20y%20variacion%20de%20un%20Rond%C3%B3%20popular%20-%20G.%20Piern%C3%A9</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Introduccion%20y%20variacion%20de%20un%20Rond%C3%B3%20popular%20-%20G.%20Piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Introduccion%20y%20variacion%20de%20un%20Rond%C3%B3%20popular%20-%20G.%20Piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Baritone%20Saxophone/Introduccion%20y%20variacion%20de%20un%20Rond%C3%B3%20popular%20-%20G.%20Piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Soprano%20Saxophone/Introduccion%20y%20variacion%20de%20un%20Rond%C3%B3%20popular%20-%20G.%20Piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Tenor%20Saxophone/Introduccion%20y%20variacion%20de%20un%20Rond%C3%B3%20popular%20-%20G.%20Piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Canzonetta%20op19.%20Gabriel%20piern%C3%A9</loc>
@@ -616,9 +3186,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Canzonetta%20op19.%20Gabriel%20piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Clarinet/Canzonetta%20op19.%20Gabriel%20piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Canzonetta%20op19.%20Gabriel%20piern%C3%A9</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/O%20Magnum%20Mysterium-%20Tomas%20Luis%20de%20Victoria</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Renaissance/O%20Magnum%20Mysterium-%20Tomas%20Luis%20de%20Victoria</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/choir/O%20Magnum%20Mysterium-%20Tomas%20Luis%20de%20Victoria</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/concerto%20en%20Mi.%20Glazunov</loc>
@@ -626,9 +3221,39 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Romanticism/concerto%20en%20Mi.%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/concerto%20en%20Mi.%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/concerto%20en%20Mi.%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/chant%20du%20menestrel%20Glazunov</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/chant%20du%20menestrel%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Cello/chant%20du%20menestrel%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/chant%20du%20menestrel%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Fantas%C3%ADa%20claude%20T.%20Smith</loc>
@@ -636,9 +3261,34 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Fantas%C3%ADa%20claude%20T.%20Smith</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Fantas%C3%ADa%20claude%20T.%20Smith</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Fantas%C3%ADa%20claude%20T.%20Smith</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Sonata%20rueff</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Dodecaphonism/Sonata%20rueff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Sonata%20rueff</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
     <url>
         <loc>https://web.faristol.net/score/Ballada.%20Henri%20Tomasi</loc>
@@ -646,13 +3296,263 @@
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Ballada.%20Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Ballada.%20Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Ballada.%20Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Fantas%C3%ADa%20florent%20Schmitt</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
             </url>
     <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Fantas%C3%ADa%20florent%20Schmitt</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Fantas%C3%ADa%20florent%20Schmitt</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Fantas%C3%ADa%20florent%20Schmitt</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
         <loc>https://web.faristol.net/score/Concerto.%20Pierre%20Max%20Dubois</loc>
             <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Concerto.%20Pierre%20Max%20Dubois</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Concerto.%20Pierre%20Max%20Dubois</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concerto.%20Pierre%20Max%20Dubois</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Scaramouche-%20Darius%20Milhaud</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Scaramouche-%20Darius%20Milhaud</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Scaramouche-%20Darius%20Milhaud</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Scaramouche-%20Darius%20Milhaud</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Gymnop%C3%A9die%20N1-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Gymnop%C3%A9die%20N1-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Gymnop%C3%A9die%20N1-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/gymnop%C3%A9die%202%20-Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/gymnop%C3%A9die%202%20-Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/gymnop%C3%A9die%202%20-Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Gymnop%C3%A9die%20N3-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Gymnop%C3%A9die%20N3-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Gymnop%C3%A9die%20N3-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Gnossienne%201-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Gnossienne%201-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Gnossienne%201-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Gnossienne%203-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Gnossienne%203-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Gnossienne%203-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Gnossienne%202-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Gnossienne%202-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Gnossienne%202-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Gnossienne%204-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Impressionism/Gnossienne%204-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Gnossienne%204-%20Erik%20Satie</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Concert%C3%B3%20op.109-%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Romanticism/Concert%C3%B3%20op.109-%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Alto%20Saxophone/Concert%C3%B3%20op.109-%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Concert%C3%B3%20op.109-%20Glazunov</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Trombone%20Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Neoclassicism/Trombone%20Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Piano/Trombone%20Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Trombone/Trombone%20Concerto%20-Henri%20Tomasi</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/score/Educandos%20de%20Benejuzar</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Folk/Educandos%20de%20Benejuzar</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/styles/Street%20Music/Educandos%20de%20Benejuzar</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://web.faristol.net/instruments/Wind%20Band/Educandos%20de%20Benejuzar</loc>
+            <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
             </url>
 </urlset>
