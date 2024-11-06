@@ -20,3 +20,4 @@ yarn-error.log
 .htaccess
 run-dev.sh
 artisan-routes.sh
+public/sitemap.xml
