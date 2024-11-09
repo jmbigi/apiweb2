@@ -1,4 +1,5 @@
 @php
+    use Illuminate\Support\Str;
     use Stichoza\GoogleTranslate\GoogleTranslate;
     
     $locale = App::getLocale();
@@ -32,7 +33,7 @@
     // $utr->setSource('en'); // Idioma fuente (opcional)
     $utr->setTarget($locale); // Idioma destino
 
-    $txt_score_name = $utr->translate($musicScore->name);
+    $txt_score_name = $utr->translate(Str::title($musicScore->name));
     $txt_score_description = $utr->translate($musicScore->description);
 
 @endphp
