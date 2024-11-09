@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\MusicScore;
+use App\Services\LocationService;
 
 class GenerateSitemap extends Command
 {
@@ -14,9 +15,22 @@ class GenerateSitemap extends Command
 
     public function handle()
     {
+        // Idiomas soportados
+        $supportedLangs = LocationService::VALID_LANGUAGES;
+        
         $sitemap = Sitemap::create();
         $sitemap->add(Url::create('/')->setPriority(1.0));
 
+        // Agregar URLs con idiomas
+        foreach ($supportedLangs as $lang) {
+            $sitemap->add(Url::create("/{$lang}")->setPriority(0.9));
+        }
+
+        // Agregar URLs con idiomas
+        foreach ($supportedLangs as $lang) {
+            $sitemap->add(Url::create("/lang/{$lang}")->setPriority(0.9));
+        }
+        
         // Obtener todas las partituras y cargar relaciones de estilos e instrumentos
         $musicScores = MusicScore::with(['style_musics', 'instruments'])->cursor();
 

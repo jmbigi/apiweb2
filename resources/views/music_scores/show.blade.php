@@ -1,5 +1,44 @@
+@php
+    use Stichoza\GoogleTranslate\GoogleTranslate;
+    
+    $locale = App::getLocale();
+
+    $lista_instrumentos = $musicScore->instruments->isNotEmpty() ? $musicScore->instruments->first()->name : '';
+    $lista_estilos_musicales = $musicScore->style_musics->isNotEmpty() ? $musicScore->style_musics->first()->name : '';
+
+    $etr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
+    $etr->setSource('es'); // Idioma fuente (opcional)
+    $etr->setTarget($locale); // Idioma destino
+
+    $txt_meta_description = $etr->translate('Faristol es una plataforma para músicos y compositores, ofreciendo acceso a partituras musicales con diferentes planes de suscripción y herramientas exclusivas. Protege los derechos de autor.');
+    $txt_meta_keyboard = $etr->translate('Faristol, música, compositores, partituras, suscripción, música en línea, protección de derechos de autor,');
+    $txt_og_title = $etr->translate('Faristol - Partituras para Músicos y Compositores');
+    $txt_og_description = $etr->translate('Con Faristol, conecta con partituras musicales exclusivas. Ideal para músicos y compositores con planes de suscripción y protección de derechos de autor.');
+    $txt_title = $etr->translate('Faristol - Plataforma de Partituras para Músicos y Compositores');
+    $txt_Descripcion = $etr->translate('Descripción');
+    $txt_Estilos_Musicales = $etr->translate('Estilos Musicales');
+    $txt_No_hay_estilos_para_partitura = $etr->translate('No hay estilos disponibles para esta partitura.');
+    $txt_Instrumentos = $etr->translate('Instrumentos');
+    $txt_No_hay_instrumentos_para_partitura = $etr->translate('No hay instrumentos disponibles para esta partitura.');
+
+    $ptr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
+    $ptr->setSource('en'); // Idioma fuente (opcional)
+    $ptr->setTarget($locale); // Idioma destino
+
+    $txt_instrumentos = $ptr->translate($lista_instrumentos);
+    $txt_estilos_musicales = $ptr->translate($lista_estilos_musicales);
+
+    $utr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
+    // $utr->setSource('en'); // Idioma fuente (opcional)
+    $utr->setTarget($locale); // Idioma destino
+
+    $txt_score_name = $utr->translate($musicScore->name);
+    $txt_score_description = $utr->translate($musicScore->description);
+
+@endphp
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ $locale }}">
 
 <head>
     <base href="{{ asset('web') }}/">
@@ -9,14 +48,14 @@
 
     <!-- Meta Description with Keywords -->
     <meta name="description"
-        content="Faristol es una plataforma para músicos y compositores, ofreciendo acceso a partituras musicales con diferentes planes de suscripción y herramientas exclusivas. Protege los derechos de autor. {{ $musicScore->name }}. {{ $musicScore->description }}. @if ($musicScore->style_musics->isNotEmpty()) {{ $musicScore->style_musics->first()->name }}. @endif @if ($musicScore->instruments->isNotEmpty()) {{ $musicScore->instruments->first()->name }}. @endif">
+        content="{{ $txt_meta_description }} {{ $txt_score_name }}. {{ $txt_score_description }}. {{ $txt_estilos_musicales }}. {{ $txt_instrumentos }}.">
     <meta name="keywords"
-        content="Faristol, música, compositores, partituras, suscripción, música en línea, protección de derechos de autor, {{ $musicScore->name }}, {{ $musicScore->description }}, @if ($musicScore->style_musics->isNotEmpty()) {{ $musicScore->style_musics->first()->name }}, @endif @if ($musicScore->instruments->isNotEmpty()) {{ $musicScore->instruments->first()->name }} @endif">
+        content="{{ $txt_meta_keyboard }}, {{ $txt_score_name }}, {{ $txt_score_description }}, {{ $txt_estilos_musicales }}, {{ $txt_instrumentos }}">
 
     <!-- Social Media / Open Graph -->
-    <meta property="og:title" content="Faristol - Partituras para Músicos y Compositores - {{ $musicScore->name }}">
+    <meta property="og:title" content="{{ $txt_og_title }} - {{ $txt_score_name }}">
     <meta property="og:description"
-        content="Con Faristol, conecta con partituras musicales exclusivas. Ideal para músicos y compositores con planes de suscripción y protección de derechos de autor. {{ $musicScore->description }}">
+        content="{{ $txt_og_description }} {{ $txt_score_description }}">
     <meta property="og:image" content="{{ asset('web/icons/Icon-512.png') }}">
     <meta property="og:url" content="https://web.faristol.net">
     <meta property="og:type" content="website">
@@ -36,7 +75,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />
 
-    <title>Faristol - Plataforma de Partituras para Músicos y Compositores - {{ $musicScore->name }}</title>
+    <title>{{ $txt_title }} - {{ $txt_score_name }}</title>
     <link rel="manifest" href="{{ asset('web/manifest.json') }}">
 
     <script>
@@ -85,7 +124,7 @@
     <div id="splash-screen"></div>
     <script>
         window.addEventListener('load', function(ev) {
-            // Oculta el splash screen cuando la página ha cargado
+            // Oculta el splash screen cuando la pagina ha cargado
             const splashScreen = document.getElementById('splash-screen');
             const title = document.getElementById('title');
             // title.style.opacity = 1;
@@ -104,34 +143,34 @@
     <!-- Título -->
     <h1 id="title">Faristol</h1>
 
-    <h2><a href="{{ route('score-viewbyname', ['name' => $musicScore->name]) }}">{{ $musicScore->name }}</a></h2>
+    <h2><a href="{{ route('score-viewbyname', ['name' => $musicScore->name]) }}">{{ $txt_score_name }}</a></h2>
 
-    <!-- Descripción de la partitura -->
+    <!-- Descripcion de la partitura -->
     <section>
-        <h3>Descripción</h3>
-        <p>{{ $musicScore->description }}</p>
+        <h3>{{ $txt_Descripcion }}</h3>
+        <p>{{ $txt_score_description }}</p>
     </section>
 
     <!-- Lista de estilos -->
     <section>
-        <h3>Estilos</h3>
+        <h3>{{ $txt_Estilos_Musicales }}</h3>
         <ul>
             @forelse($musicScore->style_musics as $style)
-                <li>{{ $style->name }}</li>
+                <li>{{ $utr->translate($style->name) }}</li>
             @empty
-                <li>No hay estilos disponibles para esta partitura.</li>
+                <li>{{ $txt_No_hay_estilos_para_partitura }}</li>
             @endforelse
         </ul>
     </section>
 
     <!-- Lista de instrumentos -->
     <section>
-        <h3>Instrumentos</h3>
+        <h3>{{ $txt_Instrumentos }}</h3>
         <ul>
             @forelse($musicScore->instruments as $instrument)
-                <li>{{ $instrument->name }}</li>
+                <li>{{ $utr->translate($instrument->name) }}</li>
             @empty
-                <li>No hay instrumentos disponibles para esta partitura.</li>
+                <li>{{ $txt_No_hay_instrumentos_para_partitura }}</li>
             @endforelse
         </ul>
     </section>

@@ -6,11 +6,37 @@ use App\Models\MusicScore; // Asegúrate de tener el modelo correcto
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use App\Services\LocationService;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    protected $locationService;
+
+    /**
+     * Constructor del controlador.
+     *
+     * @param LocationService $locationService
+     */
+    public function __construct(LocationService $locationService)
     {
+        $this->locationService = $locationService;
+    }
+
+    public function index(Request $request, $lang=null)
+    {
+        if ($lang && $this->locationService->isValidLanguage($lang)) {
+            $locale = $lang;
+            Cookie::queue(Cookie::make('preferredLang', $locale, 60 * 24 * 7, null, null, false, true)); // Cifrada
+        } else {
+            // Obtener el idioma
+            $locale = $this->locationService->getLocale($request);
+        }
+
+        // Establecer el locale de la aplicación
+        App::setLocale($locale);
+
         // Obtiene la fecha de hace un mes
         $oneMonthAgo = Carbon::now()->subMonth();
 
@@ -38,6 +64,6 @@ class HomeController extends Controller
         }
 
         // Pasar el MusicScore a la vista
-        return view('music_scores.show', compact('musicScore'));
+        return view('music_scores.show', compact('locale', 'musicScore'));
     }
 }

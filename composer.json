@@ -17,6 +17,8 @@
         "spatie/laravel-sitemap": "^7.0",
         "spatie/pdf-to-image": "^1.2",
         "srmklive/paypal": "^3.0",
+        "stevebauman/location": "^7.4",
+        "stichoza/google-translate-php": "^5.2",
         "yajra/laravel-datatables-oracle": "^10.8"
     },
     "require-dev": {
