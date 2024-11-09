@@ -16,11 +16,11 @@
     $txt_og_title = $etr->translate('Faristol - Partituras para Músicos y Compositores');
     $txt_og_description = $etr->translate('Con Faristol, conecta con partituras musicales exclusivas. Ideal para músicos y compositores con planes de suscripción y protección de derechos de autor.');
     $txt_title = $etr->translate('Faristol - Plataforma de Partituras para Músicos y Compositores');
-    $txt_Descripcion = $etr->translate('Descripción');
+    $txt_Descripcion_partitura = $etr->translate('Descripción de la partitura');
     $txt_Estilos_Musicales = $etr->translate('Estilos Musicales');
-    $txt_No_hay_estilos_para_partitura = $etr->translate('No hay estilos disponibles para esta partitura.');
-    $txt_Instrumentos = $etr->translate('Instrumentos');
-    $txt_No_hay_instrumentos_para_partitura = $etr->translate('No hay instrumentos disponibles para esta partitura.');
+    $txt_No_hay_estilos_para_partitura = $etr->translate('No hay estilos musicales disponibles para esta partitura.');
+    $txt_Instrumentos = $etr->translate('Instrumentos Musicales');
+    $txt_No_hay_instrumentos_para_partitura = $etr->translate('No hay instrumentos musicales disponibles para esta partitura.');
 
     $ptr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
     $ptr->setSource('en'); // Idioma fuente (opcional)
@@ -148,7 +148,7 @@
 
     <!-- Descripcion de la partitura -->
     <section>
-        <h3>{{ $txt_Descripcion }}</h3>
+        <h3>{{ $txt_Descripcion_partitura }}</h3>
         <p>{{ $txt_score_description }}</p>
     </section>
 
