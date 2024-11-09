@@ -19,16 +19,23 @@ class GenerateSitemap extends Command
         $supportedLangs = LocationService::VALID_LANGUAGES;
         
         $sitemap = Sitemap::create();
-        $sitemap->add(Url::create('/')->setPriority(1.0));
+
+        $url = Url::create('/')->setPriority(1.0);
+        $sitemap->add($url);
+        $this->info($url->url);
 
         // Agregar URLs con idiomas
         foreach ($supportedLangs as $lang) {
-            $sitemap->add(Url::create("/{$lang}")->setPriority(0.9));
+            $url = Url::create("/{$lang}")->setPriority(0.9);
+            $sitemap->add($url);
+            $this->info($url->url);    
         }
 
         // Agregar URLs con idiomas
         foreach ($supportedLangs as $lang) {
-            $sitemap->add(Url::create("/lang/{$lang}")->setPriority(0.9));
+            $url = Url::create("/lang/{$lang}")->setPriority(0.9);
+            $sitemap->add($url);
+            $this->info($url->url);    
         }
         
         // Obtener todas las partituras y cargar relaciones de estilos e instrumentos
