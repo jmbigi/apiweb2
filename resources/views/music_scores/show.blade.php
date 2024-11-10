@@ -34,7 +34,7 @@
     $utr->setTarget($locale); // Idioma destino
 
     $txt_score_name = $utr->translate(Str::title($musicScore->name));
-    $txt_score_description = $utr->translate($musicScore->description);
+    $txt_score_description = $utr->translate($musicScore->description ?? '');
 
 @endphp
 
