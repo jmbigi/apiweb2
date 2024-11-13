@@ -5,19 +5,17 @@
 
     $locale = App::getLocale();
 
-    $etr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
+    $etr = new GoogleTranslate(); // La configuración por defecto es 'en' (Inglés)
     $etr->setSource('es'); // Idioma fuente (opcional)
     $etr->setTarget($locale); // Idioma destino
 
     $txt_meta_description = $etr->translate('Faristol es una plataforma para músicos y compositores, ofreciendo acceso a partituras musicales con diferentes planes de suscripción y herramientas exclusivas. Protege los derechos de autor.');
-    $txt_meta_keyboard = $etr->translate('Faristol, música, compositores, partituras, suscripción, música en línea, protección de derechos de autor,');
+    $txt_meta_keywords = $etr->translate('Faristol, música, compositores, partituras, suscripción, música en línea, protección de derechos de autor');
     $txt_og_title = $etr->translate('Faristol - Partituras para Músicos y Compositores');
     $txt_og_description = $etr->translate('Con Faristol, conecta con partituras musicales exclusivas. Ideal para músicos y compositores con planes de suscripción y protección de derechos de autor.');
     $txt_title = $etr->translate('Faristol - Plataforma de Partituras para Músicos y Compositores');
-
-    $txt_todas_partituras_musicales = $etr->translate('Todas las Partituras Musiciales');
+    $txt_todas_partituras_musicales = $etr->translate('Todas las Partituras Musicales');
     $txt_enlaces_parturas_idioma = $etr->translate('Enlaces a las Partituras Musicales en tu Idioma');
-
     $txt_faristol_partituras_musicales = $etr->translate('Faristol Partituras Musicales');
 
     $musicScores = MusicScore::all();
@@ -29,6 +27,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ $txt_meta_description }}">
+    <meta name="keywords" content="{{ $txt_meta_keywords }}">
+    <meta property="og:title" content="{{ $txt_og_title }}">
+    <meta property="og:description" content="{{ $txt_og_description }}">
+    <meta property="og:type" content="website">
     <title>{{ $txt_title }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
