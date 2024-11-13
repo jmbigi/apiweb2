@@ -4,11 +4,14 @@
     use App\Models\MusicScore;
     use Illuminate\Support\Facades\Cache;
 
+    // Obtener el idioma actual
     $locale = App::getLocale();
+
+    // Configurar Google Translate
     $etr = new GoogleTranslate();
     $etr->setSource('es')->setTarget($locale); // Configuración de idioma
 
-    // Traducciones
+    // Traducciones de metadatos
     $translations = [
         'meta_description' =>
             'Faristol es una plataforma para músicos y compositores, ofreciendo acceso a partituras musicales con diferentes planes de suscripción y herramientas exclusivas. Protege los derechos de autor.',
@@ -23,7 +26,7 @@
         'faristol_partituras_musicales' => 'Faristol Partituras Musicales',
     ];
 
-    // Realizamos la traducción para cada clave
+    // Traducir los metadatos
     foreach ($translations as $key => $text) {
         $translations[$key] = $etr->translate($text);
     }
@@ -34,10 +37,9 @@
     // Traducir los nombres de las partituras con cache
     $translatedScores = $musicScores
         ->map(function ($score) use ($etr, $locale) {
-            // Verificar si la traducción ya está en cache
             $cacheKey = 'score_name_' . $score->id . '_' . $locale;
 
-            // Si no está en cache, traducir y almacenar
+            // Verificar si la traducción está en cache
             $translated_name = Cache::remember($cacheKey, now()->addWeek(), function () use ($etr, $score) {
                 return $etr->translate($score->name);
             });
@@ -46,10 +48,8 @@
             return $score;
         })
         ->sortBy(function ($score) {
-            // Ordenar por el nombre traducido
-            return $score->translated_name;
+            return $score->translated_name; // Ordenar por el nombre traducido
         });
-
 @endphp
 
 <!DOCTYPE html>
@@ -63,21 +63,26 @@
     <meta property="og:title" content="{{ $translations['og_title'] }}">
     <meta property="og:description" content="{{ $translations['og_description'] }}">
     <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />    
+
     <title>{{ $translations['title'] }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* Estilos de la página */
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f7fa;
-            margin: 0;
-            padding: 0;
-            color: #333;
+            font-family: 'Poppins', 'Roboto', sans-serif;
+            margin: 10;
+            padding: 20;
+            color: antiquewhite;
+            background-color: #060e1d;
         }
 
         .container {
             width: 80%;
             margin: 20px auto;
-            background-color: #fff;
+            background-color: #0c1934;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -85,12 +90,12 @@
 
         h1 {
             text-align: center;
-            color: #2c3e50;
+            color: antiquewhite;
             margin-bottom: 20px;
         }
 
         h2 {
-            color: #16a085;
+            color: antiquewhite;
             margin-bottom: 10px;
         }
 
@@ -106,12 +111,12 @@
 
         a {
             text-decoration: none;
-            color: #3498db;
+            color: antiquewhite;
             transition: color 0.3s ease;
         }
 
         a:hover {
-            color: #2c3e50;
+            color: white;
         }
 
         .footer {
@@ -120,6 +125,15 @@
             font-size: 14px;
             color: #777;
         }
+
+        html {
+            background-color: #060e1d;
+            color: antiquewhite;
+        }
+
+        a {
+            color: antiquewhite
+        }
     </style>
 </head>
 
@@ -127,27 +141,30 @@
     <div class="container">
         <h1>{{ $translations['title'] }}</h1>
 
+        <!-- Sección de partituras -->
         <section>
             <h2>{{ $translations['todas_partituras_musicales'] }}</h2>
             <ul>
                 @foreach ($translatedScores as $score)
                     <li><a
-                            href="{{ route('score-viewbyname', ['name' => $score->name]) }}">{{ $score->translated_name }}</a>
+                            href="{{ route('score-viewbyname', ['name' => $score->name]) }}" target="_blank">{{ ucfirst($score->translated_name) }}</a>
                     </li>
                 @endforeach
             </ul>
         </section>
 
+        <!-- Enlaces por idioma -->
         <section>
             <h2>{{ $translations['enlaces_parturas_idioma'] }}</h2>
             <ul>
                 @foreach ($translatedScores as $score)
-                    <li><a href="{{ route('la-score-viewbyname', ['lang' => $locale, 'name' => $score->name]) }}">{{ $score->translated_name }}
+                    <li><a href="{{ route('la-score-viewbyname', ['lang' => $locale, 'name' => $score->name]) }}" target="_blank">{{ ucfirst($score->translated_name) }}
                             ({{ ucfirst($locale) }})</a></li>
                 @endforeach
             </ul>
         </section>
 
+        <!-- Pie de página -->
         <div class="footer">
             <p>&copy; {{ date('Y') }} - {{ $translations['faristol_partituras_musicales'] }}</p>
         </div>
