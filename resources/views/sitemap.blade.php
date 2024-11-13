@@ -73,8 +73,8 @@
         /* Estilos de la página */
         body {
             font-family: 'Poppins', 'Roboto', sans-serif;
-            margin: 10;
-            padding: 20;
+            margin: 0;
+            padding: 0;
             color: antiquewhite;
             background-color: #060e1d;
         }
@@ -88,14 +88,26 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        header {
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header img {
+            max-width: 150px;
+            margin-bottom: 0px;
+        }
+
+        h1 {
             color: antiquewhite;
-            margin-bottom: 20px;
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 40px;
         }
 
         h2 {
             color: antiquewhite;
+            font-size: 1.6em;
             margin-bottom: 10px;
         }
 
@@ -122,8 +134,19 @@
         .footer {
             text-align: center;
             margin-top: 40px;
-            font-size: 14px;
+            font-size: 18px;
             color: #777;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: antiquewhite;
+            font-size: 18px;
+            text-decoration: none;
         }
 
         html {
@@ -132,14 +155,17 @@
         }
 
         a {
-            color: antiquewhite
+            color: antiquewhite;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>{{ $translations['title'] }}</h1>
+        <header>
+            <img src="{{ asset('web/icons/Icon-512.png') }}" alt="Logo de Faristol">
+            <h1>{{ $translations['title'] }}</h1>
+        </header>
 
         <!-- Sección de partituras -->
         <section>

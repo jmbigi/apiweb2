@@ -17,27 +17,38 @@ class GenerateSitemap extends Command
     {
         // Idiomas soportados
         $supportedLangs = LocationService::VALID_LANGUAGES;
-        
+
         $sitemap = Sitemap::create();
 
-        $url = Url::create('/')->setPriority(1.0);
+        $url = Url::create(url('/'))->setPriority(1.0);
         $sitemap->add($url);
         $this->info($url->url);
 
         // Agregar URLs con idiomas
         foreach ($supportedLangs as $lang) {
-            $url = Url::create("/{$lang}")->setPriority(0.9);
+            $url = Url::create(url("/{$lang}"))->setPriority(0.9);
             $sitemap->add($url);
-            $this->info($url->url);    
+            $this->info($url->url);
         }
+
+        $url = Url::create(url("/sitemap"))->setPriority(0.9);
+        $sitemap->add($url);
+        $this->info($url->url);
 
         // Agregar URLs con idiomas
         foreach ($supportedLangs as $lang) {
-            $url = Url::create("/lang/{$lang}")->setPriority(0.9);
+            $url = Url::create(url("/lang/{$lang}"))->setPriority(0.9);
             $sitemap->add($url);
-            $this->info($url->url);    
+            $this->info($url->url);
         }
-        
+
+        // Agregar Sitemaps con idiomas
+        foreach ($supportedLangs as $lang) {
+            $url = Url::create(url("/sitemap/{$lang}"))->setPriority(0.9);
+            $sitemap->add($url);
+            $this->info($url->url);
+        }
+
         // Obtener todas las partituras y cargar relaciones de estilos e instrumentos
         $musicScores = MusicScore::with(['style_musics', 'instruments'])->cursor();
 
