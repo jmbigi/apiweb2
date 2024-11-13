@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Mostrar el estado actual
 echo "Actualizando servidor en $(date)"
@@ -17,10 +18,10 @@ npm install --omit=optional || { echo "Error en npm install"; exit 1; }
 
 # Opcional: limpiar y cachear configuración
 echo "Limpiando caché de configuración..."
+php artisan view:clear
 php artisan cache:clear
 php artisan route:clear
 php artisan config:clear
-
-php artisan config:cache
+php artisan optimize:clear
 
 echo "Actualización completada exitosamente."
