@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MusicScoreController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SitemapController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -26,3 +27,8 @@ Route::get('/{lang}/styles/{stylename}/{scorename}', [MusicScoreController::clas
 
 Route::get('/{lang}/instruments/{instrumentname}/{scorename}', [MusicScoreController::class, 'showByLangAndInstrumentAndScoreName'])
     ->name('la-score-viewbyinstrumentandscorename')->where('lang', '[a-z]{2}');;
+
+
+Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
+
+Route::get('/sitemap/{lang}', [SitemapController::class, 'index'])->where('lang', '[a-z]{2}');
