@@ -3,6 +3,7 @@
 use App\Http\Controllers\MusicScoreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\MockUpController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -32,3 +33,7 @@ Route::get('/{lang}/instruments/{instrumentname}/{scorename}', [MusicScoreContro
 Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/sitemap/{lang}', [SitemapController::class, 'index'])->where('lang', '[a-z]{2}');
+
+
+Route::get('/pdf/{locale}/{name}', [MockUpController::class, 'generatePdf']);
+Route::get('/image/{locale}/{name}', [MockUpController::class, 'generateImage']);

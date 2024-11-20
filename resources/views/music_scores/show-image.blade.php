@@ -84,93 +84,130 @@
     <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />
 
     <title>{{ $txt_title }} - {{ $txt_score_name }}</title>
-    <link rel="manifest" href="{{ asset('web/manifest.json') }}">
 
-    <script>
-        const serviceWorkerVersion = '"3225895342"';
-    </script>
-    <script src="{{ asset('web/flutter.js') }}?v={{ date('YmdH') }}" defer></script>
+    <link rel="stylesheet" href="styles.css">
 
     <style>
-        html {
+        /* Estilos generales */
+        html,
+        body {
+            font-family: 'Arial', sans-serif;
             background-color: #0C1934;
-            color: antiquewhite;
+            color: #f1f1f1;
+            margin: 0;
+            padding: 0;
         }
 
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Logo */
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        /* Títulos principales */
         h1 {
-            /*text-align: center;*/
+            font-size: 3rem;
+            margin: 0;
+            color: #f9f9f9;
         }
 
-        a {
-            color: antiquewhite
+        h2 {
+            font-size: 2rem;
+            color: #b8d8d8;
+        }
+
+        /* Sección de Descripción */
+        .description h3 {
+            font-size: 1.8rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Lista de estilos e instrumentos */
+        section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        section ul li {
+            background-color: #2c3e50;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            text-align: left;
+        }
+
+        /* Estilos de los encabezados de lista */
+        section h3 {
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin-top: 30px;
+        }
+
+        /* Estilo para la cabecera */
+        header {
+            margin-bottom: 30px;
+        }
+
+        /* Diseño responsivo */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .description p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <style>
-        /* Estilos para el splash screen */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('{{ asset('web/faristol_splash.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 3s ease 0s;
-        }
+    <div class="container">
 
-        #title {
-            transition: margin-top 2s ease 0s;
-        }
+        <header>
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('web/icons/Icon-512.png'))) }}"
+                alt="Logo de Faristol" class="logo">
+            <h1 id="title">Faristol</h1>
+            <!-- Título -->
+            <h2>{{ $txt_score_name }}</h2>
+        </header>
 
-        #flutter_target {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        #pagecontent {
-            transition: margin-top 2s ease 0s;
-        }
-    </style>
-    <div id="flutter_target"></div>
-    <div id="splash-screen"></div>
-    <script>
-        window.addEventListener('load', function(ev) {
-            // Oculta el splash screen cuando la pagina ha cargado
-            const splashScreen = document.getElementById('splash-screen');
-            const pagecontent = document.getElementById('pagecontent');
-            // title.style.opacity = 1;
-            setTimeout(() => {
-                splashScreen.style.opacity = 0;
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    pagecontent.style.marginTop = '100vh';
-                }, 2500);
-            }, 1000);
-        });
-    </script>
-
-    <div id="pagecontent">
-        <!-- Título -->
-        <h1 id="title">Faristol</h1>
-        <h2><a href="{{ route('score-viewbyname', ['name' => $musicScore->name]) }}">{{ $txt_score_name }}</a></h2>
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/blank-music-sheet.png'))) }}"
+            alt="Partitura" class="partitura">
 
         <!-- Descripcion de la partitura -->
-        <section>
+        <section class="description">
             <h3>{{ $txt_Descripcion_partitura }}</h3>
             <p>{{ $txt_score_description }}</p>
         </section>
 
         <!-- Lista de estilos -->
-        <section>
+        <section class="styles">
             <h3>{{ $txt_Estilos_Musicales }}</h3>
             <ul>
                 @forelse($musicScore->style_musics as $style)
@@ -182,7 +219,7 @@
         </section>
 
         <!-- Lista de instrumentos -->
-        <section>
+        <section class="instruments">
             <h3>{{ $txt_Instrumentos }}</h3>
             <ul>
                 @forelse($musicScore->instruments as $instrument)
@@ -192,33 +229,8 @@
                 @endforelse
             </ul>
         </section>
+
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.worker.min.js";
-        pdfRenderOptions = {
-            cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/cmaps/',
-            cMapPacked: true,
-        }
-    </script>
-    <script>
-        window.addEventListener('load', function(ev) {
-            let target = document.querySelector("#flutter_target");
-            _flutter.loader.loadEntrypoint({
-                serviceWorker: {
-                    serviceWorkerVersion: serviceWorkerVersion,
-                    serviceWorkerPath: "{{ asset('web/flutter_service_worker.js') }}?v={{ date('YmdH') }}",
-                },
-                onEntrypointLoaded: function(engineInitializer) {
-                    engineInitializer.initializeEngine({
-                        hostElement: target,
-                    }).then(function(appRunner) {
-                        appRunner.runApp();
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
