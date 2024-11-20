@@ -29,6 +29,8 @@
     $txt_No_hay_instrumentos_para_partitura = $etr->translate(
         'No hay instrumentos musicales disponibles para esta partitura.',
     );
+    $txt_contenido = $etr->translate('Contenido');
+    $txt_ver_archivo_pdf = $etr->translate('Ver archivo PDF');
 
     $ptr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
     $ptr->setSource('en'); // Idioma fuente (opcional)
@@ -42,7 +44,7 @@
     $utr->setTarget($locale); // Idioma destino
 
     $txt_score_name = $utr->translate(Str::title($musicScore->name));
-    $txt_score_description = $utr->translate($musicScore->description ?? '');
+    $txt_score_description = $utr->translate(ucfirst($musicScore->description ?? ''));
 
 @endphp
 
@@ -139,6 +141,11 @@
         #pagecontent {
             transition: margin-top 2s ease 0s;
         }
+
+        .imagen {
+            height: 250px;
+            display: block;
+        }
     </style>
     <div id="flutter_target"></div>
     <div id="splash-screen"></div>
@@ -192,6 +199,19 @@
                 @endforelse
             </ul>
         </section>
+
+        <section>
+            <h3>{{ $txt_contenido }}</h3>
+            <ul>
+                <a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $musicScore->name]) }}">
+                    <img class="imagen"
+                        src="{{ route('showImageByLangAndName', ['locale' => $locale, 'name' => $musicScore->name]) }}" />
+                </a>
+                <a
+                        href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $musicScore->name]) }}">{{ $txt_ver_archivo_pdf }}</a>
+            </ul>
+        </section>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js" type="text/javascript"></script>
     <script type="text/javascript">

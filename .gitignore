@@ -21,3 +21,4 @@ yarn-error.log
 run-dev.sh
 artisan-routes.sh
 public/sitemap.xml
+public/cache/

@@ -2,8 +2,6 @@
     use Illuminate\Support\Str;
     use Stichoza\GoogleTranslate\GoogleTranslate;
 
-    $locale = App::getLocale();
-
     $lista_instrumentos = $musicScore->instruments->isNotEmpty() ? $musicScore->instruments->first()->name : '';
     $lista_estilos_musicales = $musicScore->style_musics->isNotEmpty() ? $musicScore->style_musics->first()->name : '';
 
@@ -42,7 +40,7 @@
     $utr->setTarget($locale); // Idioma destino
 
     $txt_score_name = $utr->translate(Str::title($musicScore->name));
-    $txt_score_description = $utr->translate($musicScore->description ?? '');
+    $txt_score_description = $utr->translate(ucfirst($musicScore->description ?? ''));
 
 @endphp
 
@@ -51,6 +49,7 @@
 
 <head>
     <base href="{{ asset('web') }}/">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,151 +84,113 @@
 
     <title>{{ $txt_title }} - {{ $txt_score_name }}</title>
 
-    <link rel="stylesheet" href="styles.css">
-
     <style>
         /* Estilos generales */
         html,
         body {
-            font-family: 'Arial', sans-serif;
             background-color: #0C1934;
             color: #f1f1f1;
             margin: 0;
             padding: 0;
+            width: 800px;
+            margin: 0 auto;
         }
 
         /* Contenedor principal */
         .container {
-            max-width: 1200px;
+            width: 660px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0;
             text-align: center;
         }
 
         /* Logo */
         .logo {
-            width: 150px;
-            margin-bottom: 20px;
+            width: 100px;
+            margin-top: 20px;
         }
 
-        /* Títulos principales */
-        h1 {
-            font-size: 3rem;
+        .webaddress {
+            font-size: 1.5rem;
             margin: 0;
             color: #f9f9f9;
-        }
-
-        h2 {
-            font-size: 2rem;
-            color: #b8d8d8;
-        }
-
-        /* Sección de Descripción */
-        .description h3 {
-            font-size: 1.8rem;
-            color: #FFD700;
-            margin-bottom: 10px;
-        }
-
-        .description p {
-            font-size: 1rem;
-            line-height: 1.5;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Lista de estilos e instrumentos */
-        section ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        section ul li {
-            background-color: #2c3e50;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            text-align: left;
-        }
-
-        /* Estilos de los encabezados de lista */
-        section h3 {
-            font-size: 1.5rem;
-            color: #FFD700;
-            margin-top: 30px;
+            margin-bottom: 15px;
         }
 
         /* Estilo para la cabecera */
-        header {
-            margin-bottom: 30px;
+        .encabezado {
+            margin-bottom: 10px;
         }
 
-        /* Diseño responsivo */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
+        .partitura {
+            font-size: 1rem;
+            color: black;
+            background-color: white;
+            padding: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
 
-            h1 {
-                font-size: 2rem;
-            }
+        .titulo {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
 
-            h2 {
-                font-size: 1.5rem;
-            }
+        .descripcion {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
 
-            .description p {
-                font-size: 0.9rem;
-            }
+        .instrumentos {
+            margin-bottom: 40px;
+        }
+
+        .estilos {
+            margin-top: 60px;
+            margin-bottom: 40px;
+        }
+
+        @font-face {
+            font-family: 'Firefly Sung';
+            font-style: normal;
+            font-weight: 400;
+            src: url(http://eclecticgeek.com/dompdf/fonts/cjk/fireflysung.ttf) format('truetype');
+        }
+
+        * {
+            font-family: Firefly Sung, DejaVu Sans, sans-serif;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-
-        <header>
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('web/icons/Icon-512.png'))) }}"
+        <div class="encabezado">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo-img.png'))) }}"
                 alt="Logo de Faristol" class="logo">
-            <h1 id="title">Faristol</h1>
-            <!-- Título -->
-            <h2>{{ $txt_score_name }}</h2>
-        </header>
-
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/blank-music-sheet.png'))) }}"
-            alt="Partitura" class="partitura">
-
-        <!-- Descripcion de la partitura -->
-        <section class="description">
-            <h3>{{ $txt_Descripcion_partitura }}</h3>
-            <p>{{ $txt_score_description }}</p>
-        </section>
-
-        <!-- Lista de estilos -->
-        <section class="styles">
-            <h3>{{ $txt_Estilos_Musicales }}</h3>
-            <ul>
-                @forelse($musicScore->style_musics as $style)
-                    <li>{{ $utr->translate($style->name) }}</li>
-                @empty
-                    <li>{{ $txt_No_hay_estilos_para_partitura }}</li>
-                @endforelse
-            </ul>
-        </section>
-
-        <!-- Lista de instrumentos -->
-        <section class="instruments">
-            <h3>{{ $txt_Instrumentos }}</h3>
-            <ul>
+            <div class="webaddress">web.faristol.net</div>
+        </div>
+        <div class="partitura">
+            <div class="titulo">{{ $txt_score_name }}</div>
+            <div class="descripcion">{{ $txt_score_description }}</div>
+            <div class="instrumentos">
                 @forelse($musicScore->instruments as $instrument)
-                    <li>{{ $utr->translate($instrument->name) }}</li>
+                    {{ strtolower($utr->translate(ucfirst($instrument->name))) }}
                 @empty
-                    <li>{{ $txt_No_hay_instrumentos_para_partitura }}</li>
+                    {{ $txt_No_hay_instrumentos_para_partitura }}
                 @endforelse
-            </ul>
-        </section>
-
+            </div>
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/blank-music-sheet.png'))) }}"
+                alt="Partitura" class="img-partitura">
+            <div class="estilos">
+                @forelse($musicScore->style_musics as $style)
+                    {{ strtolower($utr->translate(ucfirst($style->name))) }}
+                @empty
+                    {{ $txt_No_hay_estilos_para_partitura }}
+                @endforelse
+            </div>
+        </div>
     </div>
 </body>
 

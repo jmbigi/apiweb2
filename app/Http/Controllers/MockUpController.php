@@ -4,15 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\MusicScore;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cookie;
-use Barryvdh\DomPDF\Facade\Pdf; // Para generar PDFs
-use Spatie\Browsershot\Browsershot; // Para generar imágenes
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class MockUpController extends Controller
 {
+
+
+    public function showPage(Request $request, string $locale, string $name)
+    {
+
+        // Buscar el MusicScore por su nombre
+        $musicScore = MusicScore::with(['instruments', 'style_musics'])->where('name', $name)->first();
+
+        if (!$musicScore) {
+            return abort(404);
+        }
+
+        // Pasar el MusicScore a la vista
+        return view('music_scores.show-image', compact('locale', 'musicScore'));
+    }
+
+
+
     public function generatePdf(Request $request, string $locale, string $name)
     {
         // Buscar el MusicScore por su nombre
@@ -23,10 +36,10 @@ class MockUpController extends Controller
         }
 
         // Renderiza la vista y genera el PDF
-        $pdf = Pdf::loadView('music_scores.show-image', compact('locale', 'musicScore'));
+        $pdf = Pdf::view('music_scores.show-image', compact('locale', 'musicScore'));
 
         // Guarda el PDF en caché o descárgalo directamente
-        $filePath = public_path("cache/music_score_{$musicScore->id}.pdf");
+        $filePath = public_path("cache/music_score_{$locale}_{$musicScore->id}.pdf");
         if (!file_exists(public_path('cache'))) {
             mkdir(public_path('cache'), 0755, true);
         }
@@ -38,7 +51,6 @@ class MockUpController extends Controller
 
     public function generateImage(Request $request, string $locale, string $name)
     {
-
         // Buscar el MusicScore por su nombre
         $musicScore = MusicScore::with(['instruments', 'style_musics'])->where('name', $name)->first();
 
@@ -46,11 +58,34 @@ class MockUpController extends Controller
             return abort(404);
         }
 
-        // Generar la imagen desde la vista
-        $html = view('music_scores.show-image', compact('locale', 'musicScore'))->render();
+        $pdfFilePath = public_path("cache/music_score_{$locale}_{$musicScore->id}.pdf");
+        $jpgFilePath = public_path("cache/music_score_{$locale}_{$musicScore->id}.jpg");
 
-        $filePath = public_path("cache/music_score_{$musicScore->id}.png");
+        if (!file_exists($pdfFilePath)) {
+            // Renderiza la vista y genera el PDF
+            $pdf = Pdf::view('music_scores.show-image', compact('locale', 'musicScore'));
 
-        return response()->download($filePath);
+            // Guarda el PDF en caché
+            if (!file_exists(public_path('cache'))) {
+                mkdir(public_path('cache'), 0755, true);
+            }
+            $pdf->save($pdfFilePath);
+        }
+
+        if (!file_exists($jpgFilePath)) {
+            // Convertir PDF a jpg
+            $pdf = new \Spatie\PdfToImage\Pdf($pdfFilePath);
+            $pdf->save($jpgFilePath);
+        }
+
+        // Obtener el contenido de la imagen jpg
+        $imageData = file_get_contents($jpgFilePath);
+
+        // Retornar el contenido de la imagen con el encabezado adecuado
+        return response($imageData, 200)
+            ->header('Content-Type', 'image/jpeg')
+            ->header('Cache-Control', 'public')
+            ->header('Expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT'); // Expira en 1 minuto            
+        //->header('Cache-Control', 'max-age=60, public'); // Cache de 1 minuto (60 segundos);
     }
 }

@@ -35,5 +35,6 @@ Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/sitemap/{lang}', [SitemapController::class, 'index'])->where('lang', '[a-z]{2}');
 
 
-Route::get('/pdf/{locale}/{name}', [MockUpController::class, 'generatePdf']);
-Route::get('/image/{locale}/{name}', [MockUpController::class, 'generateImage']);
+Route::get('/pdf/{locale}/{name}', [MockUpController::class, 'generatePdf'])->name('getPdfByLangAndName');
+Route::get('/image/{locale}/{name}', [MockUpController::class, 'generateImage'])->name('showImageByLangAndName');
+Route::get('/page/{locale}/{name}', [MockUpController::class, 'showPage'])->name('showPageByLangAndName');
