@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MusicScore;
 use Illuminate\Http\Request;
 use Spatie\LaravelPdf\Facades\Pdf;
+use Spatie\Browsershot\Browsershot;
 
 class MockUpController extends Controller
 {
@@ -28,6 +29,11 @@ class MockUpController extends Controller
 
     public function generatePdf(Request $request, string $locale, string $name)
     {
+
+        $chrome_path = "/usr/bin/google-chrome";
+        // Funciona: Browsershot::url('https://example.com')->setChromePath($chrome_path)->noSandBox()->save('example.pdf');
+        // Recuerda: chown -R www-data:www-data /var/www/web.faristol.net/public/cache
+
         // Buscar el MusicScore por su nombre
         $musicScore = MusicScore::with(['instruments', 'style_musics'])->where('name', $name)->first();
 
@@ -44,18 +50,23 @@ class MockUpController extends Controller
             mkdir(public_path('cache'), 0755, true);
         }
         //die($filePath);
-        $pdf->save($filePath);
+        $pdf->withBrowsershot(function (Browsershot $browsershot) use ($chrome_path) {
+            $browsershot->setChromePath($chrome_path);
+        })->save($filePath);
 
         return response()->download($filePath);
     }
 
-    public function generateImage(Request $request, string $locale, string $name)
-    {
+    public static function genImageLocaleAndName(string $locale, string $name) {
+        $chrome_path = "/usr/bin/google-chrome";
+        // Funciona: Browsershot::url('https://example.com')->setChromePath($chrome_path)->noSandBox()->save('example.pdf');
+        // Recuerda: chown -R www-data:www-data /var/www/web.faristol.net/public/cache
+
         // Buscar el MusicScore por su nombre
         $musicScore = MusicScore::with(['instruments', 'style_musics'])->where('name', $name)->first();
 
         if (!$musicScore) {
-            return abort(404);
+            return '';
         }
 
         $pdfFilePath = public_path("cache/music_score_{$locale}_{$musicScore->id}.pdf");
@@ -69,14 +80,28 @@ class MockUpController extends Controller
             if (!file_exists(public_path('cache'))) {
                 mkdir(public_path('cache'), 0755, true);
             }
-            $pdf->save($pdfFilePath);
+            $pdf->withBrowsershot(function (Browsershot $browsershot) use ($chrome_path) {
+                $browsershot->setChromePath($chrome_path);
+            })->save($pdfFilePath);
         }
 
         if (!file_exists($jpgFilePath)) {
             // Convertir PDF a jpg
             $pdf = new \Spatie\PdfToImage\Pdf($pdfFilePath);
-            $pdf->save($jpgFilePath);
+            $pdf->saveImage($jpgFilePath);
         }
+
+        return $jpgFilePath;
+
+    }
+
+    public function generateImage(Request $request, string $locale, string $name)
+    {
+        $jpgFilePath = MockUpController::genImageLocaleAndName($locale, $name);
+
+        if ($jpgFilePath == '') {
+            return abort(404);
+        } 
 
         // Obtener el contenido de la imagen jpg
         $imageData = file_get_contents($jpgFilePath);

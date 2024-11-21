@@ -1,6 +1,9 @@
 @php
     use Illuminate\Support\Str;
     use Stichoza\GoogleTranslate\GoogleTranslate;
+    use App\Http\Controllers\MockUpController;
+
+    $jpgFilePath = MockUpController::genImageLocaleAndName($locale, $musicScore->name);
 
     $locale = App::getLocale();
 
