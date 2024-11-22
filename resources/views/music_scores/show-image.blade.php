@@ -49,6 +49,7 @@
 
 <head>
     <base href="{{ asset('web') }}/">
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -82,16 +83,13 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Serif&family=Noto+Sans+Bengali&family=Noto+Sans:Ethiopic&display=swap"
-        rel="stylesheet">
-
     <title>{{ $txt_title }} - {{ $txt_score_name }}</title>
 
     <style>
         /* Estilos generales */
         html,
         body {
+            font-family: 'Noto Sans';
             background-color: #0C1934;
             color: #f1f1f1;
             margin: 0;
@@ -156,7 +154,7 @@
         }
 
         * {
-            font-family: 'Noto Sans', 'Noto Serif', 'Noto Sans Bengali', 'Noto Sans Ethiopic', sans-serif;
+            font-family: 'Noto Sans';
         }
     </style>
 </head>

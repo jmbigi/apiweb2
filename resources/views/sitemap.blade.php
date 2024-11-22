@@ -24,6 +24,7 @@
         'todas_partituras_musicales' => 'Todas las Partituras Musicales',
         'enlaces_parturas_idioma' => 'Enlaces a las Partituras Musicales en tu Idioma',
         'faristol_partituras_musicales' => 'Faristol Partituras Musicales',
+        'lista_parturas_musicales_pdf' => 'Lista de Partituras Musicales en Formato PDF',
     ];
 
     // Traducir los metadatos
@@ -65,7 +66,7 @@
     <meta property="og:type" content="website">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />    
+    <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />
 
     <title>{{ $translations['title'] }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -157,6 +158,11 @@
         a {
             color: antiquewhite;
         }
+
+        .imagen {
+            height: 250px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -172,8 +178,8 @@
             <h2>{{ $translations['todas_partituras_musicales'] }}</h2>
             <ul>
                 @foreach ($translatedScores as $score)
-                    <li><a
-                            href="{{ route('score-viewbyname', ['name' => $score->name]) }}" target="_blank">{{ ucfirst($score->translated_name) }}</a>
+                    <li><a href="{{ route('score-viewbyname', ['name' => $score->name]) }}"
+                            target="_blank">{{ ucfirst($score->translated_name) }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -184,8 +190,27 @@
             <h2>{{ $translations['enlaces_parturas_idioma'] }}</h2>
             <ul>
                 @foreach ($translatedScores as $score)
-                    <li><a href="{{ route('la-score-viewbyname', ['lang' => $locale, 'name' => $score->name]) }}" target="_blank">{{ ucfirst($score->translated_name) }}
-                            ({{ ucfirst($locale) }})</a></li>
+                    <li><a href="{{ route('la-score-viewbyname', ['lang' => $locale, 'name' => $score->name]) }}"
+                            target="_blank">{{ ucfirst($score->translated_name) }}
+                            ({{ ucfirst($locale) }})
+                        </a></li>
+                @endforeach
+            </ul>
+        </section>
+
+        <!-- Enlaces por idioma -->
+        <section>
+            <h2>{{ $translations['lista_parturas_musicales_pdf'] }}</h2>
+            <ul>
+                @foreach ($translatedScores as $score)
+                    <li><a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $score->name]) }}"
+                            target="_blank">{{ ucfirst($score->translated_name) }}
+                            ({{ ucfirst($locale) }})
+                        </a></li>
+                    <li><a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $score->name]) }}"
+                            target="_blank"><img class="imagen"
+                                src="{{ route('showImageByLangAndName', ['locale' => $locale, 'name' => $score->name]) }}" /></a>
+                    </li>
                 @endforeach
             </ul>
         </section>

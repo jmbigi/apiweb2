@@ -51,13 +51,15 @@ class MockUpController extends Controller
         }
         //die($filePath);
         $pdf->withBrowsershot(function (Browsershot $browsershot) use ($chrome_path) {
-            $browsershot->setChromePath($chrome_path);
+            $browsershot->setChromePath($chrome_path)->noSandbox()
+                ->enableJavaScript();;
         })->save($filePath);
 
         return response()->download($filePath);
     }
 
-    public static function genImageLocaleAndName(string $locale, string $name) {
+    public static function genImageLocaleAndName(string $locale, string $name)
+    {
         $chrome_path = "/usr/bin/google-chrome";
         // Funciona: Browsershot::url('https://example.com')->setChromePath($chrome_path)->noSandBox()->save('example.pdf');
         // Recuerda: chown -R www-data:www-data /var/www/web.faristol.net/public/cache
@@ -81,7 +83,8 @@ class MockUpController extends Controller
                 mkdir(public_path('cache'), 0755, true);
             }
             $pdf->withBrowsershot(function (Browsershot $browsershot) use ($chrome_path) {
-                $browsershot->setChromePath($chrome_path);
+                $browsershot->setChromePath($chrome_path)->noSandbox()
+                    ->enableJavaScript();;
             })->save($pdfFilePath);
         }
 
@@ -92,7 +95,6 @@ class MockUpController extends Controller
         }
 
         return $jpgFilePath;
-
     }
 
     public function generateImage(Request $request, string $locale, string $name)
@@ -101,7 +103,7 @@ class MockUpController extends Controller
 
         if ($jpgFilePath == '') {
             return abort(404);
-        } 
+        }
 
         // Obtener el contenido de la imagen jpg
         $imageData = file_get_contents($jpgFilePath);
