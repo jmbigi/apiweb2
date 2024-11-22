@@ -82,6 +82,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('web/favicon.png') }}" />
 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Serif&family=Noto+Sans+Bengali&family=Noto+Sans:Ethiopic&display=swap"
+        rel="stylesheet">
+
     <title>{{ $txt_title }} - {{ $txt_score_name }}</title>
 
     <style>
@@ -151,15 +155,8 @@
             margin-bottom: 40px;
         }
 
-        @font-face {
-            font-family: 'Firefly Sung';
-            font-style: normal;
-            font-weight: 400;
-            src: url(http://eclecticgeek.com/dompdf/fonts/cjk/fireflysung.ttf) format('truetype');
-        }
-
         * {
-            font-family: Firefly Sung, DejaVu Sans, sans-serif;
+            font-family: 'Noto Sans', 'Noto Serif', 'Noto Sans Bengali', 'Noto Sans Ethiopic', sans-serif;
         }
     </style>
 </head>
