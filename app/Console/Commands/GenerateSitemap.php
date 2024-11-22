@@ -54,7 +54,7 @@ class GenerateSitemap extends Command
 
         foreach ($musicScores as $musicScore) {
             // Generar URL de la partitura
-            $url = Url::create(route('score-viewbyname', ['name' => $musicScore->name]))
+            $url = Url::create(route('score-viewbyname', ['name' => rawurlencode($musicScore->name)]))
                 ->setPriority(0.8)
                 ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY);
             $sitemap->add($url);
@@ -62,7 +62,7 @@ class GenerateSitemap extends Command
 
             // Iterar sobre los estilos de cada partitura
             foreach ($musicScore->style_musics as $style) {
-                $styleUrl = Url::create(route('score-viewbystyleandscorename', ['stylename' => $style->name, 'scorename' => $musicScore->name]))
+                $styleUrl = Url::create(route('score-viewbystyleandscorename', ['stylename' => $style->name, 'scorename' => rawurlencode($musicScore->name)]))
                     ->setPriority(0.8)
                     ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY);
                 $sitemap->add($styleUrl);
@@ -71,7 +71,7 @@ class GenerateSitemap extends Command
 
             // Iterar sobre los instrumentos de cada partitura
             foreach ($musicScore->instruments as $instrument) {
-                $instrumentUrl = Url::create(route('score-viewbyinstrumentandscorename', ['instrumentname' => $instrument->name, 'scorename' => $musicScore->name]))
+                $instrumentUrl = Url::create(route('score-viewbyinstrumentandscorename', ['instrumentname' => $instrument->name, 'scorename' => rawurlencode($musicScore->name)]))
                     ->setPriority(0.6)
                     ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY);
                 $sitemap->add($instrumentUrl);

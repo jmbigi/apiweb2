@@ -112,7 +112,7 @@ class MockUpController extends Controller
         return response($imageData, 200)
             ->header('Content-Type', 'image/jpeg')
             ->header('Cache-Control', 'public')
-            ->header('Expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT'); // Expira en 1 minuto            
-        //->header('Cache-Control', 'max-age=60, public'); // Cache de 1 minuto (60 segundos);
+            ->header('Expires', gmdate('D, d M Y H:i:s', time() + 86400) . ' GMT'); // Expira en 1 dia            
+        //->header('Cache-Control', 'max-age=86400, public'); // Cache de 1 minuto (60 segundos);
     }
 }

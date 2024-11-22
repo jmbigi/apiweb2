@@ -171,7 +171,9 @@
     <div id="pagecontent">
         <!-- Título -->
         <h1 id="title">Faristol</h1>
-        <h2><a href="{{ route('score-viewbyname', ['name' => $musicScore->name]) }}">{{ $txt_score_name }}</a></h2>
+        <h2><a
+                href="{{ route('score-viewbyname', ['name' => rawurlencode($musicScore->name)]) }}">{{ $txt_score_name }}</a>
+        </h2>
 
         <!-- Descripcion de la partitura -->
         <section>
@@ -206,12 +208,13 @@
         <section>
             <h3>{{ $txt_contenido }}</h3>
             <ul>
-                <a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $musicScore->name]) }}">
+                <a
+                    href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => rawurlencode($musicScore->name)]) }}">
                     <img class="imagen"
-                        src="{{ route('showImageByLangAndName', ['locale' => $locale, 'name' => $musicScore->name]) }}" />
+                        src="{{ route('showImageByLangAndName', ['locale' => $locale, 'name' => rawurlencode($musicScore->name)]) }}" />
                 </a>
                 <a
-                        href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $musicScore->name]) }}">{{ $txt_ver_archivo_pdf }}</a>
+                    href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => rawurlencode($musicScore->name)]) }}">{{ $txt_ver_archivo_pdf }}</a>
             </ul>
         </section>
 

@@ -178,7 +178,7 @@
             <h2>{{ $translations['todas_partituras_musicales'] }}</h2>
             <ul>
                 @foreach ($translatedScores as $score)
-                    <li><a href="{{ route('score-viewbyname', ['name' => $score->name]) }}"
+                    <li><a href="{{ route('score-viewbyname', ['name' => rawurlencode($score->name)]) }}"
                             target="_blank">{{ ucfirst($score->translated_name) }}</a>
                     </li>
                 @endforeach
@@ -190,7 +190,7 @@
             <h2>{{ $translations['enlaces_parturas_idioma'] }}</h2>
             <ul>
                 @foreach ($translatedScores as $score)
-                    <li><a href="{{ route('la-score-viewbyname', ['lang' => $locale, 'name' => $score->name]) }}"
+                    <li><a href="{{ route('la-score-viewbyname', ['lang' => $locale, 'name' => rawurlencode($score->name)]) }}"
                             target="_blank">{{ ucfirst($score->translated_name) }}
                             ({{ ucfirst($locale) }})
                         </a></li>
@@ -203,13 +203,13 @@
             <h2>{{ $translations['lista_parturas_musicales_pdf'] }}</h2>
             <ul>
                 @foreach ($translatedScores as $score)
-                    <li><a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $score->name]) }}"
+                    <li><a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => rawurlencode($score->name)]) }}"
                             target="_blank">{{ ucfirst($score->translated_name) }}
                             ({{ ucfirst($locale) }})
                         </a></li>
-                    <li><a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => $score->name]) }}"
+                    <li><a href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => rawurlencode($score->name)]) }}"
                             target="_blank"><img class="imagen"
-                                src="{{ route('showImageByLangAndName', ['locale' => $locale, 'name' => $score->name]) }}" /></a>
+                                src="{{ route('showImageByLangAndName', ['locale' => $locale, 'name' => rawurlencode($score->name)]) }}" /></a>
                     </li>
                 @endforeach
             </ul>
