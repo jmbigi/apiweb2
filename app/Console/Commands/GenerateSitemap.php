@@ -79,6 +79,26 @@ class GenerateSitemap extends Command
             }
         }
 
+        // Generar enlaces para /pdf, /image, /page con múltiples locales
+        foreach ($supportedLangs as $locale) { // Lista de idiomas disponibles
+            $pdfUrl = Url::create(route('getPdfByLangAndName', ['locale' => $locale, 'name' => rawurlencode($musicScore->name)]))
+                ->setPriority(0.7)
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY);
+            $sitemap->add($pdfUrl);
+            $this->info($pdfUrl->url);
+
+            $imageUrl = Url::create(route('showImageByLangAndName', ['locale' => $locale, 'name' => rawurlencode($musicScore->name)]))
+                ->setPriority(0.7)
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY);
+            $sitemap->add($imageUrl);
+            $this->info($imageUrl->url);
+
+            $pageUrl = Url::create(route('showPageByLangAndName', ['locale' => $locale, 'name' => rawurlencode($musicScore->name)]))
+                ->setPriority(0.7)
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY);
+            $sitemap->add($pageUrl);
+            $this->info($pageUrl->url);
+        }
         // Guardar el sitemap en la carpeta public
         $sitemap->writeToFile(public_path('sitemap.xml'));
     }
