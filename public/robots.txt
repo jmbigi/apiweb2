@@ -1,4 +1,5 @@
 User-agent: *
 Disallow:
 
-Sitemap: httpa://web.faristol.net/sitemap.xml
+Sitemap: https://web.faristol.net/sitemap.xml
+Sitemap: https://web.faristol.net/sitemap-lang.xml
