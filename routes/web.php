@@ -32,7 +32,7 @@ Route::get('/{lang}/instruments/{instrumentname}/{scorename}', [MusicScoreContro
 
 Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
 
-Route::get('/sitemap/{lang}', [SitemapController::class, 'index'])->where('lang', '[a-z]{2}');
+Route::get('/sitemap/{lang}', [SitemapController::class, 'index'])->where('lang', '[a-z]{2}')->name('sitemapLang');;
 
 
 Route::get('/pdf/{locale}/{name}', [MockUpController::class, 'generatePdf'])->name('getPdfByLangAndName');

@@ -35,6 +35,9 @@
     $txt_contenido = $etr->translate('Contenido');
     $txt_ver_archivo_pdf = $etr->translate('Ver archivo PDF');
 
+    $txt_enlaces = $etr->translate('Enlaces');
+    $txt_ver_mapa_sitio = $etr->translate('Ver el mapa del sitio');
+
     $ptr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
     $ptr->setSource('en'); // Idioma fuente (opcional)
     $ptr->setTarget($locale); // Idioma destino
@@ -216,6 +219,14 @@
                 <a
                     href="{{ route('getPdfByLangAndName', ['locale' => $locale, 'name' => rawurlencode($musicScore->name)]) }}">{{ $txt_ver_archivo_pdf }}</a>
             </ul>
+        </section>
+
+        <section>
+            <h3>{{ $txt_enlaces }}</h3>
+            <a href="{{ route('sitemapLang', ['lang' => $locale]) }}"
+                style="color: antiquewhite; text-decoration: underline;">
+                {{ $txt_ver_mapa_sitio }}
+            </a>
         </section>
 
     </div>
