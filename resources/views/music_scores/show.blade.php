@@ -165,7 +165,7 @@
                 splashScreen.style.opacity = 0;
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                    pagecontent.style.marginTop = '100vh';
+                    pagecontent.style.marginTop = '120vh';
                 }, 2500);
             }, 1000);
         });
