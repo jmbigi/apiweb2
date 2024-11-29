@@ -21,8 +21,9 @@ class MockUpController extends Controller
             return abort(404);
         }
 
+        $redirect = true;
         // Pasar el MusicScore a la vista
-        return view('music_scores.show-image', compact('locale', 'musicScore'));
+        return view('music_scores.show-image', compact('locale', 'musicScore', 'redirect'));
     }
 
 

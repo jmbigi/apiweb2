@@ -51,6 +51,9 @@
     <base href="{{ asset('web') }}/">
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @if (isset($redirect) && $redirect == true)
+        <meta http-equiv="refresh" content="3;url=https://web.faristol.net">
+    @endif
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,7 +95,6 @@
             font-family: 'Noto Sans';
             background-color: #0C1934;
             color: #f1f1f1;
-            margin: 0;
             padding: 0;
             width: 800px;
             margin: 0 auto;
@@ -156,6 +158,38 @@
         * {
             font-family: 'Noto Sans';
         }
+
+        /* Superposición */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semitransparente */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            /* Asegúrate de que esté por encima de otros elementos */
+        }
+
+        /* Círculo de carga */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 6px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -187,6 +221,33 @@
             </div>
         </div>
     </div>
+
+    @if (isset($redirect) && $redirect == true)
+        <div class="overlay" id="loadingOverlay" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+        <script>
+            // Mostrar el círculo de carga
+            function showLoading() {
+                document.getElementById('loadingOverlay').style.display = 'flex';
+            }
+
+            // Ocultar el círculo de carga
+            function hideLoading() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+            setTimeout(function() {
+                showLoading();
+                setTimeout(function() {
+                    window.location.href = "https://web.faristol.net"; // Reemplaza con la URL de destino
+                    setTimeout(function() {
+                        hideLoading();
+                    }, 2000);
+                }, 2000); // 3000 milisegundos = 3 segundos
+            }, 1000);
+        </script>
+    @endif
+
 </body>
 
 </html>
