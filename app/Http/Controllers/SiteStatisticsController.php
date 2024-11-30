@@ -38,6 +38,13 @@ class SiteStatisticsController extends Controller
             $query->whereBetween('created_at', [$startDate, $endDateEOD]);
         }
 
+        $excludedPages = [
+            //            'https://web.faristol.net/',
+        ];
+
+        // Excluir páginas
+        $query->whereNotIn('page', $excludedPages);
+
         // Excluir páginas que terminen con 'dashboard'
         $query->where('page', 'not like', '%dashboard');
 
@@ -50,9 +57,17 @@ class SiteStatisticsController extends Controller
         // Ordena por vistas y obtiene los resultados
         $statistics = $query->orderBy('views', 'desc')->limit(10)->get();
 
-        // Limpiar las URLs
+        // Limpiar las URLs y quitar el dominio
         $statistics = $statistics->map(function ($stat) {
-            $stat->page = urldecode($stat->page); // Limpia la URL
+            // Decodificar la URL primero
+            $stat->page = urldecode($stat->page);
+
+            // Eliminar el dominio de la URL
+            $parsedUrl = parse_url($stat->page);
+            if (isset($parsedUrl['path'])) {
+                $stat->page = $parsedUrl['path']; // Solo toma el path
+            }
+
             return $stat;
         });
 
