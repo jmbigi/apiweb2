@@ -210,7 +210,7 @@
                     {{ $txt_No_hay_instrumentos_para_partitura }}
                 @endforelse
             </div>
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/blank-music-sheet.png'))) }}"
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/pdf-music-score-sheet.png'))) }}"
                 alt="Partitura" class="img-partitura">
             <div class="estilos">
                 @forelse($musicScore->style_musics as $style)
