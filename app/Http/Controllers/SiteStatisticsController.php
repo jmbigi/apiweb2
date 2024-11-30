@@ -58,14 +58,14 @@ class SiteStatisticsController extends Controller
         $statistics = $query->orderBy('views', 'desc')->limit(10)->get();
 
         // Limpiar las URLs y quitar el dominio
-        $statistics = $statistics->map(function ($stat) {
+        $siteUrl = url('/');
+        $statistics = $statistics->map(function ($stat) use ($siteUrl) {
             // Decodificar la URL primero
             $stat->page = urldecode($stat->page);
 
-            // Eliminar el dominio de la URL
-            $parsedUrl = parse_url($stat->page);
-            if (isset($parsedUrl['path'])) {
-                $stat->page = $parsedUrl['path']; // Solo toma el path
+            // Verificar y quitar el prefijo del dominio
+            if (str_starts_with($stat->page, $siteUrl)) {
+                $stat->page = substr($stat->page, strlen($siteUrl));
             }
 
             return $stat;

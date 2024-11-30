@@ -44,7 +44,7 @@
                 <tbody>
                     @foreach ($statistics as $stat)
                         <tr>
-                            <td>{{ $stat->page }}</td>
+                            <td><a href="{{ str_replace('%2F', '/', rawurlencode($stat->page)) }}" target="_blank">{{ $stat->page }}</a></td>
                             <td>{{ $stat->views }}</td>
                         </tr>
                     @endforeach
