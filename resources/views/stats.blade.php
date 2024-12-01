@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container my-5">
-        <h1 class="mb-4">Estadísticas del Sitio</h1>
+        <h1 class="mb-4 text-center">📊 Estadísticas del Sitio</h1>
 
         <!-- Formulario de filtro por fecha -->
         <form method="GET" action="{{ route('stats') }}" class="mb-4">
@@ -30,11 +30,12 @@
             </div>
         </form>
 
-        <!-- Tabla de estadísticas -->
+        <!-- Estadísticas por página -->
+        <h2 class="mt-5">📄 Estadísticas por Página</h2>
         @if ($statistics->isEmpty())
             <p class="text-center text-muted">No hay datos disponibles para el rango de fechas seleccionado.</p>
         @else
-            <table class="table table-bordered">
+            <table class="table table-hover">
                 <thead class="table-light">
                     <tr>
                         <th>Página</th>
@@ -52,25 +53,85 @@
             </table>
         @endif
 
-        <!-- Gráfico de visitas -->
-        @if (!$statistics->isEmpty())
+        <!-- Estadísticas por fecha -->
+        <h2 class="mt-5">📅 Estadísticas por Fecha</h2>
+        @if ($statisticsByDate->isEmpty())
+            <p class="text-center text-muted">No hay datos disponibles para el rango de fechas seleccionado.</p>
+        @else
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Visitas Totales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($statisticsByDate as $dateStat)
+                        <tr>
+                            <td>{{ $dateStat->date }}</td>
+                            <td>{{ $dateStat->total_views }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+
+        <!-- Gráficos -->
+        @if (!$statistics->isEmpty() || !$statisticsByDate->isEmpty())
             <div class="mt-5">
-                <h2>Gráfico de Visitas</h2>
-                <canvas id="statsChart" width="400" height="200"></canvas>
+                <h2>📊 Gráficos de Visitas</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h4 class="text-center">Visitas por Página</h4>
+                        <canvas id="pageChart"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="text-center">Visitas por Fecha</h4>
+                        <canvas id="dateChart"></canvas>
+                    </div>
+                </div>
             </div>
+
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    const ctx = document.getElementById('statsChart').getContext('2d');
-                    const statsChart = new Chart(ctx, {
+                    // Gráfico de visitas por página
+                    const pageCtx = document.getElementById('pageChart').getContext('2d');
+                    new Chart(pageCtx, {
                         type: 'bar',
                         data: {
-                            labels: @json($statistics->pluck('page')), // Páginas
+                            labels: @json($statistics->pluck('page')),
                             datasets: [{
                                 label: 'Visitas',
-                                data: @json($statistics->pluck('views')), // Vistas
+                                data: @json($statistics->pluck('views')),
                                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
                                 borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // Gráfico de visitas por fecha
+                    const dateCtx = document.getElementById('dateChart').getContext('2d');
+                    new Chart(dateCtx, {
+                        type: 'line',
+                        data: {
+                            labels: @json($statisticsByDate->pluck('date')),
+                            datasets: [{
+                                label: 'Visitas Totales',
+                                data: @json($statisticsByDate->pluck('total_views')),
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1,
+                                tension: 0.3,
+                                fill: true
                             }]
                         },
                         options: {

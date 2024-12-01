@@ -54,7 +54,7 @@ class SiteStatisticsController extends Controller
         // Excluir páginas que terminen con 'login'
         $query->where('page', 'not like', '%/login');
 
-        // Ordena por vistas y obtiene los resultados
+        // Estadísticas por página
         $statistics = $query->orderBy('views', 'desc')->limit(10)->get();
 
         // Limpiar las URLs y quitar el dominio
@@ -71,6 +71,13 @@ class SiteStatisticsController extends Controller
             return $stat;
         });
 
-        return view('stats', compact('statistics', 'startDate', 'endDate'));
+        // Estadísticas por fecha
+        $statisticsByDate = SiteStatistic::selectRaw('DATE(created_at) as date, SUM(views) as total_views')
+            ->whereBetween('created_at', [$startDate, $endDateEOD])
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get();
+
+        return view('stats', compact('statistics', 'statisticsByDate', 'startDate', 'endDate'));
     }
 }
