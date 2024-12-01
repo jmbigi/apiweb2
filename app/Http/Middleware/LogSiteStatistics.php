@@ -3,7 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\SiteStatistic;
+use App\Models\SiteVisit;
+use Carbon\Carbon;
 
 class LogSiteStatistics
 {
@@ -19,9 +20,9 @@ class LogSiteStatistics
         $fullUrl = $siteUrl . ($page == '/' ? '' : '/') . $page;
 
         // Busca la estadística o crea una nueva
-        SiteStatistic::updateOrCreate(
+        SiteVisit::updateOrCreate(
             ['page' => $fullUrl],
-            ['views' => \DB::raw('views + 1')]
+            ['visited_at' => Carbon::now()]
         );
 
         return $next($request);

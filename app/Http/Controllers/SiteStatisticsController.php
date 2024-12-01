@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\SiteStatistic;
+use App\Models\SiteVisit;
 use Carbon\Carbon;
 
 class SiteStatisticsController extends Controller
@@ -31,11 +31,10 @@ class SiteStatisticsController extends Controller
         }
 
         // Consulta básica
-        $query = SiteStatistic::query();
-
+        $query = SiteVisit::selectRaw('page, COUNT(*) as views');;
         // Filtra por fechas si están presentes
         if ($startDate && $endDateEOD) {
-            $query->whereBetween('created_at', [$startDate, $endDateEOD]);
+            $query->whereBetween('visited_at', [$startDate, $endDateEOD]);
         }
 
         $excludedPages = [
@@ -53,6 +52,8 @@ class SiteStatisticsController extends Controller
 
         // Excluir páginas que terminen con 'login'
         $query->where('page', 'not like', '%/login');
+
+        $query->groupBy('page');
 
         // Estadísticas por página
         $statistics = $query->orderBy('views', 'desc')->limit(10)->get();
@@ -72,8 +73,8 @@ class SiteStatisticsController extends Controller
         });
 
         // Estadísticas por fecha
-        $statisticsByDate = SiteStatistic::selectRaw('DATE(updated_at) as date, SUM(views) as total_views')
-            ->whereBetween('updated_at', [$startDate, $endDateEOD])
+        $statisticsByDate = SiteVisit::selectRaw('DATE(visited_at) as date, COUNT(*) as total_views')
+            ->whereBetween('visited_at', [$startDate, $endDateEOD])
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
