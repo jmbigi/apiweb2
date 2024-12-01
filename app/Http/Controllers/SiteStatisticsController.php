@@ -72,8 +72,8 @@ class SiteStatisticsController extends Controller
         });
 
         // Estadísticas por fecha
-        $statisticsByDate = SiteStatistic::selectRaw('DATE(created_at) as date, SUM(views) as total_views')
-            ->whereBetween('created_at', [$startDate, $endDateEOD])
+        $statisticsByDate = SiteStatistic::selectRaw('DATE(updated_at) as date, SUM(views) as total_views')
+            ->whereBetween('updated_at', [$startDate, $endDateEOD])
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
