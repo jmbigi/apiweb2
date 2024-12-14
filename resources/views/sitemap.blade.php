@@ -25,6 +25,7 @@
         'enlaces_parturas_idioma' => 'Enlaces a las Partituras Musicales en tu Idioma',
         'faristol_partituras_musicales' => 'Faristol Partituras Musicales',
         'lista_parturas_musicales_pdf' => 'Lista de Partituras Musicales en Formato PDF',
+        'es_mapa_sitio_aplicacion_faristol' => 'Este es el Mapa del Sitio de la Aplicación Web Faristol',
     ];
 
     // Traducir los metadatos
@@ -172,6 +173,10 @@
             <img src="{{ asset('web/icons/Icon-512.png') }}" alt="Logo de Faristol">
             <h1>{{ $translations['title'] }}</h1>
         </header>
+
+        @if($defaultLang)
+            <h2>{{ $translations['es_mapa_sitio_aplicacion_faristol'] }}</h2>
+        @endif
 
         <!-- Sección de partituras -->
         <section>

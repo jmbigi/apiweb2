@@ -25,9 +25,11 @@ class SitemapController extends Controller
         $this->locationService = $locationService;
     }
 
-    public function index(Request $request, $lang=null)
+    public function index(Request $request, $lang = null)
     {
+        $defaultLang = true;
         if ($lang && $this->locationService->isValidLanguage($lang)) {
+            $defaultLang = false;
             $locale = $lang;
             Cookie::queue(Cookie::make('preferredLang', $locale, 60 * 24 * 7, null, null, false, true)); // Cifrada
         } else {
@@ -38,6 +40,6 @@ class SitemapController extends Controller
         // Establecer el locale de la aplicación
         App::setLocale($locale);
 
-        return view('sitemap', compact('locale'));
+        return view('sitemap', compact('locale', 'defaultLang'));
     }
 }
