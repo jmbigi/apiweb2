@@ -41,8 +41,10 @@ class MusicScoreController extends Controller
             return redirect()->route('home'); // Redirigir a la ruta nombrada 'home'
         }
 
+        $styleName = null;
+        $instrumentName = null;
         // Pasar el MusicScore a la vista
-        return view('music_scores.show', compact('locale', 'musicScore'));
+        return view('music_scores.show', compact('locale', 'musicScore', 'styleName', 'instrumentName'));
     }
 
     public function showByLangAndName(Request $request, string $lang, string $name)
@@ -51,7 +53,7 @@ class MusicScoreController extends Controller
     }
 
 
-    public function showByStyleAndScoreName(Request $request, string $stylename, string $scorename, ?string $lang = null)
+    public function showByStyleAndScoreName(Request $request, string $style_name, string $scorename, ?string $lang = null)
     {
         if ($lang && $this->locationService->isValidLanguage($lang)) {
             $locale = $lang;
@@ -66,8 +68,8 @@ class MusicScoreController extends Controller
         // Buscar el MusicScore por su nombre y estilo
         $musicScore = MusicScore::with(['instruments', 'style_musics'])
             ->where('name', $scorename)
-            ->whereHas('style_musics', function ($query) use ($stylename) {
-                $query->where('name', $stylename);
+            ->whereHas('style_musics', function ($query) use ($style_name) {
+                $query->where('name', $style_name);
             })
             ->first();
 
@@ -76,16 +78,18 @@ class MusicScoreController extends Controller
             return redirect()->route('home'); // Redirigir a la ruta nombrada 'home'
         }
 
+        $styleName = $style_name;
+        $instrumentName = null;
         // Pasar el MusicScore a la vista
-        return view('music_scores.show', compact('locale', 'musicScore'));
+        return view('music_scores.show', compact('locale', 'musicScore', 'styleName', 'instrumentName'));
     }
 
-    public function showByLangAndStyleAndScoreName(Request $request, string $lang, string $stylename, string $scorename)
+    public function showByLangAndStyleAndScoreName(Request $request, string $lang, string $style_name, string $scorename)
     {
-        return $this->showByStyleAndScoreName($request, $stylename, $scorename, $lang);
+        return $this->showByStyleAndScoreName($request, $style_name, $scorename, $lang);
     }
 
-    public function showByInstrumentAndScoreName(Request $request, string $instrumentname, string $scorename, ?string $lang = null)
+    public function showByInstrumentAndScoreName(Request $request, string $instrument_name, string $scorename, ?string $lang = null)
     {
         if ($lang && $this->locationService->isValidLanguage($lang)) {
             $locale = $lang;
@@ -100,8 +104,8 @@ class MusicScoreController extends Controller
         // Buscar el MusicScore por su nombre e instrumento
         $musicScore = MusicScore::with(['instruments', 'style_musics'])
             ->where('name', $scorename)
-            ->whereHas('instruments', function ($query) use ($instrumentname) {
-                $query->where('name', $instrumentname);
+            ->whereHas('instruments', function ($query) use ($instrument_name) {
+                $query->where('name', $instrument_name);
             })
             ->first();
 
@@ -110,13 +114,14 @@ class MusicScoreController extends Controller
             return redirect()->route('home'); // Redirigir a la ruta nombrada 'home'
         }
 
+        $styleName = null;
+        $instrumentName = $instrument_name;
         // Pasar el MusicScore a la vista
-        return view('music_scores.show', compact('locale', 'musicScore'));
+        return view('music_scores.show', compact('locale', 'musicScore', 'styleName', 'instrumentName'));
     }
 
-    public function showByLangAndInstrumentAndScoreName(Request $request, string $lang, string $instrumentname, string $scorename)
+    public function showByLangAndInstrumentAndScoreName(Request $request, string $lang, string $instrument_name, string $scorename)
     {
-        return $this->showByInstrumentAndScoreName($request, $instrumentname, $scorename, $lang);
+        return $this->showByInstrumentAndScoreName($request, $instrument_name, $scorename, $lang);
     }
-
 }

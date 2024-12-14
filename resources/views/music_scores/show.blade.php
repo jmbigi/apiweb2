@@ -25,6 +25,10 @@
         'Con Faristol, conecta con partituras musicales exclusivas. Ideal para músicos y compositores con planes de suscripción y protección de derechos de autor.',
     );
     $txt_title = $etr->translate('Faristol - Plataforma de Partituras para Músicos y Compositores');
+    //
+    $txt_Estilo_Musical = $etr->translate('Estilo Musical');
+    $txt_Instrumento_Musical = $etr->translate('Instrumento Musical');
+    //
     $txt_Descripcion_partitura = $etr->translate('Descripción de la partitura musical');
     $txt_Estilos_Musicales = $etr->translate('Estilos Musicales');
     $txt_No_hay_estilos_para_partitura = $etr->translate('No hay estilos musicales disponibles para esta partitura.');
@@ -42,8 +46,8 @@
     $ptr->setSource('en'); // Idioma fuente (opcional)
     $ptr->setTarget($locale); // Idioma destino
 
-    $txt_instrumentos = $ptr->translate($lista_instrumentos);
     $txt_estilos_musicales = $ptr->translate($lista_estilos_musicales);
+    $txt_instrumentos = $ptr->translate($lista_instrumentos);
 
     $utr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
     // $utr->setSource('en'); // Idioma fuente (opcional)
@@ -51,6 +55,15 @@
 
     $txt_score_name = $utr->translate(Str::title($musicScore->name));
     $txt_score_description = $utr->translate(ucfirst($musicScore->description ?? ''));
+
+    $estiloMusical = '';
+    if (!empty($styleName)) {
+        $estiloMusical = $ptr->translate($styleName);
+    }
+    $instrumento = '';
+    if (!empty($instrumentName)) {
+        $instrumento = $ptr->translate($instrumentName);
+    }
 
 @endphp
 
@@ -174,6 +187,17 @@
     <div id="pagecontent">
         <!-- Título -->
         <h1 id="title">Faristol</h1>
+
+        @if(!empty($estiloMusical))
+            <!-- Estilo Musical -->
+            <h2>{{ $txt_Estilo_Musical }} | {{ $estiloMusical }} </h2>
+        @endif
+
+        @if(!empty($instrumento))
+            <!-- Instrumento Musical -->
+            <h2>{{ $txt_Instrumento_Musical }} | {{ $instrumento }}</h2>
+        @endif
+
         <h2><a
                 href="{{ route('score-viewbyname', ['name' => rawurlencode($musicScore->name)]) }}">{{ $txt_score_name }}</a>
         </h2>

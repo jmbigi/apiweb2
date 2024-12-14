@@ -24,7 +24,7 @@ class HomeController extends Controller
         $this->locationService = $locationService;
     }
 
-    public function index(Request $request, $lang=null)
+    public function index(Request $request, $lang = null)
     {
         if ($lang && $this->locationService->isValidLanguage($lang)) {
             $locale = $lang;
@@ -63,7 +63,9 @@ class HomeController extends Controller
             return abort(404); // O puedes redirigir a otra página
         }
 
+        $styleName = null;
+        $instrumentName = null;
         // Pasar el MusicScore a la vista
-        return view('music_scores.show', compact('locale', 'musicScore'));
+        return view('music_scores.show', compact('locale', 'musicScore', 'styleName', 'instrumentName'));
     }
 }
