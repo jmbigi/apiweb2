@@ -83,7 +83,8 @@
         content="{{ $txt_meta_keyboard }}, {{ $txt_score_name }}, {{ $txt_score_description }}, {{ $txt_estilos_musicales }}, {{ $txt_instrumentos }}">
 
     <!-- Social Media / Open Graph -->
-    <meta property="og:title" content="{{ $txt_og_title }} - {{ $txt_score_name }}">
+    <meta property="og:title"
+        content="{{ $txt_og_title }} - {{ $txt_score_name }} | {{ \Carbon\Carbon::now()->locale(app()->getLocale())->isoFormat('LLLL') }}">
     <meta property="og:description" content="{{ $txt_og_description }} {{ $txt_score_description }}">
     <meta property="og:image" content="{{ asset('web/icons/Icon-512.png') }}">
     <meta property="og:url" content="https://web.faristol.net">
@@ -179,6 +180,12 @@
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                     pagecontent.style.marginTop = '120vh';
+                    //
+                    var txtOgTitle = "{{ $txt_og_title }}";
+                    var txtScoreName = "{{ $txt_score_name }}";
+                    var currentDatetime =
+                        "{{ \Carbon\Carbon::now()->locale(app()->getLocale())->isoFormat('LLLL') }}";
+                    document.title = txtOgTitle + ' - ' + txtScoreName + ' | ' + currentDatetime;
                 }, 2500);
             }, 1000);
         });
@@ -186,14 +193,14 @@
 
     <div id="pagecontent">
         <!-- Título -->
-        <h1 id="title">Faristol</h1>
+        <h1 id="title">Faristol | {{ \Carbon\Carbon::now()->locale(app()->getLocale())->isoFormat('LLLL') }} </h1>
 
-        @if(!empty($estiloMusical))
+        @if (!empty($estiloMusical))
             <!-- Estilo Musical -->
             <h2>{{ $txt_Estilo_Musical }} | {{ $estiloMusical }} </h2>
         @endif
 
-        @if(!empty($instrumento))
+        @if (!empty($instrumento))
             <!-- Instrumento Musical -->
             <h2>{{ $txt_Instrumento_Musical }} | {{ $instrumento }}</h2>
         @endif

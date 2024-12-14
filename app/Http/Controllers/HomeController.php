@@ -26,6 +26,46 @@ class HomeController extends Controller
 
     public function index(Request $request, $lang = null)
     {
+        $check_bot = false;
+        $isBot = false;
+        if ($lang == null) {
+            $locale = $this->locationService->getLocale($request);
+            if ($locale == 'zn') {
+                $check_bot = true;
+            }
+        }
+        if ($check_bot) {
+            $userAgent = $request->header('User-Agent');
+            $ip = $request->ip();
+
+            // Lista de agentes de usuario conocidos de motores de búsqueda
+            $searchBotAgents = ['Googlebot', 'Bingbot', 'Slurp', 'DuckDuckBot'];
+
+            // Rangos IPs de motores de búsqueda
+            $searchEngineIps = ['66.249.64.0/24', '104.16.0.0/12'];
+
+            foreach ($searchBotAgents as $botAgent) {
+                if (stripos($userAgent, $botAgent) !== false) {
+                    $isBot = true;
+                    break;
+                }
+            }
+
+            // Verificar si la IP corresponde a un motor de búsqueda
+            if (!$isBot) {
+                foreach ($searchEngineIps as $range) {
+                    if (ip2long($ip) >= ip2long(long2ip($range[0])) && ip2long($ip) <= ip2long(long2ip($range[1]))) {
+                        $isBot = true;
+                        break;
+                    }
+                }
+            }
+
+            if ($isBot) {
+                $lang = 'es';
+            }
+        }
+
         if ($lang && $this->locationService->isValidLanguage($lang)) {
             $locale = $lang;
             Cookie::queue(Cookie::make('preferredLang', $locale, 60 * 24 * 7, null, null, false, true)); // Cifrada
