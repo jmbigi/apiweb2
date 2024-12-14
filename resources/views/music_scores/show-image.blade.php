@@ -27,6 +27,7 @@
     $txt_No_hay_instrumentos_para_partitura = $etr->translate(
         'No hay instrumentos musicales disponibles para esta partitura.',
     );
+    $txt_Visita_sitio_web = $etr->translate('Por favor, visita el sitio web de la aplicación Faristol');
 
     $ptr = new GoogleTranslate(); // La configuracion por defecto es 'en' (Ingles)
     $ptr->setSource('en'); // Idioma fuente (opcional)
@@ -42,6 +43,7 @@
     $txt_score_name = $utr->translate(Str::title($musicScore->name));
     $txt_score_description = $utr->translate(ucfirst($musicScore->description ?? ''));
 
+    $url = route('la-score-viewbyname', ['lang' => $locale, 'name' => rawurlencode($musicScore->name)]);
 @endphp
 
 <!DOCTYPE html>
@@ -51,9 +53,6 @@
     <base href="{{ asset('web') }}/">
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    @if (isset($redirect) && $redirect == true)
-        <meta http-equiv="refresh" content="3;url=https://web.faristol.net">
-    @endif
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -190,6 +189,16 @@
                 transform: rotate(360deg);
             }
         }
+
+        a {
+            text-decoration: none;
+            color: antiquewhite;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: white;
+        }
     </style>
 </head>
 
@@ -220,6 +229,10 @@
                 @endforelse
             </div>
         </div>
+        @if (isset($redirect) && $redirect == true)
+            <h3>{{ $txt_Visita_sitio_web }}</h3>
+            <h3><a href="{{ $url }}" target="_blank">{{ $url }}</a></h3>
+        @endif
     </div>
 
     @if (isset($redirect) && $redirect == true)
@@ -227,6 +240,8 @@
             <div class="spinner"></div>
         </div>
         <script>
+            let isRedirecting = false; // Evitar redirecciones múltiples
+
             // Mostrar el círculo de carga
             function showLoading() {
                 document.getElementById('loadingOverlay').style.display = 'flex';
@@ -236,15 +251,31 @@
             function hideLoading() {
                 document.getElementById('loadingOverlay').style.display = 'none';
             }
-            setTimeout(function() {
-                showLoading();
-                setTimeout(function() {
-                    window.location.href = "https://web.faristol.net"; // Reemplaza con la URL de destino
+
+            function activateRedirect() {
+                // Detectar movimiento del mouse
+                document.addEventListener('mousemove', redirectToTarget);
+
+                // Detectar desplazamiento del scroll
+                document.addEventListener('scroll', redirectToTarget);
+            }
+
+            function redirectToTarget() {
+                if (!isRedirecting) {
+                    isRedirecting = true; // Evita múltiples redirecciones
                     setTimeout(function() {
-                        hideLoading();
-                    }, 2000);
-                }, 2000); // 3000 milisegundos = 3 segundos
-            }, 1000);
+                        showLoading();
+                        setTimeout(function() {
+                            window.location.href = "{{ $url }}";
+                            setTimeout(function() {
+                                hideLoading();
+                            }, 2000);
+                        }, 2000);
+                    }, 1000);
+                }
+            }
+
+            activateRedirect();
         </script>
     @endif
 
