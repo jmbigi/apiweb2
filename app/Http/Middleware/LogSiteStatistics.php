@@ -20,7 +20,7 @@ class LogSiteStatistics
         $fullUrl = $siteUrl . ($page == '/' ? '' : '/') . $page;
 
         // Busca la estadística o crea una nueva
-        SiteVisit::updateOrCreate(
+        SiteVisit::create(
             ['page' => $fullUrl],
             ['visited_at' => Carbon::now()]
         );

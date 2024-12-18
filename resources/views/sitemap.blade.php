@@ -174,7 +174,7 @@
             <h1>{{ $translations['title'] }}</h1>
         </header>
 
-        @if($defaultLang)
+        @if ($defaultLang)
             <h2>{{ $translations['es_mapa_sitio_aplicacion_faristol'] }}</h2>
         @endif
 
@@ -225,6 +225,36 @@
             <p>&copy; {{ date('Y') }} - {{ $translations['faristol_partituras_musicales'] }}</p>
         </div>
     </div>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+        crossorigin="anonymous"></script>
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+        crossorigin="anonymous"></script>
+    <!-- Display -->
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6468139714055912" data-ad-slot="6114596214"
+        data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+        crossorigin="anonymous"></script>
+    <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-6468139714055912"
+        data-ad-slot="1930942655"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+        crossorigin="anonymous"></script>
+    <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
+        data-ad-format="fluid" data-ad-client="ca-pub-6468139714055912" data-ad-slot="8333565440"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
 </body>
 
 </html>

@@ -282,6 +282,12 @@
                         hostElement: target,
                     }).then(function(appRunner) {
                         appRunner.runApp();
+                        var adsScript = document.createElement('script');
+                        adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912";
+                        adsScript.async = true;
+                        adsScript.crossOrigin = "anonymous";
+                        document.body.appendChild(adsScript);
+                        console.log("googlesyndication");
                     });
                 }
             });

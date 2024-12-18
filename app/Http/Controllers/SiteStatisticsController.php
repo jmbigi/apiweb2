@@ -23,7 +23,7 @@ class SiteStatisticsController extends Controller
         $endDateEOD = $endDate;
         // Asegúrate de que el endDate tenga la hora actual (por defecto, a las 23:59:59)
         if ($endDate) {
-            $endDateEOD = Carbon::createFromFormat('Y-m-d', $endDate)->endOfDay();  // Asegura que sea hasta las 23:59:59 del día
+            $endDateEOD = Carbon::createFromFormat('Y-m-d', $endDate)->endOfDay()->toDateTimeString();  // Asegura que sea hasta las 23:59:59 del día
         }
 
         if ($startDate && $endDateEOD && strtotime($startDate) > strtotime($endDateEOD)) {
