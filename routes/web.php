@@ -33,6 +33,7 @@ Route::get('/{lang}/styles/{stylename}/{scorename}', [MusicScoreController::clas
 Route::get('/{lang}/instruments/{instrumentname}/{scorename}', [MusicScoreController::class, 'showByLangAndInstrumentAndScoreName'])
     ->name('la-score-viewbyinstrumentandscorename')->where('lang', '[a-z]{2}');;
 
+Route::get('/list', [SitemapController::class, 'list'])->name('list');
 
 Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
 
