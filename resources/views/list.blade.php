@@ -168,40 +168,47 @@
 </head>
 
 <body>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
-        crossorigin="anonymous"></script>
-
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
-        crossorigin="anonymous"></script>
-    <!-- Display -->
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6468139714055912" data-ad-slot="6114596214"
-        data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
-        crossorigin="anonymous"></script>
-    <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-6468139714055912"
-        data-ad-slot="1930942655"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
-        crossorigin="anonymous"></script>
-    <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
-        data-ad-format="fluid" data-ad-client="ca-pub-6468139714055912" data-ad-slot="8333565440"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
 
     <div class="container">
         <header>
             <img src="{{ asset('web/icons/Icon-512.png') }}" alt="Logo de Faristol">
-            <h1>{{ $translations['title'] }}</h1>
+            <h2>{{ $translations['title'] }}</h2>
         </header>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+            crossorigin="anonymous"></script>
+
+        @php
+            $ads = [
+                'display' => '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+                    crossorigin="anonymous"></script>
+                              <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6468139714055912" data-ad-slot="6114596214" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                              <script>
+                                  (adsbygoogle = window.adsbygoogle || [])
+                                  .push({});
+                              </script>',
+                'autorelaxed' => '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+                    crossorigin="anonymous"></script>
+                                  <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-6468139714055912" data-ad-slot="1930942655"></ins>
+                                  <script>
+                                      (adsbygoogle = window.adsbygoogle || []).push({});
+                                  </script>',
+                'in-article' => '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912"
+                    crossorigin="anonymous"></script>
+                                 <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-6468139714055912" data-ad-slot="8333565440"></ins>
+                                 <script>
+                                     (adsbygoogle = window.adsbygoogle || []).push({});
+                                 </script>',
+            ];
+            $rad = array_rand($ads);
+            $selectedAd = $ads[$rad];
+        @endphp
+
+        {!! $selectedAd !!}
+
+        <script>
+            console.log("{!! $rad !!}");
+        </script>
 
         @if ($defaultLang)
             <h2>{{ $translations['es_mapa_sitio_aplicacion_faristol'] }}</h2>
