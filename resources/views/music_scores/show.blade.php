@@ -109,7 +109,7 @@
     <link rel="manifest" href="{{ asset('web/manifest.json') }}">
 
     <script>
-        const serviceWorkerVersion = '"4013560198"';
+        const serviceWorkerVersion = '"3919739119"';
     </script>
     <script src="{{ asset('web/flutter.js') }}?v={{ date('YmdH') }}" defer></script>
 
@@ -282,12 +282,6 @@
                         hostElement: target,
                     }).then(function(appRunner) {
                         appRunner.runApp();
-                        var adsScript = document.createElement('script');
-                        adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6468139714055912";
-                        adsScript.async = true;
-                        adsScript.crossOrigin = "anonymous";
-                        document.body.appendChild(adsScript);
-                        console.log("googlesyndication");
                     });
                 }
             });
