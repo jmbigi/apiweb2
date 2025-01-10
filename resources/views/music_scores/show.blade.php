@@ -109,7 +109,7 @@
     <link rel="manifest" href="{{ asset('web/manifest.json') }}">
 
     <script>
-        const serviceWorkerVersion = '"1523599971"';
+        const serviceWorkerVersion = '"4013560198"';
     </script>
     <script src="{{ asset('web/flutter.js') }}?v={{ date('YmdH') }}" defer></script>
 
