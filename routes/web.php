@@ -9,42 +9,45 @@ use App\Http\Controllers\SiteStatisticsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware('throttle:global')->group(function () {
 
-Route::get('/score/{name}', [MusicScoreController::class, 'showByName'])
-    ->name('score-viewbyname');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/styles/{stylename}/{scorename}', [MusicScoreController::class, 'showByStyleAndScoreName'])
-    ->name('score-viewbystyleandscorename');
+    Route::get('/score/{name}', [MusicScoreController::class, 'showByName'])
+        ->name('score-viewbyname');
 
-Route::get('/instruments/{instrumentname}/{scorename}', [MusicScoreController::class, 'showByInstrumentAndScoreName'])
-    ->name('score-viewbyinstrumentandscorename');
+    Route::get('/styles/{stylename}/{scorename}', [MusicScoreController::class, 'showByStyleAndScoreName'])
+        ->name('score-viewbystyleandscorename');
 
-Route::get('/lang/{lang}', [HomeController::class, 'index']);
+    Route::get('/instruments/{instrumentname}/{scorename}', [MusicScoreController::class, 'showByInstrumentAndScoreName'])
+        ->name('score-viewbyinstrumentandscorename');
 
-Route::get('/{lang}', [HomeController::class, 'index'])->where('lang', '[a-z]{2}');
+    Route::get('/lang/{lang}', [HomeController::class, 'index']);
 
-Route::get('/{lang}/score/{name}', [MusicScoreController::class, 'showByLangAndName'])
-    ->name('la-score-viewbyname')->where('lang', '[a-z]{2}');;
+    Route::get('/{lang}', [HomeController::class, 'index'])->where('lang', '[a-z]{2}');
 
-Route::get('/{lang}/styles/{stylename}/{scorename}', [MusicScoreController::class, 'showByLangAndStyleAndScoreName'])
-    ->name('la-score-viewbystyleandscorename')->where('lang', '[a-z]{2}');;
+    Route::get('/{lang}/score/{name}', [MusicScoreController::class, 'showByLangAndName'])
+        ->name('la-score-viewbyname')->where('lang', '[a-z]{2}');;
 
-Route::get('/{lang}/instruments/{instrumentname}/{scorename}', [MusicScoreController::class, 'showByLangAndInstrumentAndScoreName'])
-    ->name('la-score-viewbyinstrumentandscorename')->where('lang', '[a-z]{2}');;
+    Route::get('/{lang}/styles/{stylename}/{scorename}', [MusicScoreController::class, 'showByLangAndStyleAndScoreName'])
+        ->name('la-score-viewbystyleandscorename')->where('lang', '[a-z]{2}');;
 
-Route::get('/list', [SitemapController::class, 'list'])->name('list');
+    Route::get('/{lang}/instruments/{instrumentname}/{scorename}', [MusicScoreController::class, 'showByLangAndInstrumentAndScoreName'])
+        ->name('la-score-viewbyinstrumentandscorename')->where('lang', '[a-z]{2}');;
+});
 
-Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/list', [SitemapController::class, 'list'])->name('list')->middleware('throttle:sitemap');
 
-Route::get('/sitemap/{lang}', [SitemapController::class, 'index'])->where('lang', '[a-z]{2}')->name('sitemapLang');;
+Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap')->middleware('throttle:sitemap');
+
+Route::get('/sitemap/{lang}', [SitemapController::class, 'index'])->where('lang', '[a-z]{2}')->name('sitemapLang')->middleware('throttle:sitemap');;
 
 
-Route::get('/pdf/{locale}/{name}', [MockUpController::class, 'generatePdf'])->name('getPdfByLangAndName');
-Route::get('/image/{locale}/{name}', [MockUpController::class, 'generateImage'])->name('showImageByLangAndName');
-Route::get('/page/{locale}/{name}', [MockUpController::class, 'showPage'])->name('showPageByLangAndName');
+Route::get('/pdf/{locale}/{name}', [MockUpController::class, 'generatePdf'])->name('getPdfByLangAndName')->middleware('throttle:pdf');
+Route::get('/image/{locale}/{name}', [MockUpController::class, 'generateImage'])->name('showImageByLangAndName')->middleware('throttle:pdf');
+Route::get('/page/{locale}/{name}', [MockUpController::class, 'showPage'])->name('showPageByLangAndName')->middleware('throttle:global');
 
-Route::get('/stats', [SiteStatisticsController::class, 'index'])->name('stats')->middleware('auth');
+Route::get('/stats', [SiteStatisticsController::class, 'index'])->name('stats')->middleware(['auth', 'throttle:global']);
 
 /*
 |--------------------------------------------------------------------------
