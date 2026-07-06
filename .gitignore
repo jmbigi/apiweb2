@@ -22,4 +22,5 @@ run-dev.sh
 artisan-routes.sh
 public/sitemap.xml
 public/cache/
+public/web/
 .well-known/acme-challenge/testfile
