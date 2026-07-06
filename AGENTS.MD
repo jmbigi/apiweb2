@@ -34,3 +34,38 @@
 20. **Ejecutar `php artisan route:list --path=PATH`** para verificar rutas antes de agregar nuevas.
 21. **Probar en `/tmp` antes de migrar cambios al proyecto real** (copiar archivos, probar, luego implementar).
 22. **Actualizar este archivo cuando se agreguen nuevas reglas**, previa confirmación del usuario.
+
+## Procedimientos para web2.faristol.net (Demo2)
+
+### Repositorios
+- **visorweb2** (Flutter): `~/apps_flutter/visorweb2/` → `git@github.com:jmbigi/visorweb2.git` (rama `main`)
+- **web2.faristol.net** (Laravel): `/var/www/web2.faristol.net/` en rama `web2-main` del repo principal
+
+### Despliegue de visorweb2
+```bash
+sudo -u www-data /var/www/web2.faristol.net/build_visorweb2.sh
+```
+Este script:
+1. Hace `git pull` del repo visorweb2
+2. Ejecuta `flutter build web --release`
+3. Copia `build/web/` a `public/web/`
+4. Asigna permisos `www-data:www-data`
+
+⚠️ Si el build falla por `google_fonts` u otros paquetes, ejecutar primero:
+```bash
+cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter build web --release
+```
+
+### Base de datos
+- DB: `web2` (copia de `faristol`)
+- Usuario: `faristol` (mismo que producción)
+- Los PDFs se generan localmente con Chrome headless (igual que producción)
+
+### Superadmin MySQL
+- Se creó usuario `superadmin_*` para administración
+- Credenciales guardadas en `/root/.mysql_admin_credentials`
+- Para crear nuevo superadmin: `bash /root/create_admin_safe.sh`
+
+### Acceso MariaDB root
+- Root tiene password desconocido. NO modificarlo.
+- Usar `create_admin_safe.sh` para crear usuarios admin alternativos.
