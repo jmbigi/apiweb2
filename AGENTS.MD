@@ -29,8 +29,22 @@
 ## Reglas de seguridad
 18. **No exponer secretos:** verificar que ningún `.env`, clave API, token o contraseña quede en el código comiteado.
 19. **Usar detección de N+1 queries** - revisar consultas Eloquent con `with()` para evitar lazy loading.
+20. **Todas las rutas públicas deben tener throttle middleware** para prevenir ataques de fuerza bruta y scraping:
+    - Rutas generales: `throttle:global` (120 req/min)
+    - Rutas con APIs externas (Google Translate): `throttle:sitemap` (30 req/min)
+    - Rutas de generación de archivos (PDF/imágenes): `throttle:pdf` (30 req/min)
+21. **Los rate limiters se definen en `AppServiceProvider::boot()` con `RateLimiter::for()`** y se aplican por nombre en las rutas.
 
 ## Reglas de rutas y estructura
-20. **Ejecutar `php artisan route:list --path=PATH`** para verificar rutas antes de agregar nuevas.
-21. **Probar en `/tmp` antes de migrar cambios al proyecto real** (copiar archivos, probar, luego implementar).
-22. **Actualizar este archivo cuando se agreguen nuevas reglas**, previa confirmación del usuario.
+22. **Ejecutar `php artisan route:list --path=PATH`** para verificar rutas antes de agregar nuevas.
+23. **Ejecutar `php artisan route:list -v` para verificar middleware** (incluyendo throttle) en las rutas.
+24. **Probar en `/tmp` antes de migrar cambios al proyecto real** (copiar archivos, probar, luego implementar).
+25. **Actualizar este archivo cuando se agreguen nuevas reglas**, previa confirmación del usuario.
+
+## Reglas de tests
+26. **Todo middleware nuevo debe tener tests unitarios** que verifiquen:
+    - El limiter está registrado en `RateLimiter`
+    - El limiter tiene los límites correctos (maxAttempts, decaySeconds)
+    - Las rutas correctas tienen el middleware asignado
+27. **Ejecutar tests con filtro específico del cambio:** `php artisan test --filter=NombreTest`
+28. **Tests de throttle usan `CACHE_DRIVER=array`** (ya configurado en phpunit.xml) y no requieren BD.
