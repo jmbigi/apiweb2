@@ -69,3 +69,43 @@ cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter b
 ### Acceso MariaDB root
 - Root tiene password desconocido. NO modificarlo.
 - Usar `create_admin_safe.sh` para crear usuarios admin alternativos.
+
+## Estado del proyecto web2.faristol.net
+
+### Rama y repositorio
+- Rama local: `web2-main`
+- Remote: `git@gitlab.com:libraryscores1/FaristolWeb.git`
+- Rama remota: `origin/web2-main`
+- Repo visorweb2: `~/apps_flutter/visorweb2/` → `github.com/jmbigi/visorweb2.git` (rama `main`)
+
+### Servicios
+| Componente | Estado | Notas |
+|-----------|--------|-------|
+| Apache (web2.faristol.net) | ✅ Activo | SSL Let's Encrypt vigente hasta 2026-10-04 |
+| MariaDB (DB web2) | ✅ Activo | Copia de faristol, 36 tablas, 314 partituras |
+| Chrome headless | ✅ Instalado | `/usr/bin/google-chrome` para PDFs |
+| Flutter SDK | ✅ 3.44.4 | `/usr/local/flutter/bin/flutter` |
+| visorweb2 | ✅ Build exitoso | Desplegado en `public/web/` |
+
+### Scripts disponibles
+| Script | Ruta | Función |
+|--------|------|---------|
+| `build_visorweb2.sh` | `/var/www/web2.faristol.net/build_visorweb2.sh` | Compila Flutter y despliega a `public/web/` |
+| `create_admin_safe.sh` | `/root/create_admin_safe.sh` | Crea usuarios superadmin MySQL sin modificar root |
+
+### Base de datos
+- **Nombre:** `web2`
+- **Usuario:** `faristol`
+- **Superadmin:** guardado en `/root/.mysql_admin_credentials`
+- **PDFs:** Se generan localmente con Chrome headless. No usan S3/Wasabi.
+- **Tabla `files_s3_s`:** 353 registros de datos huérfanos (no los lee la app).
+
+### Reglas aplicadas durante la creación
+- ✅ Rama `main` del proyecto original (`/var/www/web.faristol.net/`) quedó intacta
+- ✅ Solo se modificó la rama `web2-main` para cambios de web2
+- ✅ DB original `faristol` intacta (solo se usó para dump de solo lectura)
+- ✅ Commits verificados antes de push
+- ✅ Cada paso fue preguntado antes de ejecutar (según regla 2)
+- ✅ MariaDB se detuvo ~15s para crear superadmin (sin pérdida de datos)
+- ✅ Flutter build se probó antes de desplegar
+- ✅ `public/web/` excluido de git (generado por build)
