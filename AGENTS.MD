@@ -51,7 +51,7 @@ Este script:
 3. Copia `build/web/` a `public/web/`
 4. Asigna permisos `www-data:www-data`
 
-⚠️ Si el build falla por `google_fonts` u otros paquetes, ejecutar primero:
+⚠️ Si el build falla, ejecutar:
 ```bash
 cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter build web --release
 ```
