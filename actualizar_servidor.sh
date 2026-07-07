@@ -10,7 +10,11 @@ git pull origin main || { echo "Error al hacer git pull"; exit 1; }
 
 # Instalar dependencias de Composer
 echo "Instalando dependencias de Composer..."
-composer install --optimize-autoloader || { echo "Error en composer install"; exit 1; }
+composer install --no-dev --optimize-autoloader || { echo "Error en composer install"; exit 1; }
+
+# 🚫 NUNCA ejecutar tests en producción. Los tests pueden destruir la BD.
+# Si necesitas tests, hazlo local o en un entorno aislado.
+# php artisan test -- Deshabilitado por seguridad
 
 # Instalar dependencias de npm
 echo "Instalando dependencias de npm..."

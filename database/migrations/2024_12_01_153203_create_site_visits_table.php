@@ -16,8 +16,4 @@ class CreateSiteVisitsTable extends Migration
         });
     }
 
-    public function down()
-    {
-        Schema::dropIfExists('site_visits');
-    }
 }
