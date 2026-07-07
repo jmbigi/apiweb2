@@ -8,6 +8,11 @@ if ($appEnv !== 'testing') {
       . "   Ejecuta: php artisan config:clear\n\n");
 }
 
+if (!file_exists(__DIR__ . '/../.env.testing')) {
+    die("\n🔴 ERROR: No existe el archivo .env.testing.\n"
+      . "   Créalo para evitar cargar config de producción.\n\n");
+}
+
 $app = require __DIR__ . '/../bootstrap/app.php';
 $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
