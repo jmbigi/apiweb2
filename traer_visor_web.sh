@@ -1,27 +1,29 @@
 #!/bin/bash
+# Script para desplegar visorweb2 (Flutter web) en web2.faristol.net
+# Uso: ./traer_visor_web.sh [ruta_al_build_flutter]
+#
+# Si no se pasa ruta, usa el script build_visorweb2.sh (recomendado)
+set -euo pipefail
 
-SOURCE='/home/kubuntu/OneDrive/Trabajo/Faristol/VisorWeb/visorweb/build/web/'
-DESTINATION='./public/web'
+FLUTTER_BUILD="${1:-}"
 
-# Verificar si existe el directorio de origen
-if [ -d "$SOURCE" ]; then
-    echo "Directorio de origen encontrado: $SOURCE"
+if [ -z "$FLUTTER_BUILD" ]; then
+    echo "No se especifico ruta. Usando build_visorweb2.sh..."
+    exec bash "$(dirname "$0")/build_visorweb2.sh"
+fi
 
-    # Eliminar el destino si existe
-    if [ -d "$DESTINATION" ]; then
-        echo "Eliminando directorio de destino existente: $DESTINATION"
-        rm -rf "$DESTINATION"
-    fi
+DESTINATION="./public/web"
 
-    # Crear el directorio destino y copiar el contenido
-    echo "Copiando contenido Flutter de VisorWeb en Proyecto PHP Laravel. Fecha $(date)"
+if [ -d "$FLUTTER_BUILD" ]; then
+    echo "Origen: $FLUTTER_BUILD"
+    echo "Destino: $DESTINATION"
+    rm -rf "$DESTINATION"
     mkdir -p "$DESTINATION"
-    cp -r "$SOURCE." "$DESTINATION"
-
-    # Asignar permisos 775 al directorio destino
-    chmod -R 775 "$DESTINATION"
-
-    echo "Copia completada exitosamente con permisos 775 asignados al directorio destino."
+    cp -r "$FLUTTER_BUILD"/* "$DESTINATION"
+    chmod -R 755 "$DESTINATION"
+    chown -R www-data:www-data "$DESTINATION"
+    echo "[OK] visorweb2 desplegado desde $FLUTTER_BUILD"
 else
-    echo "Error: El directorio de origen $SOURCE no existe."
+    echo "[ERROR] La ruta $FLUTTER_BUILD no existe"
+    exit 1
 fi

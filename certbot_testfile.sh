@@ -1,37 +1,27 @@
 #!/bin/bash
+# Script para probar el desafío ACME de Let's Encrypt en web2.faristol.net
+set -euo pipefail
 
-# Definir la ruta donde Certbot intenta colocar los archivos de validación
-WELLKNOw_DIR="/var/www/web.faristol.net/.well-known"
-CHALLENGE_DIR="$WELLKNOw_DIR/acme-challenge"
+DOMAIN="web2.faristol.net"
+WWW_DIR="/var/www/web2.faristol.net"
+CHALLENGE_DIR="$WWW_DIR/.well-known/acme-challenge"
 
-# Crear el directorio si no existe
-echo "$CHALLENGE_DIR"
+echo "=== Creando archivo de prueba ACME para $DOMAIN ==="
+echo "Directorio: $CHALLENGE_DIR"
 sudo mkdir -p "$CHALLENGE_DIR"
 
-# Crear un archivo de prueba
 TEST_FILE="$CHALLENGE_DIR/testfile"
-echo "Este es un archivo de prueba para verificar la accesibilidad del desafío Let's Encrypt." | sudo tee "$TEST_FILE"
-sudo cat "$TEST_FILE"
+echo "OK" | sudo tee "$TEST_FILE"
 
-# Asegurar permisos adecuados
-sudo chmod -R 755 "$WELLKNOw_DIR"
-sudo chown -R www-data:www-data "$WELLKNOw_DIR"
-sudo chown www-data:www-data "$TEST_FILE"
-echo "$CHALLENGE_DIR"
-sudo ls -la "$CHALLENGE_DIR"
+sudo chmod -R 755 "$WWW_DIR/.well-known"
+sudo chown -R www-data:www-data "$WWW_DIR/.well-known"
 
-# Mostrar la URL para probar en el navegador
-echo "Prueba la accesibilidad en tu navegador o con curl:"
-#echo "http://$(hostname -I | awk '{print $1}')/.well-known/acme-challenge/testfile"
-echo "http://web.faristol.net/.well-known/acme-challenge/testfile"
-
-# Reiniciar Apache para aplicar cambios
-sudo systemctl restart apache2
-
-# Verificar si el archivo es accesible localmente
-if curl -I "http://web.faristol.net/.well-known/acme-challenge/testfile" 2>/dev/null | grep -q "200 OK"; then
-    echo "✅ El archivo de prueba es accesible localmente."
-    curl "http://web.faristol.net/.well-known/acme-challenge/testfile"
+echo "=== Verificando acceso ==="
+if curl -I "https://$DOMAIN/.well-known/acme-challenge/testfile" 2>/dev/null | grep -q "200\|404"; then
+    echo "[OK] El archivo de prueba es accesible desde $DOMAIN"
+    curl -s "https://$DOMAIN/.well-known/acme-challenge/testfile"
+    echo ""
+    echo "Limpieza: sudo rm \"$TEST_FILE\""
 else
-    echo "❌ El archivo de prueba no es accesible. Revisa la configuración de Apache."
+    echo "[ERROR] No se pudo acceder. Revisa la configuracion de Apache/Nginx."
 fi
