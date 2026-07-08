@@ -51,3 +51,67 @@
     - El limiter tiene los límites correctos (maxAttempts, decaySeconds)
     - Las rutas correctas tienen el middleware asignado
 31. **Tests de throttle usan `CACHE_DRIVER=array`** (ya configurado en phpunit.xml) y no requieren BD.
+
+## Procedimientos para web2.faristol.net (Demo2)
+
+### Repositorios
+- **visorweb2** (Flutter): `~/apps_flutter/visorweb2/` → `git@github.com:jmbigi/visorweb2.git` (rama `main`)
+- **web2.faristol.net** (Laravel): `/var/www/web2.faristol.net/`
+
+### Despliegue de visorweb2
+```bash
+sudo -u www-data /var/www/web2.faristol.net/build_visorweb2.sh
+```
+Este script:
+1. Hace `git pull` del repo visorweb2
+2. Ejecuta `flutter build web --release`
+3. Copia `build/web/` a `public/web/`
+4. Asigna permisos `www-data:www-data`
+
+⚠️ Si el build falla, ejecutar:
+```bash
+cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter build web --release
+```
+
+### Base de datos
+- DB: `web2` (copia de `faristol`)
+- Usuario: `faristol` (mismo que producción)
+- Los PDFs se generan localmente con Chrome headless (igual que producción)
+
+### Superadmin MySQL
+- Se creó usuario `superadmin_*` para administración
+- Credenciales guardadas en `/root/.mysql_admin_credentials`
+- Para crear nuevo superadmin: `bash /root/create_admin_safe.sh`
+
+### Acceso MariaDB root
+- Root tiene password desconocido. NO modificarlo.
+- Usar `create_admin_safe.sh` para crear usuarios admin alternativos.
+
+## Estado del proyecto
+
+### Rama y repositorio
+- Repo: `git@gitlab.com:libraryscores1/DesktopDemoWeb.git`
+- Rama: `main`
+- Repo visorweb2: `~/apps_flutter/visorweb2/` → `github.com/jmbigi/visorweb2.git` (rama `main`)
+
+### Servicios
+| Componente | Estado | Notas |
+|-----------|--------|-------|
+| Apache (web2.faristol.net) | ✅ Activo | SSL Let's Encrypt vigente hasta 2026-10-04 |
+| MariaDB (DB web2) | ✅ Activo | Copia de faristol, 36 tablas, 314 partituras |
+| Chrome headless | ✅ Instalado | `/usr/bin/google-chrome` para PDFs |
+| Flutter SDK | ✅ 3.44.4 | `/usr/local/flutter/bin/flutter` |
+| visorweb2 | ✅ Build exitoso | Desplegado en `public/web/` |
+
+### Scripts disponibles
+| Script | Ruta | Función |
+|--------|------|---------|
+| `build_visorweb2.sh` | `/var/www/web2.faristol.net/build_visorweb2.sh` | Compila Flutter y despliega a `public/web/` |
+| `create_admin_safe.sh` | `/root/create_admin_safe.sh` | Crea usuarios superadmin MySQL sin modificar root |
+
+### Base de datos
+- **Nombre:** `web2`
+- **Usuario:** `faristol`
+- **Superadmin:** guardado en `/root/.mysql_admin_credentials`
+- **PDFs:** Se generan localmente con Chrome headless. No usan S3/Wasabi.
+- **Tabla `files_s3_s`:** 353 registros de datos huérfanos (no los lee la app).
