@@ -42,10 +42,10 @@
 25. **Actualizar este archivo cuando se agreguen nuevas reglas**, previa confirmación del usuario.
 
 ## Reglas de tests - PELIGRO: NO EJECUTAR EN PRODUCCIÓN
-26. **🚫 NUNCA ejecutar `php artisan test` en producción.** Los tests con `RefreshDatabase` (trait) ejecutan `migrate:fresh` que DROP TODAS las tablas de la BD.
-27. **La causa:** `phpunit.xml` tiene `DB_CONNECTION=sqlite` y `DB_DATABASE=:memory:` COMENTADOS, por lo que los tests corren contra la BD real de MySQL.
-28. **Si es necesario ejecutar tests:** hacerlo en un entorno aislado (CI, Docker, o servidor de desarrollo) nunca en producción.
-29. **Los tests unitarios que NO usan BD** (como los de RateLimiter) se pueden ejecutar con: `php artisan test --filter=RateLimiterRegistrationTest`
+26. **🚫 NUNCA usar la BD de producción ni la del `.env` para tests.** Los tests deben usar SIEMPRE `DB_CONNECTION=sqlite` y `DB_DATABASE=:memory:` (configurado en `phpunit.xml`).
+27. **Si `pdo_sqlite` no está disponible, los tests deben ABORTAR** (no saltar, no ignorar). `tests/bootstrap.php` y `tests/TestCase.php` verifican esto y fallan si no está.
+28. **Ejecutar tests solo con:** `APP_ENV=testing vendor/bin/phpunit` (requiere `php artisan config:clear` si hay config cacheada).
+29. **Los tests unitarios que NO usan BD** (RateLimiter, EnvironmentTest) se ejecutan sin problemas.
 30. **Todo middleware nuevo debe tener tests unitarios** que verifiquen:
     - El limiter está registrado en `RateLimiter`
     - El limiter tiene los límites correctos (maxAttempts, decaySeconds)
