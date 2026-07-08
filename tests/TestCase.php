@@ -10,6 +10,21 @@ abstract class TestCase extends BaseTestCase
 
     protected function setUp(): void
     {
+        $usesDatabaseTraits = collect(class_uses_recursive(static::class))
+            ->intersect([
+                \Illuminate\Foundation\Testing\DatabaseTransactions::class,
+                \Illuminate\Foundation\Testing\RefreshDatabase::class,
+                \Illuminate\Foundation\Testing\DatabaseMigrations::class,
+            ])
+            ->isNotEmpty();
+
+        if ($usesDatabaseTraits && !extension_loaded('pdo_sqlite')) {
+            $dbConnection = getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? 'mysql');
+            if ($dbConnection === 'sqlite') {
+                $this->markTestSkipped('Driver pdo_sqlite no disponible en este servidor.');
+            }
+        }
+
         parent::setUp();
 
         $connection = config('database.default');
