@@ -43,14 +43,25 @@
 
 ## Reglas de tests - PELIGRO: NO EJECUTAR EN PRODUCCIÓN
 26. **🚫 NUNCA usar la BD de producción ni la del `.env` para tests.** Los tests deben usar SIEMPRE `DB_CONNECTION=sqlite` y `DB_DATABASE=:memory:` (configurado en `phpunit.xml`).
-27. **Si `pdo_sqlite` no está disponible, los tests deben ABORTAR** (no saltar, no ignorar). `tests/bootstrap.php` y `tests/TestCase.php` verifican esto y fallan si no está.
-28. **Ejecutar tests solo con:** `APP_ENV=testing vendor/bin/phpunit` (requiere `php artisan config:clear` si hay config cacheada).
-29. **Los tests unitarios que NO usan BD** (RateLimiter, EnvironmentTest) se ejecutan sin problemas.
-30. **Todo middleware nuevo debe tener tests unitarios** que verifiquen:
+27. **Si `pdo_sqlite` no está disponible, los tests con BD fallan con `$this->fail()`.** Los tests sin BD (SafetyTest, ExampleTest) se ejecutan igual.
+28. **Ejecutar tests solo con:** `APP_ENV=testing vendor/bin/phpunit`.
+29. **Siempre limpiar cachés antes de tests:** `php artisan config:clear && php artisan route:clear`.
+30. **Los tests unitarios que NO usan BD** (RateLimiter, SafetyTest, EnvironmentTest, ExampleTest) se ejecutan sin problemas.
+31. **Todo middleware nuevo debe tener tests unitarios** que verifiquen:
     - El limiter está registrado en `RateLimiter`
     - El limiter tiene los límites correctos (maxAttempts, decaySeconds)
     - Las rutas correctas tienen el middleware asignado
-31. **Tests de throttle usan `CACHE_DRIVER=array`** (ya configurado en phpunit.xml) y no requieren BD.
+32. **Tests de throttle usan `CACHE_DRIVER=array`** (ya configurado en phpunit.xml) y no requieren BD.
+33. **Tests que requieren BD (Feature):** usan `DatabaseTransactions` + SQLite en memoria. Sin `pdo_sqlite` fallan con mensaje claro.
+34. **Test stats:** 72 tests total (32 unit + 17 app-safety + 23 feature). Ejecutar: `vendor/bin/phpunit`.
+
+## Lecciones aprendidas (errores anteriores)
+35. **Verificar `pdo_sqlite` al inicio de cada sesión** con `php -m | grep sqlite`. Sin él, los feature tests fallan.
+36. **No cambiar estrategia de tests múltiples veces.** Decidir de una vez: aborto abrupto (fail), no skip graceful.
+37. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
+38. **Las credenciales MySQL del `.env` pueden estar obsoletas.** No asumir que funcionan. Verificar antes de usarlas.
+39. **Compilar extensiones PHP en producción requiere aprobación.** Hacerlo en `/tmp` primero.
+40. **No crear archivos nuevos sin preguntar** (CHECKLIST.md). Confirmar con el usuario antes.
 
 ## Procedimientos para web2.faristol.net (Demo2)
 

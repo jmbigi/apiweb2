@@ -24,7 +24,12 @@ _Revisado el 2026-07-08 tras aplicación de cambios_
 ## 🟡 Arquitectura y deuda técnica
 
 - [✅ NO APLICA] **Migraciones**: Se verificaron 53 migraciones trackeadas por git. El checklist original decía "solo 1" pero es incorrecto — sí existen migraciones para todas las tablas.
-- [✅ HECHO] **Tests**: Se escribió `EnvironmentTest.php` que verifica el aislamiento del entorno de testing. Además se corrigió `TestCase.php` y `bootstrap.php` para abortar si no hay `pdo_sqlite` o si se detecta BD producción. Total: **41 tests, 18 pasan** (unitarios), 23 feature tests requieren `pdo_sqlite` no instalado en este servidor.
+- [✅ HECHO] **Tests**: 
+  - `EnvironmentTest.php` — verifica aislamiento de `.env.testing`
+  - `SafetyTest.php` — 14 tests sin necesidad de app (verifican archivos, .gitignore, config)
+  - `SafetyAppTest.php` — 17 tests que requieren app (saltados sin pdo_sqlite)
+  - Total: **72 tests (32 unit + 17 app-safety + 23 feature)**
+  - **32 pasan, 17 saltados, 23 fallan** (sin pdo_sqlite)
 - [IGNORAR] **Sin staging**: `APP_ENV=production` directo. No se modificó.
 - [IGNORAR] **Traducción frágil**: No se modificó. Sigue usando Google Translate sin caché.
 - [IGNORAR] **PDF síncrono**: No se modificó. Sigue siendo síncrono.
