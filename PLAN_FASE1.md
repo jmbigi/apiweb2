@@ -117,10 +117,7 @@ Servidas por Laravel. Middleware global: CORS + `throttle:api`.
 | DELETE | `/api/setlists/{id}/items/{itemId}` | auth | Quitar score |
 | POST | `/api/setlists/{id}/reorder` | auth | Recibir array ordenado de item IDs |
 
-### PdfConcatenateController
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| POST | `/api/setlists/{id}/pdf` | auth | Devuelve PDF concatenado de todos los items del setlist |
+_No se genera PDF concatenado. El frontend (app) ofrece un visor secuencial._
 
 ---
 
@@ -163,12 +160,15 @@ Servidas por Laravel. Middleware global: CORS + `throttle:api`.
 - **Nueva pantalla: Ensayos**
   - Dentro de cada agrupación, listado de ensayos
 
-- **Nuevo visor: Setlist**
+- **Nuevo visor: Setlist (atril virtual)**
   - En lugar del visor de partitura individual (coexisten):
     - Visor individual para scores sueltos
-    - Visor de setlist para scores agrupados
+    - Visor secuencial de setlist para scores agrupados
   - Drag & drop para reordenar items
-  - Botón "Generar PDF" que llama al endpoint de concatenación
+  - Al abrir un setlist, el músico ve las partituras en orden
+  - Al terminar una obra, avanza automáticamente a la siguiente
+  - Experiencia "como si estuvieran físicamente concatenadas"
+  - Opción "Play/Open setlist" en la app Android/iOS
 
 - **Premium automático:**
   - Al cargar perfil, verificar `GET /api/user/agrup-status`
@@ -225,7 +225,7 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 | Ver ensayos | Todos los miembros |
 | Abandonar agrupación (Leave) | Cualquier miembro |
 | Crear/editar setlists | Cualquier usuario autenticado |
-| Ver setlist PDF concatenado | Propietario del setlist |
+| Abrir setlist en visor secuencial (atril virtual) | Cualquier usuario autenticado |
 
 ---
 
@@ -235,7 +235,7 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 - [ ] Tests nuevos para API de agrupaciones, affiliations, rehearsals, setlists
 - [ ] Verificar: partituras privadas NO listables por no miembros
 - [ ] Verificar: premium automático (has_active_affiliation) eleva plan en app
-- [ ] Verificar: concatenación PDF de setlist funciona
+- [ ] Verificar: visor secuencial de setlist funciona (avance automático entre scores, atril virtual)
 - [ ] Verificar: landing page carga correctamente
 - [ ] Verificar: ambas apps Flutter funcionan en sus rutas con base href correcto
 - [ ] Verificar: no se rompen rutas SEO existentes (`/score/{name}`, `/sitemap`, etc.)
