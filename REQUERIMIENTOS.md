@@ -81,6 +81,8 @@ por un **prototipo web** (Julio–Agosto 2026):
   desde la **Control App** por el Archivero o Maestro. La app móvil solo visualiza
   el repositorio ya organizado.
 
+  **Nota de implementación (experimental):** La subida de partituras incluirá una validación que verificará que el archivo tenga formato PDF válido (`%PDF-` header) y que no esté encriptado (`/Encrypt`). Esta validación es una prueba exploratoria: puede fallar con PDFs atípicos y se revertirá sin afectar al resto del desarrollo si presenta problemas. Al no estar presupuestada, no dedicaremos tiempo adicional a su refinamiento más allá de lo estrictamente necesario.
+
 ### 2.3. Estructura de Datos
 
 - **RF-07**: La tabla `music_scores` debe soportar relación polimórfica para poder
