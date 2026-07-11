@@ -32,6 +32,7 @@
 |---------------|--------|
 | Perfil educativo con jerarquía master→alumnos/profesores | Se acordó reemplazar por agrupaciones planas con roles |
 | Subida masiva de partituras | Se acordó subida individual desde Control App |
+| Visualización/descarga de PDFs en Control App | La Control App es solo gestión, no visor (RF-18) |
 | Analytics de uso (master ve búsquedas de usuarios hijos) | No se acordó en el alcance final |
 | Filtro de búsqueda (catálogo interno vs. general) | No se acordó en el alcance final |
 | Confirmación de asistencia a ensayos | Roberto dijo: "a futuro y que lo pidan" |
