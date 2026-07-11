@@ -63,13 +63,13 @@
 | **May 2023** | Inicio de la relación laboral: clases de Symfony/Laravel | Chat completo |
 | Mar 2025 | Primera mención a "federación de bandas" (concepto inicial de agrupaciones) | Mensajes Roberto |
 | Abr 2025 | Segunda mención a "federación de bandas" | Mensajes Roberto |
-| Jul 2025 | MGX offline editor. Pago 700+300€. Plan MGX 20€ vs 300€/mes. *"v2 = grupos"* | Audios |
-| **03 Ene 2026** | **CFO propone 10.000€/año x 4h/día para desarrollo grupos. NO se concretó** | Audio |
-| Ene 2026 | Fixbug subida mismo nombre. Reunión CFO. Se cancela Copilot | Audios |
+| Jul 2025 | MGX offline editor. Se menciona *"v2 = grupos"* | Audios |
+| **03 Ene 2026** | **CFO propone acuerdo para desarrollo de grupos. No se concretó** | Audio |
+| Ene 2026 | Fixbug subida mismo nombre. Reunión CFO | Audios |
 | **08 Feb 2026** | **Notas Roberto: Perfil Educativo, Subida Masiva** (1ª versión agrupaciones) | Notas |
-| Abr 2026 | Pack "Premium+Bandas" 8€/mes. Migración hosting 200€ (2×100€). Contabo 4€/mes | Audios |
-| **~Feb 2026** | **Probable llamada: JMB cotiza 1.600€ y probablemente se redefine alcance.** Perfil Educativo → agrupaciones simples | Audios |
-| **~Jun 2026** | **Total: 1.600+100=1.700€. Paga 700€. Saldo: 1.000€** | Audios |
+| Abr 2026 | Se discute modelo de negocio para agrupaciones. Migración hosting | Audios |
+| **~Feb 2026** | **Se redefine alcance.** Perfil Educativo → agrupaciones simples | Audios |
+| **~Jun 2026** | **Se confirma acuerdo para el desarrollo** | Audios |
 | May–Jun 2026 | Roberto prepara Memoria de Actualización PDF | — |
 | 06 Jul 2026 | Demo web ofrecida. Dossier + encuesta. Banda Benidorm confirmada | Grupo |
 | **10 Jul 2026** | **Documento requerimientos Julio 2026. 19 RFs** | — |

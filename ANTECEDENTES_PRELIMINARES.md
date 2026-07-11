@@ -81,56 +81,21 @@ Audios exportados manualmente desde WhatsApp, transcritos con faster-whisper lar
 > *"Estamos invirtiendo todo el dinero que iría para marketing en el CFO...
 > hemos estado viendo precisamente con contables"*
 
-### 3.4. Seguimiento económico julio 2025 – junio 2026
+### 3.4. Hitos técnicos y económicos
 
-#### Cotizaciones y pagos principales
+Los detalles financieros completos están en `FINANZAS.md` (documento interno).
+Aquí solo se referencian los hitos técnicos relevantes para entender la
+evolución del proyecto:
 
-| Fecha | Concepto | Importe | Estado |
-|-------|----------|---------|--------|
-| Jul 2025 | Desarrollo Faristol (offline editor, MGX) — acuerdo verbal | 700€ + 300€ (1.000€ total) | Aceptado por Roberto |
-| Jul 2025 | Discusión plan MGX vs Copilot Pro (20€ vs 300€/mes) | 20–300€/mes | Se mantuvo plan 20€ |
-| Jul 2025 | APK Faristol v13 para pruebas | — | Probado por Quico |
-| Ago 2025 | GitHub Copilot Pro (plan superior) | ~38€/mes | Se canceló meses después |
-| Sep 2025 | Pago parcial (vía PayPal) | 150€ | Pagado |
-| Oct 2025 | Plan MGX — presupuesto diario 15 USD | ~450€/mes estimado | Se agotaron créditos |
-| Nov 2025 | Pago recibido | (sin especificar) | Pagado |
-| Dic 2025 | **Cotización integración Google Pay en Android** | **600€** | Propuesta de JMB, pendiente |
-| Ene 2026 | *"pagarte el desarrollo de los grupos"* — primer indicio agrupaciones | Presupuesto no especificado | En discusión |
-| Feb 2026 | Notas de Roberto: Perfil Educativo, Subida Masiva | — | Primera versión del concepto |
-| Abr 2026 | Migración hosting DigitalOcean → Contabo | **200€** (2×100€) | Aceptado y pagado |
-| Abr 2026 | VPS Contabo (coste mensual) | **4€/mes** | Activo |
-
-#### Hitos del presupuesto de Agrupaciones (1.600€ + 100€)
-
-| Fecha | Detalle | Fuente |
-|-------|---------|--------|
-| Jul 2025 | Roberto menciona *"alcanzar la v2 que es todo el tema de grupos"*. Sin presupuesto aún. | Audio PTT-20250725 |
-| **03 Ene 2026** | **CFO propone 10.000€/año por 4h/día (part-time) para desarrollo de grupos.** No se concretó. | Audio PTT-20260103 |
-| 08 Feb 2026 | Roberto: *"quiero hacer un brainstorming de cuánto nos podría costar... sale de mi bolsillo"* | Audio PTT-20260208 |
-| **~Feb 2026** | **Posible llamada: JMB probablemente cotiza 1.600€ y probablemente se redefine el alcance.** El concepto original (Perfil Educativo) se simplifica: se descarta jerarquía master→hijos, analytics, subida masiva. Se reemplaza por: agrupaciones planas con roles. Lo que luego será la Memoria PDF. | Confirmado por Roberto: *"sé que dijiste 1.600"* |
-| Abr 2026 | Se habla de pack "Premium + Bandas" por 8€/mes (*"en lugar de 4 serían 8"*) | Audio false_ACA428FF |
-| ~Jun 2026 | Roberto confirma acuerdo: *"1.600 + 100 que te debo = 1.700. Te pago 700 ahora"* | Audio PTT-20260630 |
-| ~Jul 2026 | Pago de 700€ realizado (PayPal) | Audio: *"te he pagado ya los 700"* |
-| ~Jul 2026 | Saldo pendiente: 700€ (siguiente pago) + 300€ (final) = **1.000€** | Audio: *"otros 700... quedarían 300"* |
-
-#### Detalle de la deuda de 100€
-
-Los 100€ adicionales corresponden a una deuda previa de Roberto con JMB
-por trabajos anteriores (no especificados). Roberto la reconoce explícitamente:
-*"ahí hay que sumarle los 100 que aún te debo del este"* y la incluye en el
-total de 1.700€.
-
-#### Otros temas económicos
-
-| Concepto | Cantidad | Notas |
-|----------|----------|-------|
-| GitHub Copilot Pro → cancelado | ~38€/mes | Cancelado por cambios en cobros Microsoft |
-| MGX plan 20€ vs 300€ | 20€/mes | Se mantuvo el plan básico por falta de clientes |
-| Contabo VPS | 4€/mes | Migración desde Digital Ocean |
-| Hostinger (WordPress) | 2-4€/mes | En evaluación, no concretado |
-| Pack "Premium + Bandas" (propuesta) | 8€/mes | *"En lugar de 4 serían 8"* — Roberto |
-| Fondo de patente potencial | 150.000€ | Posible ronda de financiación (no concretada) |
-| Cotización análisis previo (oct 2025) | Sin especificar | JMB pidió *"estimado de lo que sería empezar a analizar"* |
+| Fecha | Hito | Fuente |
+|-------|------|--------|
+| Jul 2025 | Roberto menciona *"alcanzar la v2 que es todo el tema de grupos"* | Audio PTT-20250725 |
+| **03 Ene 2026** | **CFO propone acuerdo para desarrollo de grupos.** No se concretó. | Audio PTT-20260103 |
+| 08 Feb 2026 | Roberto: *"quiero hacer un brainstorming de cuánto nos podría costar"* | Audio PTT-20260208 |
+| **~Feb 2026** | **Se redefine el alcance del proyecto.** El concepto original (Perfil Educativo) se simplifica: se descarta jerarquía master→hijos, analytics, subida masiva. Se reemplaza por: agrupaciones planas con roles. Este es el alcance que luego se plasma en la Memoria PDF. | Confirmado por Roberto |
+| Abr 2026 | Se discute modelo de negocio para agrupaciones | Audio |
+| ~Jun 2026 | Se confirma acuerdo para desarrollo de agrupaciones | Audio |
+| ~Jul 2026 | Inicio del proyecto | Acuerdo vigente |
 
 ### 3.5. Propuestas técnicas y rol archivero (febrero 2026)
 
@@ -213,7 +178,7 @@ de faristol
 [12:00, 27/4/2026] JMB: Sería bueno que conversemos 15 minutos para aclarar
 algunos temas
 
-[14:50, 27/4/2026] Roberto: he vuelto ya del psiquiatra. ¿Has tenido todos
+[14:50, 27/4/2026] Roberto: ¿Has tenido todos
 los accesos?
 
 [14:57, 27/4/2026] JMB: Sí, por el momento
@@ -238,10 +203,8 @@ pago
 > Corresponde a la infraestructura web (faristol.net, WordPress).
 
 **Historial:**
-- 22/04/2026: Cotización de migración por **200€** (Contabo VPS, 4€/mes)
-- 22/04/2026: Aceptado por Roberto. Pago acordado: 100€ + 100€ al mes siguiente
-- 27/04/2026: Pendiente de tarjeta de crédito (Quico). Se crea cuenta en Contabo
+- 22/04/2026: Cotización de migración (Contabo VPS)
+- 27/04/2026: Se crea cuenta en Contabo
 - 29/04/2026: DNS migrado a Cloudflare
-- 21/04/2026 (audio): Se plantea migrar WordPress a Hostinger por costos
 
 **Estado actual:** Pendiente de definir (no incluido en alcance actual).
