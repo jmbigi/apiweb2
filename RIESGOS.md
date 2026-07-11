@@ -232,6 +232,19 @@ La app móvil actual **NO PUEDE compilarse para Windows** sin cambios. Problemas
 - No se introducen funcionalidades no estándar
 - La app ya está publicada en ambas tiendas
 
+### R14 — Validación experimental de PDFs puede rechazar partituras legítimas
+
+| | |
+|---|---|
+**Probabilidad** | Media
+**Impacto** | Alto
+
+**Mitigación:**
+- Validación exclusiva de magic bytes (`%PDF-`) y búsqueda de `/Encrypt` (sin dependencias externas)
+- Flag de configuración para activar/desactivar (por defecto desactivada en producción)
+- Si genera falsos positivos, se revertirá inmediatamente sin horas extra presupuestadas
+- Al no estar presupuestada, no se dedicarán horas adicionales; se documentará claramente como riesgo experimental
+
 ---
 
 ## 4. Matriz de Riesgos
