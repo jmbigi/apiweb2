@@ -67,7 +67,8 @@
 
 ### Repositorios
 - **visorweb2** (Flutter): `~/apps_flutter/visorweb2/` → `git@github.com:jmbigi/visorweb2.git` (rama `main`)
-- **web2.faristol.net** (Laravel): `/var/www/web2.faristol.net/`
+- **control_app** (Flutter): `~/apps_flutter/control_app/` (proyecto nuevo)
+- **web2.faristol.net** (Laravel): `/var/www/web2.faristol.net/` — clon de `~/apps_prod/API_Faristol` + Ensembles
 
 ### Despliegue de visorweb2
 ```bash
@@ -75,8 +76,8 @@ sudo -u www-data /var/www/web2.faristol.net/build_visorweb2.sh
 ```
 Este script:
 1. Hace `git pull` del repo visorweb2
-2. Ejecuta `flutter build web --release`
-3. Copia `build/web/` a `public/web/`
+2. Ejecuta `flutter build web --release --base-href=/visorweb2/`
+3. Copia `build/web/` a `public/visorweb2/`
 4. Asigna permisos `www-data:www-data`
 
 ⚠️ Si el build falla, ejecutar:
@@ -84,13 +85,30 @@ Este script:
 cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter build web --release
 ```
 
+### Despliegue de control_app
+```bash
+cd ~/apps_flutter/control_app
+flutter build web --release --base-href=/control-app/
+cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
+chown -R www-data:www-data /var/www/web2.faristol.net/public/control-app/
+```
+
+### Estructura de web2
+```
+web2.faristol.net/
+├── /                          → Landing page (switch apps)
+├── /visorweb2/                → Faristol App (Flutter web)
+├── /control-app/              → Control App (Flutter web)
+└── /api/*                     → API Laravel (producción + ensembles)
+```
+
 ### Base de datos
-- DB: `web2` (copia de `faristol`)
-- Usuario: `web2` (mismo que producción)
-- Los PDFs se generan localmente con Chrome headless (igual que producción)
+- DB: `web2`
+- Usuario: `web2`
+- Bucket S3: `faristol-web2` (Wasabi)
+- Los PDFs se generan localmente con Chrome headless
 
 ### Superadmin MySQL
-- Se creó usuario `superadmin_*` para administración
 - Credenciales guardadas en `/root/.mysql_admin_credentials`
 - Para crear nuevo superadmin: `bash /root/create_admin_safe.sh`
 
@@ -109,20 +127,26 @@ cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter b
 | Componente | Estado | Notas |
 |-----------|--------|-------|
 | Apache (web2.faristol.net) | ✅ Activo | SSL Let's Encrypt vigente hasta 2026-10-04 |
-| MariaDB (DB web2) | ✅ Activo | Copia de faristol, 36 tablas, 314 partituras |
+| MariaDB (DB web2) | ✅ Activo | Copia de faristol |
 | Chrome headless | ✅ Instalado | `/usr/bin/google-chrome` para PDFs |
 | Flutter SDK | ✅ 3.44.4 | `/usr/local/flutter/bin/flutter` |
-| visorweb2 | ✅ Build exitoso | Desplegado en `public/web/` |
+| API producción | ✅ Copiada | `~/apps_prod/API_Faristol` → web2 |
+| visorweb2 | Pendiente rebuild | Con base href `/visorweb2/` |
+| control_app | Pendiente crear | Proyecto nuevo Flutter |
 
 ### Scripts disponibles
 | Script | Ruta | Función |
 |--------|------|---------|
-| `build_visorweb2.sh` | `/var/www/web2.faristol.net/build_visorweb2.sh` | Compila Flutter y despliega a `public/web/` |
-| `create_admin_safe.sh` | `/root/create_admin_safe.sh` | Crea usuarios superadmin MySQL sin modificar root |
+| `build_visorweb2.sh` | `/var/www/web2.faristol.net/build_visorweb2.sh` | Compila Flutter y despliega a `public/visorweb2/` |
+| `traer_visor_web.sh` | `/var/www/web2.faristol.net/traer_visor_web.sh` | Alternativo para desplegar visorweb2 |
+| `actualizar_servidor.sh` | `/var/www/web2.faristol.net/actualizar_servidor.sh` | Git pull + composer + npm + cache clear |
+| `backend-dev-server.sh` | `/var/www/web2.faristol.net/backend-dev-server.sh` | Servidor PHP dev en puerto 8083 |
+| `certbot_testfile.sh` | `/var/www/web2.faristol.net/certbot_testfile.sh` | Prueba ACME Let's Encrypt |
+| `create_admin_safe.sh` | `/root/create_admin_safe.sh` | Crea usuarios superadmin MySQL |
 
 ### Base de datos
 - **Nombre:** `web2`
 - **Usuario:** `web2`
-- **Superadmin:** guardado en `/root/.mysql_admin_credentials`
-- **PDFs:** Se generan localmente con Chrome headless. No usan S3/Wasabi.
-- **Tabla `files_s3_s`:** 353 registros de datos huérfanos (no los lee la app).
+- **Bucket S3:** `faristol-web2` (Wasabi)
+- **PDFs:** Se generan localmente con Chrome headless
+- **SEO:** No aplica para web2 (sitemaps, robots.txt, ads.txt eliminados)

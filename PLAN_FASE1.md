@@ -12,7 +12,88 @@ web2.faristol.net/
 
 ---
 
-## 1. Backend — Base de Datos y Modelos
+## 0. Setup inicial
+
+### 0.1. Limpiar basura
+
+Borrar lo que no sirve del web2 anterior:
+
+| Archivo | Motivo |
+|---------|--------|
+| `public/cache/` | PDF/JPG pre-generados del web-view anterior |
+| `public/sitemap.xml` | SEO — no necesario para prototipo |
+| `public/sitemap-lang.xml` | SEO |
+| `public/robots.txt` | SEO |
+| `public/ads.txt` | AdSense |
+| `public/google53776e12c164ec3e.html` | Search Console |
+
+### 0.2. Copiar producción
+
+```bash
+rsync -av --exclude='.env' --exclude='.git/' --exclude='node_modules/' \
+      --exclude='vendor/' --exclude='public/' \
+      ~/apps_prod/API_Faristol/ /var/www/web2.faristol.net/
+```
+
+Luego merge de `public/`: copiar assets de producción pero conservar `web/` (visorweb2 build).
+
+### 0.3. Instalar dependencias
+
+```bash
+composer install
+npm install && npm run build
+```
+
+### 0.4. Configurar `.env`
+
+- `DB_DATABASE=web2`, `DB_USERNAME=web2`, `DB_PASSWORD=Web2DB2607`
+- `AWS_BUCKET=faristol-web2`
+- Credenciales Wasabi S3
+
+### 0.5. Migrar BD
+
+```bash
+php artisan migrate
+```
+
+---
+
+## 1. Landing Page
+
+- Vista simple en `resources/views/home.blade.php`
+- Renderizada por `HomeController@index`
+- 2 cards:
+  - **"Faristol App"** → enlace a `/visorweb2/`
+  - **"Control App"** → enlace a `/control-app/`
+- Root `/` reemplaza al redirect a login que trae producción
+- Diseño: fondo `#0C1934`, logo Faristol
+
+---
+
+## 2. Subdirectorios Flutter (servidos vía Apache directo)
+
+- `public/visorweb2/` — build de visorweb2 con `<base href="/visorweb2/">`
+- `public/control-app/` — build de control_app con `<base href="/control-app/">`
+- Assets estáticos servidos directamente desde Apache
+- Laravel sirve el `index.html` de cada subdirectorio (fallback)
+
+---
+
+## 3. Backend — API base (producción)
+
+Se copia la API completa de `~/apps_prod/API_Faristol`:
+
+- Controladores API (MusicScoreController, AuthController, ComposerController, etc.)
+- Controladores admin (CRUD completo)
+- Rutas API (174 líneas en `routes/api.php`)
+- Modelos, migraciones, config
+- Panel admin (Blade + Metronic)
+
+**No se modifica nada existente.** Todo lo nuevo es additive.
+
+---
+
+## 4. Backend — Base de Datos y Modelos (Ensembles)
 
 ### Migraciones
 
@@ -30,7 +111,7 @@ web2.faristol.net/
 | `rehearsals` | id, ensemble_id, title, date, time, location, instructor_id (FK users), notes, status, timestamps |
 | `ensemble_folders` | id, ensemble_id, name, parent_id (nullable self-ref), timestamps |
 
-**Validación:** Al crear/renombrar carpeta, verificar que `longitud(ruta_completa) ≤ 4096` (PATH_MAX). Ruta: `storage/app/music_scores/ensembles/{id}/{carpeta1}/{carpeta2}/...`
+**Validación:** Al crear/renombrar carpeta, verificar que `longitud(ruta_completa) ≤ 4096` (PATH_MAX).
 
 ### Modelos Eloquent
 
@@ -46,12 +127,12 @@ _Setlist es local (Hive en el dispositivo), no requiere modelo backend._
 
 - Mismo sistema que app Android: subida directa a Wasabi S3.
 - **El S3 no distingue público/privado.** El control de acceso es en la app (Laravel), no en el almacenamiento.
-- Mismo bucket que producción (`AWS_BUCKET` en `.env`). Sin carpeta `ensembles/` separada.
-- No se crea disco nuevo en `filesystems.php`; se reutiliza el disco `s3` existente.
+- Mismo bucket (`AWS_BUCKET=faristol-web2`). Sin carpeta `ensembles/` separada.
+- Se reutiliza el disco `s3` existente en `config/filesystems.php`.
 
 ### Control de acceso en listados de partituras
 
-Los endpoints de listado/búsqueda (`GET /api/music-score/list`, `/list-filtered`, `/allmusic`, etc.) deben filtrar según permisos:
+Los endpoints públicos de listado (`GET /api/music-score/list`, `/list-filtered`, `/allmusic`, etc.) deben filtrar según permisos:
 
 | Usuario | Scores visibles |
 |---------|----------------|
@@ -59,7 +140,7 @@ Los endpoints de listado/búsqueda (`GET /api/music-score/list`, `/list-filtered
 | Autenticado + miembro de ensembles | Públicos `UNION` privados de sus ensembles donde `ensemble_user.status = 1` |
 | Autenticado sin ensembles | Solo públicos |
 
-Implementar como **scope global** en `MusicScore` o **scope local** `publicOrAccessible(User)` aplicado en cada endpoint de listado.
+Implementar como **scope local** `publicOrAccessible(User)` en `MusicScore`.
 
 ### Premium automático (no backend)
 
@@ -69,7 +150,7 @@ Implementar como **scope global** en `MusicScore` o **scope local** `publicOrAcc
 
 ---
 
-## 2. Backend — API Routes (`routes/api.php`)
+## 5. Backend — API Routes (nuevas, añadidas después de las de producción)
 
 Servidas por Laravel. Middleware global: CORS + `throttle:api`.
 
@@ -115,74 +196,32 @@ Servidas por Laravel. Middleware global: CORS + `throttle:api`.
 | POST | `/api/ensembles/{id}/scores` | member | Subir PDF (roles con permiso) |
 | DELETE | `/api/ensembles/{id}/scores/{scoreId}` | member | Eliminar |
 
-_Setlist es local (Hive en el dispositivo) — no requiere controller backend. El visor secuencial se implementa en Flutter._
+_Setlist es local (Hive en el dispositivo) — no requiere controller backend._
 
 ---
 
-## 3. Landing Page
-
-- Nueva vista `resources/views/home.blade.php`
-- Renderizada por `HomeController@index`
-- 2 cards:
-  - **"Faristol App"** → enlace a `/visorweb2/`
-  - **"Control App"** → enlace a `/control-app/`
-- Rutas SEO existentes se mantienen intactas: `/score/{name}`, `/sitemap`, list, stats, etc.
-- Diseño: fondo `#0C1934`, logo Faristol, estilo coherente con el actual
-
----
-
-## 4. Subdirectorios Flutter (servidos vía Laravel)
-
-- `public/visorweb2/` — build de visorweb2 con `<base href="/visorweb2/">`
-- `public/control-app/` — build de control_app con `<base href="/control-app/">`
-- Ruta Laravel para servir el `index.html` de cada subdirectorio
-- Assets estáticos servidos directamente desde Apache
-
----
-
-## 5. visorweb2 — Modificaciones Flutter
+## 6. visorweb2 — Modificaciones Flutter
 
 ### Cambios en el código existente (`/root/apps_flutter/visorweb2/`)
 
 - **API base URL**: cambiar de `ios.faristol.net` a `web2.faristol.net`
-  - `lib/presentation/services/api_constants.dart`
-  - `lib/presentation/services/api_service.dart`
-
-- **Menú hamburguesa** (`menu_page.dart`):
-  - Nuevo ítem: "Ensembles" (después de Home)
-
-- **Nueva pantalla: My Ensembles**
-  - Lista de ensembles del usuario (desde API)
-  - Botón "Leave" para abandonar cada una
-
-- **Nueva pantalla: Ensayos**
-  - Dentro de cada agrupación, listado de ensayos
-
-- **Nuevo visor: Setlist (atril virtual)**
-  - En lugar del visor de partitura individual (coexisten):
-    - Visor individual para scores sueltos
-    - Visor secuencial de setlist para scores agrupados
-  - Drag & drop para reordenar items
-  - Al abrir un setlist, el músico ve las partituras en orden
-  - Al terminar una obra, avanza automáticamente a la siguiente
-  - Experiencia "como si estuvieran físicamente concatenadas"
-  - Opción "Play/Open setlist" en la app Android/iOS
-
-- **Premium automático:**
-  - Al cargar perfil, verificar `GET /api/user/ensemble-status`
-  - Si `has_active_ensemble === true`, elevar plan a Premium en memoria
+- **Menú hamburguesa**: nuevo ítem "Ensembles" (después de Home)
+- **Nueva pantalla: My Ensembles** — lista de ensembles del usuario
+- **Nueva pantalla: Ensayos** — dentro de cada agrupación
+- **Nuevo visor: Setlist (atril virtual)** — visor secuencial con avance automático
+- **Premium automático:** verificar `GET /api/user/ensemble-status`
 
 ### Build y deploy
 
 ```bash
 cd /root/apps_flutter/visorweb2
-flutter build web
+flutter build web --release --base-href=/visorweb2/
 cp -r build/web/* /var/www/web2.faristol.net/public/visorweb2/
 ```
 
 ---
 
-## 6. Control App — Demo Web Flutter (Julio)
+## 7. Control App — Demo Web Flutter
 
 ### Nuevo proyecto en `/root/apps_flutter/control_app/`
 
@@ -194,24 +233,19 @@ flutter create control_app
 ### Pantallas
 
 - **Login**: campos CIF, Email, Contraseña
-- **Dashboard**:
-  - Sidebar de navegación (color azul)
-  - Stats cards en cabecera
-  - Gráfico de barras verticales
-  - Gráfico circular (pie chart)
-- Funcionalidad demo (simulación, sin backend real conectado)
+- **Dashboard**: sidebar, stats cards, gráficos (demo)
 
 ### Build y deploy
 
 ```bash
 cd /root/apps_flutter/control_app
-flutter build web
+flutter build web --release --base-href=/control-app/
 cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 ```
 
 ---
 
-## 7. Control de Acceso y Roles
+## 8. Control de Acceso y Roles
 
 | Recurso | Quién puede |
 |---------|-------------|
@@ -227,22 +261,13 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 
 ---
 
-## 8. QA y Verificación
+## 9. QA y Verificación
 
-- [ ] Tests de producción existentes siguen pasando (34 tests, 82 assertions)
-- [ ] Tests nuevos para API de ensembles, miembros, rehearsals, setlists
+- [ ] Tests de producción existentes siguen pasando
+- [ ] Tests nuevos para API de ensembles, miembros, rehearsals
 - [ ] Verificar: partituras privadas NO listables por no miembros
-- [ ] Verificar: premium automático (has_active_ensemble) eleva plan en app
-- [ ] Verificar: visor secuencial de setlist funciona (avance automático entre scores, atril virtual)
+- [ ] Verificar: premium automático eleva plan en app
+- [ ] Verificar: visor secuencial de setlist funciona
 - [ ] Verificar: landing page carga correctamente
-- [ ] Verificar: ambas apps Flutter funcionan en sus rutas con base href correcto
-- [ ] Verificar: no se rompen rutas SEO existentes (`/score/{name}`, `/sitemap`, etc.)
-
----
-
-## 9. Pendiente para Agosto
-
-- Migración de archivos locales a S3 con ruta `ensembles/{id}/{filename}`
-- Definir endpoint de S3 con el CTO (mismo bucket que globales vs bucket separado)
-- Control App: convertir demo web a app de escritorio real (Electron/Windows)
-- Posible: agregar `ensemble_folders` en la UI de visorweb2
+- [ ] Verificar: ambas apps Flutter funcionan en sus rutas
+- [ ] Verificar: API de producción responde correctamente en web2

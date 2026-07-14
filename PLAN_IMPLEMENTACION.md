@@ -5,6 +5,58 @@
 
 ---
 
+## 0. Setup de web2 desde producción
+
+### 0.1. Limpiar basura del web2 anterior
+
+```bash
+rm -rf public/cache/
+rm -f public/sitemap.xml public/sitemap-lang.xml public/robots.txt
+rm -f public/ads.txt public/google53776e12c164ec3e.html
+```
+
+### 0.2. Copiar producción
+
+```bash
+rsync -av --exclude='.env' --exclude='.git/' --exclude='node_modules/' \
+      --exclude='vendor/' \
+      ~/apps_prod/API_Faristol/app/   /var/www/web2.faristol.net/app/
+rsync -av --exclude='.env' --exclude='.git/' --exclude='node_modules/' \
+      --exclude='vendor/' \
+      ~/apps_prod/API_Faristol/routes/ /var/www/web2.faristol.net/routes/
+rsync -av --exclude='.env' --exclude='.git/' --exclude='node_modules/' \
+      --exclude='vendor/' \
+      ~/apps_prod/API_Faristol/config/ /var/www/web2.faristol.net/config/
+# ... same for database/, resources/, tests/, bootstrap/, storage/
+```
+
+Merge `public/`: copiar assets de producción sin sobrescribir `web/`.
+
+### 0.3. Instalar
+
+```bash
+composer install
+npm install && npm run build
+```
+
+### 0.4. `.env`
+
+```
+DB_DATABASE=web2
+DB_USERNAME=web2
+DB_PASSWORD=Web2DB2607
+AWS_BUCKET=faristol-web2
+# + Wasabi credentials
+```
+
+### 0.5. Migrar BD existente
+
+```bash
+php artisan migrate
+```
+
+---
+
 ## 1. Backend — Nuevas Tablas (Migraciones + Modelos)
 
 ### 1.1. `ensembles`

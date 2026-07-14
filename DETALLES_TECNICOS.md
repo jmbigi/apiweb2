@@ -4,6 +4,10 @@
 > y los requerimientos definidos en Julio 2026.
 >
 > ⚠️ Sin modificar: no altera ningún archivo de los proyectos existentes.
+>
+> **web2.faristol.net** es un clon de la API de producción (`~/apps_prod/API_Faristol`)
+> con el módulo Ensembles añadido. No conserva nada del web2 demo anterior salvo
+> `.env`, `public/web/` (Flutter), scripts y documentación.
 
 ---
 
@@ -53,6 +57,8 @@ estilos musicales, familias de instrumentos, planes de suscripción.
 | Web (WordPress) | DigitalOcean / Hostinger | faristol.net |
 | **Prototipo web** | **DigitalOcean** | **web2.faristol.net** |
 | Almacenamiento | Wasabi (S3) | s3.eu-west-2.wasabisys.com |
+
+**Nota:** web2 no necesita SEO. `public/sitemap.xml`, `robots.txt`, `ads.txt`, etc. se eliminan.
 
 **Especificaciones del servidor web2:**
 
@@ -422,8 +428,17 @@ funcionalidades nuevas.
 ### 10.1. Especificaciones del prototipo
 
 - **URL:** `web2.faristol.net`
+- **Origen:** Clon de la API de producción (`~/apps_prod/API_Faristol`) con módulo Ensembles añadido.
 - **Base de datos:** `web2` — copia reciente de la base de producción
   (ligeramente anterior). Independiente de la base de producción activa.
+- **Estructura:**
+  ```
+  web2.faristol.net/
+  ├── /                          → Landing page (switch apps)
+  ├── /visorweb2/                → Faristol App (Flutter web)
+  ├── /control-app/              → Control App (Flutter web)
+  └── /api/*                     → API Laravel (producción + ensembles)
+  ```
 - **Funcionalidad:** debe ser completa y operativa, con datos reales para
   validar todos los flujos de ambas aplicaciones:
   - Control App (escritorio): gestión, roles, ensayos
@@ -435,6 +450,8 @@ funcionalidades nuevas.
   inviables.
 - **Transición a producción:** debe ser **muy rápida (~3 días)**. Todo debe
   quedar investigado y validado durante la fase de prototipo.
+- **SEO:** No necesario para el prototipo. Archivos como sitemaps, robots.txt,
+  ads.txt se eliminan.
 - El prototipo es **temporal** y se presentará a Biblioscores/Faristol para
   obtener feedback antes del desarrollo definitivo.
 
