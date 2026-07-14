@@ -19,7 +19,7 @@ web2.faristol.net/
 **Tabla `music_scores` — migración sobre tabla existente:**
 - `ensemble_id` (nullable FK → `ensembles.id`)
 - `uploaded_by` (FK → `users.id`)
-- `folder` (string, nullable) — carpeta dentro del repositorio del ensemble
+- `ensemble_folder_id` (nullable FK → `ensemble_folders.id`)
 
 **Nuevas tablas:**
 

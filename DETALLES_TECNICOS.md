@@ -241,7 +241,7 @@ Siguiendo las convenciones del código existente (snake_case plural):
 |---------|------|-------|
 | ensemble_id | bigint, FK->ensembles, nullable | null = catálogo global, not null = partitura privada del ensemble |
 | uploaded_by | bigint, FK->users, nullable | Quién subió la partitura |
-| folder | string, nullable | Carpeta dentro del repositorio del ensemble |
+| ensemble_folder_id | bigint, FK->ensemble_folders, nullable | Carpeta dentro del repositorio del ensemble |
 
 ### 5.4. `rehearsals`
 

@@ -70,7 +70,7 @@ Schema::create('ensemble_user', function (Blueprint $table) {
 Schema::table('music_scores', function (Blueprint $table) {
     $table->foreignId('ensemble_id')->nullable()->constrained()->onDelete('cascade');
     $table->foreignId('uploaded_by')->nullable()->constrained('users');
-    $table->string('folder')->nullable()->comment('Carpeta en el repositorio del ensemble');
+    $table->foreignId('ensemble_folder_id')->nullable()->constrained('ensemble_folders')->nullOnDelete();
 });
 ```
 

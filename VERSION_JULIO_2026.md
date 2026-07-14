@@ -51,7 +51,7 @@ _Actualizado: 2026-07-10_
 
 | # | Tarea | Prioridad |
 |---|---|---|
-| 1 | Migración: `ensemble_id`, `uploaded_by` y `folder` a `music_scores` | Alta |
+| 1 | Migración: `ensemble_id`, `uploaded_by` y `ensemble_folder_id` a `music_scores` | Alta |
 | 2 | Crear tabla `ensembles` | Alta |
 | 3 | Crear tabla `ensemble_user` | Alta |
 | 4 | Crear tabla `rehearsals` | Alta |
