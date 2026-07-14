@@ -17,39 +17,38 @@ web2.faristol.net/
 ### Migraciones
 
 **Tabla `music_scores` — migración sobre tabla existente:**
-- `agrupacion_id` (nullable FK → `agrupaciones.id`)
+- `ensemble_id` (nullable FK → `ensembles.id`)
 - `uploaded_by` (FK → `users.id`)
+- `folder` (string, nullable) — carpeta dentro del repositorio del ensemble
 
 **Nuevas tablas:**
 
 | Tabla | Columnas |
 |-------|----------|
-| `agrupaciones` | id, name, description, type (banda/conservatorio/orquesta), created_by (FK users), timestamps, soft_deletes |
-| `affiliations` | id, user_id, agrupacion_id, role (archivero/admin/instructor/basic), status (active/inactive), timestamps |
-| `rehearsals` | id, agrupacion_id, title, description, scheduled_at, location, created_by (FK users), timestamps |
-| `agrupacion_folders` | id, agrupacion_id, name, parent_id (nullable self-ref), timestamps |
-| `setlists` | id, user_id, name, description, timestamps |
-| `setlist_items` | id, setlist_id, music_score_id, position, timestamps |
+| `ensembles` | id, name, cif (unique), description, owner_id (FK users), status, timestamps, soft_deletes |
+| `ensemble_user` | id, ensemble_id, user_id, role (archivero/admin/instructor/basic), status, timestamps |
+| `rehearsals` | id, ensemble_id, title, date, time, location, instructor_id (FK users), notes, status, timestamps |
+| `ensemble_folders` | id, ensemble_id, name, parent_id (nullable self-ref), timestamps |
 
 ### Modelos Eloquent
 
-- `Agrupacion` — hasMany Affiliation, hasMany Rehearsal, hasMany AgrupacionFolder
-- `Affiliation` — belongsTo User, belongsTo Agrupacion; user puede tener múltiples roles simultáneos
-- `Rehearsal` — belongsTo Agrupacion, belongsTo User (created_by)
-- `AgrupacionFolder` — belongsTo Agrupacion, self-ref parent_id
-- `Setlist` — belongsTo User, hasMany SetlistItem
-- `SetlistItem` — belongsTo Setlist, belongsTo MusicScore
-- `MusicScore` (actualizar) — nullable belongsTo Agrupacion, belongsTo User (uploaded_by)
+- `Ensemble` — belongsToMany User via ensemble_user, hasMany MusicScore, hasMany Rehearsal, hasMany EnsembleFolder
+- `EnsembleUser` — belongsTo Ensemble, belongsTo User (pivote con role)
+- `Rehearsal` — belongsTo Ensemble, belongsTo User (instructor_id)
+- `MusicScore` (actualizar) — nullable belongsTo Ensemble, belongsTo User (uploaded_by)
+- `EnsembleFolder` — belongsTo Ensemble, self-ref parent_id
+
+_Setlist es local (Hive en el dispositivo), no requiere modelo backend._
 
 ### Almacenamiento de archivos
 
-- Carpeta: `storage/app/music_scores/` (misma que partituras globales, plana, sin subcarpetas por agrupación)
-- Para agosto: migrar a S3 con ruta `ensembles/{id_agrupacion}/{filename}` (a discutir con CTO)
+- Carpeta: `storage/app/music_scores/` (misma que partituras globales, plana, sin subcarpetas por ensemble)
+- Para agosto: migrar a S3 con ruta `ensembles/{id}/{filename}` (a discutir con CTO)
 
 ### Premium automático (no backend)
 
-- Backend expone endpoint `GET /api/user/agrupaciones-status` → `{ has_active_affiliation: bool }`
-- La app **visorweb2 (Flutter)** eleva el plan a Premium en memoria si el usuario tiene affiliation activa
+- Backend expone endpoint `GET /api/user/ensemble-status` → `{ has_active_ensemble: bool, ensembles[] }`
+- La app **visorweb2 (Flutter)** eleva el plan a Premium en memoria si el usuario tiene membresía activa en un ensemble
 - No hay cambios en lógica de suscripciones/pagos en backend
 
 ---
@@ -61,63 +60,46 @@ Servidas por Laravel. Middleware global: CORS + `throttle:api`.
 ### AuthController (Sanctum token)
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| POST | `/api/auth/login` | Login (email, password) → token |
+| POST | `/api/auth/login` | Login (email, password) → token. Si envía `cif`, valida membresía activa del ensemble |
 | POST | `/api/auth/register` | Register |
 | POST | `/api/auth/logout` | Revocar token |
 | GET | `/api/user/me` | Perfil usuario autenticado |
-| GET | `/api/user/agrup-status` | `{ has_active_affiliation, agrupaciones[] }` |
+| GET | `/api/user/ensemble-status` | `{ has_active_ensemble, ensembles[] }` |
 | POST | `/api/auth/refresh` | Refresh token |
 
-### AgrupacionController
+### EnsembleController
 | Método | Endpoint | Auth | Descripción |
 |--------|----------|------|-------------|
-| GET | `/api/agrupaciones` | auth | Mis agrupaciones |
-| POST | `/api/agrupaciones` | superadmin | Crear agrupación |
-| GET | `/api/agrupaciones/{id}` | auth | Detalle (solo miembros) |
-| PUT | `/api/agrupaciones/{id}` | superadmin | Actualizar |
-| DELETE | `/api/agrupaciones/{id}` | superadmin | Soft delete |
+| GET | `/api/ensembles` | auth | Mis ensembles |
+| POST | `/api/ensembles` | superadmin | Crear ensemble |
+| GET | `/api/ensembles/{id}` | auth | Detalle (solo miembros) |
+| PUT | `/api/ensembles/{id}` | superadmin | Actualizar |
+| DELETE | `/api/ensembles/{id}` | superadmin | Soft delete |
 
-### AffiliationController
+### EnsembleMemberController
 | Método | Endpoint | Auth | Descripción |
 |--------|----------|------|-------------|
-| GET | `/api/agrupaciones/{id}/members` | auth | Lista miembros |
-| POST | `/api/agrupaciones/{id}/join` | auth | Unirse (admin invita) |
-| DELETE | `/api/agrupaciones/{id}/leave` | auth | Abandonar |
-| PUT | `/api/agrupaciones/{id}/members/{userId}/role` | admin | Asignar rol |
+| GET | `/api/ensembles/{id}/members` | auth | Lista miembros |
+| POST | `/api/ensembles/{id}/join` | auth | Unirse (admin invita) |
+| DELETE | `/api/ensembles/{id}/leave` | auth | Abandonar |
+| PUT | `/api/ensembles/{id}/members/{userId}/role` | admin | Asignar rol |
 
 ### RehearsalController
 | Método | Endpoint | Auth | Descripción |
 |--------|----------|------|-------------|
-| GET | `/api/agrupaciones/{id}/rehearsals` | auth | Lista (todos los miembros) |
-| POST | `/api/agrupaciones/{id}/rehearsals` | admin/instructor | Crear |
+| GET | `/api/ensembles/{id}/rehearsals` | auth | Lista (todos los miembros) |
+| POST | `/api/ensembles/{id}/rehearsals` | admin/instructor | Crear |
 | PUT | `/api/rehearsals/{id}` | admin/instructor | Actualizar |
 | DELETE | `/api/rehearsals/{id}` | admin/instructor | Eliminar |
 
-### AgrupacionScoreController
+### EnsembleScoreController (sobre `music_scores` filtrado por `ensemble_id`)
 | Método | Endpoint | Auth | Descripción |
 |--------|----------|------|-------------|
-| GET | `/api/agrupaciones/{id}/scores` | member | Listar partituras privadas |
-| POST | `/api/agrupaciones/{id}/scores` | member | Subir PDF (roles con permiso) |
-| DELETE | `/api/agrupaciones/{id}/scores/{scoreId}` | member | Eliminar |
+| GET | `/api/ensembles/{id}/scores` | member | Listar partituras privadas |
+| POST | `/api/ensembles/{id}/scores` | member | Subir PDF (roles con permiso) |
+| DELETE | `/api/ensembles/{id}/scores/{scoreId}` | member | Eliminar |
 
-### SetlistController
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| GET | `/api/setlists` | auth | Mis setlists |
-| POST | `/api/setlists` | auth | Crear |
-| GET | `/api/setlists/{id}` | auth | Detalle con items ordenados |
-| PUT | `/api/setlists/{id}` | auth | Actualizar nombre/desc |
-| DELETE | `/api/setlists/{id}` | auth | Eliminar |
-
-### SetlistItemController
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| POST | `/api/setlists/{id}/items` | auth | Agregar score |
-| PUT | `/api/setlists/{id}/items/{itemId}` | auth | Reordenar (position) |
-| DELETE | `/api/setlists/{id}/items/{itemId}` | auth | Quitar score |
-| POST | `/api/setlists/{id}/reorder` | auth | Recibir array ordenado de item IDs |
-
-_No se genera PDF concatenado. El frontend (app) ofrece un visor secuencial._
+_Setlist es local (Hive en el dispositivo) — no requiere controller backend. El visor secuencial se implementa en Flutter._
 
 ---
 
@@ -151,10 +133,10 @@ _No se genera PDF concatenado. El frontend (app) ofrece un visor secuencial._
   - `lib/presentation/services/api_service.dart`
 
 - **Menú hamburguesa** (`menu_page.dart`):
-  - Nuevo ítem: "Agrupaciones" (después de Home)
+  - Nuevo ítem: "Ensembles" (después de Home)
 
-- **Nueva pantalla: Mis Agrupaciones**
-  - Lista de agrupaciones del usuario (desde API)
+- **Nueva pantalla: My Ensembles**
+  - Lista de ensembles del usuario (desde API)
   - Botón "Leave" para abandonar cada una
 
 - **Nueva pantalla: Ensayos**
@@ -171,8 +153,8 @@ _No se genera PDF concatenado. El frontend (app) ofrece un visor secuencial._
   - Opción "Play/Open setlist" en la app Android/iOS
 
 - **Premium automático:**
-  - Al cargar perfil, verificar `GET /api/user/agrup-status`
-  - Si `has_active_affiliation === true`, elevar plan a Premium en memoria
+  - Al cargar perfil, verificar `GET /api/user/ensemble-status`
+  - Si `has_active_ensemble === true`, elevar plan a Premium en memoria
 
 ### Build y deploy
 
@@ -195,7 +177,7 @@ flutter create control_app
 
 ### Pantallas
 
-- **Login**: campos Organización, Usuario, Contraseña
+- **Login**: campos CIF, Email, Contraseña
 - **Dashboard**:
   - Sidebar de navegación (color azul)
   - Stats cards en cabecera
@@ -217,13 +199,13 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 
 | Recurso | Quién puede |
 |---------|-------------|
-| Crear agrupación | Solo superadmin (desde backend) |
-| Listar partituras privadas de agrupación | Miembros activos |
+| Crear ensemble | Solo superadmin (desde backend) |
+| Listar partituras privadas del ensemble | Miembros activos |
 | Subir/actualizar partituras privadas | Archivero, admin, instructor |
 | Gestionar miembros y roles | Admin |
 | Planificar ensayos | Admin, instructor |
 | Ver ensayos | Todos los miembros |
-| Abandonar agrupación (Leave) | Cualquier miembro |
+| Abandonar ensemble (Leave) | Cualquier miembro |
 | Crear/editar setlists | Cualquier usuario autenticado |
 | Abrir setlist en visor secuencial (atril virtual) | Cualquier usuario autenticado |
 
@@ -232,9 +214,9 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 ## 8. QA y Verificación
 
 - [ ] Tests de producción existentes siguen pasando (34 tests, 82 assertions)
-- [ ] Tests nuevos para API de agrupaciones, affiliations, rehearsals, setlists
+- [ ] Tests nuevos para API de ensembles, miembros, rehearsals, setlists
 - [ ] Verificar: partituras privadas NO listables por no miembros
-- [ ] Verificar: premium automático (has_active_affiliation) eleva plan en app
+- [ ] Verificar: premium automático (has_active_ensemble) eleva plan en app
 - [ ] Verificar: visor secuencial de setlist funciona (avance automático entre scores, atril virtual)
 - [ ] Verificar: landing page carga correctamente
 - [ ] Verificar: ambas apps Flutter funcionan en sus rutas con base href correcto
@@ -244,7 +226,7 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 
 ## 9. Pendiente para Agosto
 
-- Migración de archivos locales a S3 con ruta `ensembles/{id_agrupacion}/{filename}`
+- Migración de archivos locales a S3 con ruta `ensembles/{id}/{filename}`
 - Definir endpoint de S3 con el CTO (mismo bucket que globales vs bucket separado)
 - Control App: convertir demo web a app de escritorio real (Electron/Windows)
-- Posible: agregar `agrupacion_folders` en la UI de visorweb2
+- Posible: agregar `ensemble_folders` en la UI de visorweb2

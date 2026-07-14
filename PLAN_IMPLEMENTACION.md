@@ -18,6 +18,7 @@ return new class extends Migration {
         Schema::create('ensembles', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('cif', 20)->unique()->comment('CIF/NIF de la agrupación');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('owner_id');  // superadmin que la creó
             $table->boolean('status')->default(true);
@@ -36,9 +37,10 @@ return new class extends Migration {
 // Mismo patrón que LogDisplayPersonalScore (52 líneas, ~10 efectivas)
 class Ensemble extends Model {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['name', 'description', 'owner_id', 'status'];
+    protected $fillable = ['name', 'cif', 'description', 'owner_id', 'status'];
     public function owner() { return $this->belongsTo(User::class, 'owner_id'); }
     public function members() { return $this->belongsToMany(User::class, 'ensemble_user'); }
+    public function musicScores() { return $this->hasMany(MusicScore::class, 'ensemble_id'); }
 }
 ```
 
@@ -62,26 +64,42 @@ Schema::create('ensemble_user', function (Blueprint $table) {
 
 **Justificación:** Tabla pivote estándar. `unique(['ensemble_id', 'user_id'])` evita duplicados. `role` como string evita crear otra tabla.
 
-### 1.3. `ensemble_score`
+### 1.3. `music_scores` — migración sobre tabla existente
 
 ```php
-Schema::create('ensemble_score', function (Blueprint $table) {
-    $table->id();
-    $table->unsignedBigInteger('ensemble_id');
-    $table->unsignedBigInteger('music_score_id')->nullable(); // partitura existente en catálogo
-    $table->string('name');
-    $table->text('description')->nullable();
-    $table->string('folder')->nullable();
-    $table->unsignedBigInteger('uploaded_by');
-    $table->boolean('status')->default(true);
-    $table->timestamps();
-    $table->foreign('ensemble_id')->references('id')->on('ensembles')->onDelete('cascade');
-    $table->foreign('music_score_id')->references('id')->on('music_scores')->onDelete('set null');
-    $table->foreign('uploaded_by')->references('id')->on('users');
+Schema::table('music_scores', function (Blueprint $table) {
+    $table->foreignId('ensemble_id')->nullable()->constrained()->onDelete('cascade');
+    $table->foreignId('uploaded_by')->nullable()->constrained('users');
+    $table->string('folder')->nullable()->comment('Carpeta en el repositorio del ensemble');
 });
 ```
 
-### 1.4. `rehearsals`
+### 1.4. `ensemble_folders`
+
+```php
+Schema::create('ensemble_folders', function (Blueprint $table) {
+    $table->id();
+    $table->unsignedBigInteger('ensemble_id');
+    $table->string('name');
+    $table->unsignedBigInteger('parent_id')->nullable();
+    $table->timestamps();
+    $table->foreign('ensemble_id')->references('id')->on('ensembles')->onDelete('cascade');
+    $table->foreign('parent_id')->references('id')->on('ensemble_folders')->onDelete('set null');
+});
+```
+
+**Modelo:**
+```php
+class EnsembleFolder extends Model {
+    use HasFactory;
+    protected $fillable = ['ensemble_id', 'name', 'parent_id'];
+    public function ensemble() { return $this->belongsTo(Ensemble::class); }
+    public function children() { return $this->hasMany(EnsembleFolder::class, 'parent_id'); }
+    public function parent() { return $this->belongsTo(EnsembleFolder::class, 'parent_id'); }
+}
+```
+
+### 1.5. `rehearsals`
 
 ```php
 Schema::create('rehearsals', function (Blueprint $table) {
@@ -103,6 +121,39 @@ Schema::create('rehearsals', function (Blueprint $table) {
 ---
 
 ## 2. Backend — Endpoints API
+
+### 2.1. Login unificado (Control App + Faristol App)
+
+**Archivo a modificar:** Controlador existente de login (o nuevo `ApiAuthController`)
+
+`POST /api/auth/login` acepta `cif` opcional:
+- Sin `cif`: login normal (legacy, Faristol App)
+- Con `cif`: busca ensemble por cif, verifica membresía activa del usuario, si no → 403
+
+```php
+// Lógica añadida al login existente
+if ($request->filled('cif')) {
+    $ensemble = Ensemble::where('cif', $request->cif)->firstOrFail();
+    $membership = $ensemble->members()
+        ->wherePivot('user_id', $user->id)
+        ->wherePivot('status', true)
+        ->first();
+    if (!$membership) {
+        return response()->json(['message' => 'No eres miembro de esta agrupación'], 403);
+    }
+}
+```
+
+Respuesta extra cuando incluye `cif`:
+```json
+{
+    "token": "...",
+    "user": { "id": 1, "email": "...", "name": "..." },
+    "ensemble": { "id": 1, "name": "...", "cif": "B-12345678", "role": "admin" }
+}
+```
+
+### 2.2. Rutas de Ensembles
 
 **Archivo a modificar:** `routes/api.php`
 **Patrón existente:** Las rutas públicas y autenticadas ya están definidas (174 líneas).
@@ -232,8 +283,8 @@ Modelo con `fromJson()` y `toJson()`, mismo patrón que `offline_score_model.dar
 
 | Archivo | Tipo de cambio | Líneas |
 |---------|---------------|--------|
-| Migraciones (4 nuevas) | Nuevo | ~120 total |
-| Modelos (4 nuevos) | Nuevo | ~40 total |
+| Migraciones (4 nuevas + 1 sobre music_scores) | Nuevo | ~130 total |
+| Modelos (4 nuevos + MusicScore actualizado) | Nuevo | ~40 total |
 | `api.php` | Agregar rutas | ~10 líneas |
 | `EnsembleController.php` | Nuevo | ~200 líneas |
 | `SubscriptionService.php` | Agregar campo | ~5 líneas |

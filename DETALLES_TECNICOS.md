@@ -159,7 +159,8 @@ GET  /api/music-score/allmusic
 GET  /api/composer/list
 GET  /api/instruments/list
 GET  /api/style-music/list
-POST /api/auth/login
+POST /api/auth/login                    → Login. Body: { email, password, cif? }
+                                           cif opcional: si se envía, valida membresía activa del ensemble
 POST /api/auth/user/signup
 ```
 
@@ -212,6 +213,7 @@ Siguiendo las convenciones del código existente (snake_case plural):
 |---------|------|-------|
 | id | bigint, PK | |
 | name | string, unique | Nombre de la agrupación |
+| cif | string(20), unique, not null | CIF/NIF de la agrupación (requerido para login Control App) |
 | description | text, nullable | |
 | owner_id | bigint, FK->users | Superadmin que la creó |
 | status | boolean, default:1 | Activa/inactiva |
@@ -233,19 +235,13 @@ Siguiendo las convenciones del código existente (snake_case plural):
 
 **Unique:** (`ensemble_id`, `user_id`)
 
-### 5.3. `ensemble_score` (partituras del repositorio privado)
+### 5.3. `music_scores` — columnas añadidas
 
 | Columna | Tipo | Notas |
 |---------|------|-------|
-| id | bigint, PK | |
-| ensemble_id | bigint, FK->ensembles | |
-| music_score_id | bigint, FK->music_scores | Opcional si la partitura existe en catálogo |
-| name | string | Nombre visible en el repositorio |
-| description | text, nullable | |
-| folder | string, nullable | Carpeta dentro del repositorio |
-| uploaded_by | bigint, FK->users | Quién la subió |
-| status | boolean, default:1 | |
-| created_at / updated_at | timestamps | |
+| ensemble_id | bigint, FK->ensembles, nullable | null = catálogo global, not null = partitura privada del ensemble |
+| uploaded_by | bigint, FK->users, nullable | Quién subió la partitura |
+| folder | string, nullable | Carpeta dentro del repositorio del ensemble |
 
 ### 5.4. `rehearsals`
 
@@ -262,7 +258,17 @@ Siguiendo las convenciones del código existente (snake_case plural):
 | status | boolean, default:1 | |
 | created_at / updated_at | timestamps | |
 
-### 5.5. `setlists` (local en app móvil)
+### 5.5. `ensemble_folders`
+
+| Columna | Tipo | Notas |
+|---------|------|-------|
+| id | bigint, PK | |
+| ensemble_id | bigint, FK->ensembles | |
+| name | string | Nombre de la carpeta |
+| parent_id | bigint, FK->ensemble_folders, nullable | Auto-referencia para subcarpetas |
+| created_at / updated_at | timestamps | |
+
+### 5.6. `setlists` (local en app móvil)
 
 El Setlist es una funcionalidad **local** que no requiere tabla en backend.
 Los datos se almacenan en el dispositivo mediante **Hive** (ya implementado en la app).
@@ -276,10 +282,11 @@ Siguiendo la convención existente (PascalCase, snake_case table names):
 
 | Modelo | Tabla | Relaciones clave |
 |--------|-------|-----------------|
-| `Ensemble` | `ensembles` | belongsToMany(User via ensemble_user), hasMany(EnsembleScore), hasMany(Rehearsal) |
+| `Ensemble` | `ensembles` | belongsToMany(User via ensemble_user), hasMany(MusicScore via ensemble_id), hasMany(Rehearsal), hasMany(EnsembleFolder) |
 | `EnsembleUser` | `ensemble_user` | belongsTo(Ensemble), belongsTo(User) |
-| `EnsembleScore` | `ensemble_score` | belongsTo(Ensemble), belongsTo(MusicScore, nullable), belongsTo(User as uploader) |
+| `EnsembleFolder` | `ensemble_folders` | belongsTo(Ensemble), hasMany(EnsembleFolder as children), belongsTo(EnsembleFolder as parent) |
 | `Rehearsal` | `rehearsals` | belongsTo(Ensemble), belongsTo(User as instructor) |
+| `MusicScore` (actualizar) | `music_scores` | belongsTo(Ensemble, nullable via ensemble_id), belongsTo(User as uploader) |
 
 No se requiere modelo para Setlist (es local).
 

@@ -45,38 +45,35 @@ _Actualizado: 2026-07-10_
 
 ---
 
-## 2. Pendiente para Julio — 42 tareas
+## 2. Pendiente para Julio — 39 tareas
 
-### Backend — Base de Datos (7 tareas)
+### Backend — Base de Datos (6 tareas)
 
 | # | Tarea | Prioridad |
 |---|---|---|
-| 1 | Migración: `agrupacion_id` y `uploaded_by` a `music_scores` | Alta |
-| 2 | Crear tabla `agrupaciones` | Alta |
-| 3 | Crear tabla `affiliations` | Alta |
+| 1 | Migración: `ensemble_id`, `uploaded_by` y `folder` a `music_scores` | Alta |
+| 2 | Crear tabla `ensembles` | Alta |
+| 3 | Crear tabla `ensemble_user` | Alta |
 | 4 | Crear tabla `rehearsals` | Alta |
-| 5 | Crear tabla `agrupacion_folders` | Media |
-| 6 | Crear tabla `setlists` | Alta |
-| 7 | Crear tabla `setlist_items` | Alta |
+| 5 | Crear tabla `ensemble_folders` | Media |
 
 ### Backend — Modelos (2 tareas)
 
 | # | Tarea | Prioridad |
 |---|---|---|
-| 8 | Actualizar `MusicScore`: belongsTo Agrupacion + User (uploaded_by) | Alta |
-| 9 | Endpoint `GET /api/user/agrupaciones-status` | Alta |
+| 6 | Actualizar `MusicScore`: belongsTo Ensemble + User (uploaded_by) | Alta |
+| 7 | Endpoint `GET /api/user/ensemble-status` | Alta |
 
-### Backend — API (7 tareas)
+### Backend — API (6 tareas)
 
 | # | Tarea | Prioridad |
 |---|---|---|
-| 10 | `AuthController`: login, register, logout, me, agrup-status, refresh | Alta |
-| 11 | `AgrupacionController` CRUD | Alta |
-| 12 | `AffiliationController`: members, join, leave, role | Alta |
-| 13 | `RehearsalController` CRUD | Alta |
-| 14 | `AgrupacionScoreController`: scores privados por agrupación | Alta |
-| 15 | `SetlistController` CRUD | Alta |
-| 16 | `SetlistItemController`: reorder items, devolver setlist ordenado | Alta |
+| 8 | `AuthController`: login (con cif opcional), register, logout, me, ensemble-status, refresh | Alta |
+| 9 | `EnsembleController` CRUD | Alta |
+| 10 | `EnsembleMemberController`: members, join, leave, role | Alta |
+| 11 | `RehearsalController` CRUD | Alta |
+| 12 | `EnsembleScoreController`: scores privados (music_scores con ensemble_id) | Alta |
+| 13 | `EnsembleFolderController`: CRUD carpetas | Media |
 
 ### Backend — Storage (2 tareas)
 

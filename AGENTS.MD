@@ -86,7 +86,7 @@ cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter b
 
 ### Base de datos
 - DB: `web2` (copia de `faristol`)
-- Usuario: `faristol` (mismo que producción)
+- Usuario: `web2` (mismo que producción)
 - Los PDFs se generan localmente con Chrome headless (igual que producción)
 
 ### Superadmin MySQL
@@ -122,7 +122,7 @@ cd ~/apps_flutter/visorweb2 && flutter clean && flutter pub upgrade && flutter b
 
 ### Base de datos
 - **Nombre:** `web2`
-- **Usuario:** `faristol`
+- **Usuario:** `web2`
 - **Superadmin:** guardado en `/root/.mysql_admin_credentials`
 - **PDFs:** Se generan localmente con Chrome headless. No usan S3/Wasabi.
 - **Tabla `files_s3_s`:** 353 registros de datos huérfanos (no los lee la app).
