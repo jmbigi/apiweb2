@@ -99,6 +99,30 @@ class EnsembleFolder extends Model {
 }
 ```
 
+**Validación PATH_MAX (4096):** Al crear o renombrar una carpeta, calcular longitud total de la ruta y rechazar si excede 4096 caracteres:
+
+```php
+// En EnsembleFolderController o FormRequest
+$basePath = storage_path("app/music_scores/ensembles/{$ensembleId}/");
+$fullPath = $basePath . $this->buildFolderPath($request->name, $request->parent_id);
+
+if (strlen($fullPath) > 4096) {
+    throw new \Illuminate\Validation\ValidationException(
+        'La ruta completa excede el límite de 4096 caracteres'
+    );
+}
+
+private function buildFolderPath(string $name, ?int $parentId): string {
+    $path = $name;
+    while ($parentId) {
+        $parent = EnsembleFolder::findOrFail($parentId);
+        $path = $parent->name . '/' . $path;
+        $parentId = $parent->parent_id;
+    }
+    return $path;
+}
+```
+
 ### 1.5. `rehearsals`
 
 ```php

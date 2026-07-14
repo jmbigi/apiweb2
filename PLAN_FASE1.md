@@ -30,6 +30,8 @@ web2.faristol.net/
 | `rehearsals` | id, ensemble_id, title, date, time, location, instructor_id (FK users), notes, status, timestamps |
 | `ensemble_folders` | id, ensemble_id, name, parent_id (nullable self-ref), timestamps |
 
+**Validación:** Al crear/renombrar carpeta, verificar que `longitud(ruta_completa) ≤ 4096` (PATH_MAX). Ruta: `storage/app/music_scores/ensembles/{id}/{carpeta1}/{carpeta2}/...`
+
 ### Modelos Eloquent
 
 - `Ensemble` — belongsToMany User via ensemble_user, hasMany MusicScore, hasMany Rehearsal, hasMany EnsembleFolder

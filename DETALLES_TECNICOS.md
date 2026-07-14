@@ -268,6 +268,8 @@ Siguiendo las convenciones del código existente (snake_case plural):
 | parent_id | bigint, FK->ensemble_folders, nullable | Auto-referencia para subcarpetas |
 | created_at / updated_at | timestamps | |
 
+**Validación:** Toda la ruta concatenada (`storage/app/music_scores/ensembles/{id}/carpeta1/carpeta2/...`) no debe exceder 4096 caracteres (PATH_MAX de Linux).
+
 ### 5.6. `setlists` (local en app móvil)
 
 El Setlist es una funcionalidad **local** que no requiere tabla en backend.
