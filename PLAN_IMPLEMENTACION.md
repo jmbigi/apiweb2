@@ -144,9 +144,48 @@ Schema::create('rehearsals', function (Blueprint $table) {
 
 ---
 
-## 2. Backend — Endpoints API
+## 2. Almacenamiento S3
 
-### 2.1. Login unificado (Control App + Faristol App)
+**El S3 no distingue público/privado.** El control de acceso se hace en la aplicación (scopes de Laravel), no en el almacenamiento.
+
+- Mismo bucket Wasabi S3 que producción (`AWS_BUCKET` en `.env`, ej: `faristol-web2` para pruebas).
+- Misma estructura de archivos que partituras públicas — **sin carpeta `ensembles/` separada**.
+- No se crea un disco nuevo en `config/filesystems.php`; se reutiliza el disco `s3` existente.
+- Los archivos subidos por un ensemble conviven con las partituras públicas en el mismo bucket.
+
+---
+
+## 3. Control de acceso en listados de partituras
+
+**Problema:** Los endpoints públicos de listado (`GET /api/music-score/list`, `/list-filtered`, `/allmusic`) no deben exponer partituras privadas de ensembles.
+
+**Solución:** Scope local `publicOrAccessible()` en `MusicScore`:
+
+```php
+// app/Models/MusicScore.php
+public function scopePublicOrAccessible(Builder $query, ?User $user): void {
+    $query->whereNull('music_scores.ensemble_id')  // siempre públicas
+        ->when($user, function ($q) use ($user) {
+            $ensembleIds = $user->ensembles()
+                ->wherePivot('status', true)
+                ->pluck('ensembles.id');
+            if ($ensembleIds->isNotEmpty()) {
+                $q->orWhereIn('music_scores.ensemble_id', $ensembleIds);
+            }
+        });
+}
+```
+
+**Uso en cada endpoint de listado:**
+```php
+MusicScore::publicOrAccessible(Auth::user())->get();
+```
+
+---
+
+## 4. Backend — Endpoints API
+
+### 4.1. Login unificado (Control App + Faristol App)
 
 **Archivo a modificar:** Controlador existente de login (o nuevo `ApiAuthController`)
 
@@ -177,7 +216,7 @@ Respuesta extra cuando incluye `cif`:
 }
 ```
 
-### 2.2. Rutas de Ensembles
+### 4.2. Rutas de Ensembles
 
 **Archivo a modificar:** `routes/api.php`
 **Patrón existente:** Las rutas públicas y autenticadas ya están definidas (174 líneas).
@@ -202,7 +241,7 @@ Route::post('/ensembles/{ensemble}/rehearsals', [EnsembleController::class, 'cre
 
 ---
 
-## 3. Backend — Premium Lógico
+## 5. Backend — Premium Lógico
 
 **Archivo a modificar:** `app/Services/SubscriptionService.php`
 
@@ -224,7 +263,7 @@ Y agregar al array de retorno (sin eliminar nada existente):
 
 ---
 
-## 4. Flutter — Menú "Ensembles"
+## 6. Flutter — Menú "Ensembles"
 
 **Archivo a modificar 1:** `lib/src/utils/menu/menu_page.dart`
 
@@ -253,7 +292,7 @@ case MenuItems.ensembles:
 
 ---
 
-## 5. Flutter — API Calls
+## 7. Flutter — API Calls
 
 **Archivo a modificar 1:** `lib/src/network/api_service.dart`
 

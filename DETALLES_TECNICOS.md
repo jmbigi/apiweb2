@@ -164,6 +164,9 @@ POST /api/auth/login                    → Login. Body: { email, password, cif?
 POST /api/auth/user/signup
 ```
 
+**Nota:** Los endpoints `GET /api/music-score/list`, `/list-filtered`, `/allmusic` deben aplicar el scope
+`publicOrAccessible()` para no exponer partituras privadas de ensembles a usuarios no miembros.
+
 ### 4.2. Autenticados (middleware: `auth:sanctum`, `check_active`)
 
 ```
@@ -365,8 +368,11 @@ polimórfica `files_s3_s` con `storagePlace = 'Wasabi'`.
 ### 9.2. Partituras de agrupaciones
 
 Las partituras del repositorio privado de agrupaciones se almacenan
-en el mismo Wasabi, referenciadas desde `ensemble_score`.
-El archivo físico se guarda de forma similar a las partituras existentes.
+en el mismo Wasabi, mismo bucket que las públicas (el S3 no distingue
+público/privado). El control de acceso se hace en la aplicación (scope
+`publicOrAccessible()` en `MusicScore`, filtra por `ensemble_id`).
+El archivo físico usa la misma estructura que las partituras existentes.
+No se usa disco `s3` separado ni carpeta `ensembles/` en S3.
 
 ### 9.3. Setlist
 

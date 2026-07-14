@@ -44,8 +44,22 @@ _Setlist es local (Hive en el dispositivo), no requiere modelo backend._
 
 ### Almacenamiento de archivos
 
-- Carpeta: `storage/app/music_scores/` (misma que partituras globales, plana, sin subcarpetas por ensemble)
-- Para agosto: migrar a S3 con ruta `ensembles/{id}/{filename}` (a discutir con CTO)
+- Mismo sistema que app Android: subida directa a Wasabi S3.
+- **El S3 no distingue público/privado.** El control de acceso es en la app (Laravel), no en el almacenamiento.
+- Mismo bucket que producción (`AWS_BUCKET` en `.env`). Sin carpeta `ensembles/` separada.
+- No se crea disco nuevo en `filesystems.php`; se reutiliza el disco `s3` existente.
+
+### Control de acceso en listados de partituras
+
+Los endpoints de listado/búsqueda (`GET /api/music-score/list`, `/list-filtered`, `/allmusic`, etc.) deben filtrar según permisos:
+
+| Usuario | Scores visibles |
+|---------|----------------|
+| No autenticado | Solo `WHERE ensemble_id IS NULL` (catálogo público) |
+| Autenticado + miembro de ensembles | Públicos `UNION` privados de sus ensembles donde `ensemble_user.status = 1` |
+| Autenticado sin ensembles | Solo públicos |
+
+Implementar como **scope global** en `MusicScore` o **scope local** `publicOrAccessible(User)` aplicado en cada endpoint de listado.
 
 ### Premium automático (no backend)
 
