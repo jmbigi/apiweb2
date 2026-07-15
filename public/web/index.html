@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Description with Keywords -->
+  <meta name="description"
+    content="Faristol es una plataforma para músicos y compositores, ofreciendo acceso a partituras musicales con diferentes planes de suscripción y herramientas exclusivas. Protege los derechos de autor.">
+  <meta name="keywords"
+    content="Faristol, música, compositores, partituras, suscripción, música en línea, protección de derechos de autor">
+
+  <!-- Social Media / Open Graph -->
+  <meta property="og:title" content="Faristol - Partituras para Músicos y Compositores">
+  <meta property="og:description"
+    content="Con Faristol, conecta con partituras musicales exclusivas. Ideal para músicos y compositores con planes de suscripción y protección de derechos de autor.">
+  <meta property="og:image" content="https://faristol.net/icons/Icon-512.png">
+  <meta property="og:url" content="https://faristol.net">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://faristol.net">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Faristol">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <title>Faristol - Plataforma de Partituras para Músicos y Compositores</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    const serviceWorkerVersion = '"2568840347" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */';
+  </script>
+  <script src="flutter.js" defer></script>
+
+  <style>
+    html {
+      background-color: #0C1934;
+    }
+    h1 {
+      text-align: center;
+      color: antiquewhite;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="title">Faristol - Plataforma de Partituras para Músicos y Compositores</h1>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.worker.min.js";
+    pdfRenderOptions = {
+      cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/cmaps/',
+      cMapPacked: true,
+    }
+  </script>
+  <script>
+    window.addEventListener('load', function (ev) {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(function (appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

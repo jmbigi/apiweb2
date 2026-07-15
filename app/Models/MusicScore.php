@@ -63,4 +63,33 @@ class MusicScore extends Model
     {
         return $this->hasMany(LogViewMusicScoreDetail::class);
     }
+
+    public function ensemble()
+    {
+        return $this->belongsTo(Ensemble::class, 'ensemble_id');
+    }
+
+    public function uploader()
+    {
+        return $this->belongsTo(User::class, 'uploaded_by');
+    }
+
+    public function folder()
+    {
+        return $this->belongsTo(EnsembleFolder::class, 'ensemble_folder_id');
+    }
+
+    public function scopePublicOrAccessible(Builder $query, ?User $user = null)
+    {
+        $query->where(function ($q) {
+            $q->whereNull('ensemble_id');
+        });
+
+        if ($user) {
+            $ensembleIds = $user->ensembles()->pluck('ensembles.id');
+            if ($ensembleIds->isNotEmpty()) {
+                $query->orWhereIn('ensemble_id', $ensembleIds);
+            }
+        }
+    }
 }

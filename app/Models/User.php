@@ -84,4 +84,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(LogViewMusicScoreDetail::class);
     }
+
+    public function ensembles()
+    {
+        return $this->belongsToMany(Ensemble::class, 'ensemble_user')
+            ->withPivot('role', 'status')
+            ->withTimestamps();
+    }
+
+    public function rehearsalsAsInstructor()
+    {
+        return $this->hasMany(Rehearsal::class, 'instructor_id');
+    }
 }
