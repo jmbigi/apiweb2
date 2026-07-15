@@ -1,0 +1,90 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Facade;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('composer_status', function(Blueprint $table){
+            $table->id();
+            $table->string('name');                        
+            $table->timestamps();
+        });
+        
+        /* Insertar datos en la tabla composer_status */
+        DB::table('composer_status')->insert([
+            ['name' => 'Pendiente'],
+            ['name' => 'Activo'],
+            ['name' => 'Rechazado'],
+            ['name' => 'Suspendido']            
+        ]);
+
+        
+        Schema::create('request_status', function(Blueprint $table){
+            $table->id();
+            $table->string('name');                        
+            $table->timestamps();
+        });
+        /* Insertar datos en la tabla composer_status */
+        DB::table('request_status')->insert([
+            ['name' => 'Pendiente'],
+            ['name' => 'En curso'],
+            ['name' => 'Terminado']
+        ]);
+
+        Schema::table('composers', function(Blueprint $table){
+            $table->dropColumn('approved');
+            $table->dropColumn('request');
+        });        
+        
+        Schema::table('composer_request', function(Blueprint $table)
+        {
+            $table->dropColumn('request_status');
+            $table->dropColumn('approved');
+            $table->dropColumn('approved_date');
+            // $table->renameColumn('approved_by', 'updated_by'); 
+            DB::statement('ALTER TABLE composer_request CHANGE approved_by updated_by bigint');  
+
+            $table->unsignedBigInteger('composer_status_id')->nullable();
+            $table->unsignedBigInteger('request_status_id')->nullable();            
+            $table->foreign('composer_status_id')->references('id')->on('composer_status')->onDelete('set null');
+            $table->foreign('request_status_id')->references('id')->on('request_status')->onDelete('set null');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+
+    public function down(): void
+    {
+        Schema::dropIfExists('composer_status');
+        Schema::dropIfExists('request_status');
+        Schema::table('composer_request', function(Blueprint $table)
+        {
+            $table->dropForeign(['composer_status_id']);
+            $table->dropForeign(['request_status_id']);
+            $table->dropColumn('composer_status_id');
+            $table->dropColumn('request_status_id');
+            $table->enum('request_status',['Pendiente','En curso','Terminado'])->default('Pendiente');
+            $table->boolean('approved');
+            $table->datetime('approved_date');
+        //    $table->renameColumn('updated_by', 'approved_by');
+
+            DB::statement('ALTER TABLE composer_request CHANGE updated_by approved_by bigint');
+
+
+        });
+        Schema::table('composers', function(Blueprint $table){
+            $table->string('approved');
+            $table->string('request');
+        });
+    }
+};
