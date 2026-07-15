@@ -34,8 +34,8 @@ use Maatwebsite\Excel\Facades\Excel;
 */
 
 Route::get('/', function () {
-  return redirect('login');
-})->name('welcome');
+  return view('home');
+})->name('home');
 
 
 Route::group(['middleware' => ['auth', 'verified', 'check_token']], function () {
