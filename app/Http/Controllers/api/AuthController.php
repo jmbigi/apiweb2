@@ -27,6 +27,7 @@ use App\Events\UserRegisteredEvent;
 use App\Services\SubscriptionService;
 
 use Illuminate\Support\Str;
+use App\Models\Ensemble;
 
 //TODO: hace falta refactorizar a lo loco. La mitad de lo que esta en este fichero va fuera o en otras capas.
 
@@ -56,7 +57,8 @@ class AuthController extends Controller
                 $request->all(),
                 [
                     'email' => 'required|email',
-                    'password' => 'required'
+                    'password' => 'required',
+                    'cif' => 'nullable|string|max:20|exists:ensembles,cif',
                 ]
             );
 
@@ -118,6 +120,29 @@ class AuthController extends Controller
 
             $request->user()->tokens()->delete();
 
+            $ensembleData = null;
+            if ($request->cif) {
+                $ensemble = Ensemble::where('cif', $request->cif)->first();
+                if ($ensemble) {
+                    $membership = $ensemble->members()
+                        ->where('user_id', $user->id)
+                        ->where('ensemble_user.status', true)
+                        ->first();
+                    if (!$membership) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'User is not an active member of this ensemble',
+                        ], 403);
+                    }
+                    $ensembleData = [
+                        'id' => $ensemble->id,
+                        'name' => $ensemble->name,
+                        'cif' => $ensemble->cif,
+                        'role' => $membership->pivot->role,
+                    ];
+                }
+            }
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
@@ -130,6 +155,7 @@ class AuthController extends Controller
                 'subscribed_user' => $subscribed_user,
                 'subscription_plan' => $subscription_plan,
                 'subscription_data' => $subscription_data,
+                'ensemble' => $ensembleData,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

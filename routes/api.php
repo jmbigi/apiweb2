@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\ComposerController;
+use App\Http\Controllers\EnsembleController;
 use App\Http\Controllers\FamilyInstrumentController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\MusicScoreController;
@@ -170,5 +171,42 @@ Route::middleware(['auth:sanctum', 'check_active'])->group(function () {
     Route::prefix('inapp-subscription')->group(function () {
         Route::post('/sync-subscribe', [InAppSubscriptionController::class, 'syncSubscribe'])->name('inapp-subscribe');
         Route::post('/apply-premium-trial', [InAppSubscriptionController::class, 'applyPremiumTrail'])->name('inapp-apply-premium-trial');
+    });
+
+    // User ensemble status (premium logic)
+    Route::get('/user/ensemble-status', [EnsembleController::class, 'ensembleStatus']);
+
+    // My ensembles
+    Route::get('/my-ensembles', [EnsembleController::class, 'myEnsembles']);
+
+    // Ensembles (admin only for create/update/delete)
+    Route::prefix('ensembles')->group(function () {
+        Route::get('/', [EnsembleController::class, 'index']);
+        Route::post('/', [EnsembleController::class, 'store']);
+        Route::get('/{ensemble}', [EnsembleController::class, 'show']);
+        Route::put('/{ensemble}', [EnsembleController::class, 'update']);
+        Route::delete('/{ensemble}', [EnsembleController::class, 'destroy']);
+
+        // Members
+        Route::get('/{ensemble}/members', [EnsembleController::class, 'members']);
+        Route::post('/{ensemble}/members', [EnsembleController::class, 'addMember']);
+        Route::put('/{ensemble}/members/{user}', [EnsembleController::class, 'updateMember']);
+        Route::delete('/{ensemble}/members/{user}', [EnsembleController::class, 'removeMember']);
+
+        // Folders
+        Route::get('/{ensemble}/folders', [EnsembleController::class, 'folders']);
+        Route::post('/{ensemble}/folders', [EnsembleController::class, 'storeFolder']);
+        Route::put('/folders/{folder}', [EnsembleController::class, 'updateFolder']);
+        Route::delete('/folders/{folder}', [EnsembleController::class, 'destroyFolder']);
+
+        // Scores
+        Route::get('/{ensemble}/scores', [EnsembleController::class, 'scores']);
+        Route::post('/{ensemble}/scores', [EnsembleController::class, 'storeScore']);
+
+        // Rehearsals
+        Route::get('/{ensemble}/rehearsals', [EnsembleController::class, 'rehearsals']);
+        Route::post('/{ensemble}/rehearsals', [EnsembleController::class, 'storeRehearsal']);
+        Route::put('/rehearsals/{rehearsal}', [EnsembleController::class, 'updateRehearsal']);
+        Route::delete('/rehearsals/{rehearsal}', [EnsembleController::class, 'destroyRehearsal']);
     });
 });
