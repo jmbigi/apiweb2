@@ -28,3 +28,5 @@ actualizar_rama_produccion.sh
 instalar_y_refrescar.sh
 docs/
 route_list.txt
+/public/visorweb2/
+/public/control-app/

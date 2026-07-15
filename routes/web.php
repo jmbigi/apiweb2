@@ -35,7 +35,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/', function () {
   return view('home');
-})->name('home');
+})->name('welcome');
 
 
 Route::group(['middleware' => ['auth', 'verified', 'check_token']], function () {
