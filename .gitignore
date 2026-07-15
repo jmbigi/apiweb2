@@ -20,3 +20,11 @@ yarn-error.log
 .htaccess
 run-dev.sh
 artisan-routes.sh
+/public/cache/
+/public/web/
+/public/sitemap.xml
+.env.testing
+actualizar_rama_produccion.sh
+instalar_y_refrescar.sh
+docs/
+route_list.txt
