@@ -50,10 +50,15 @@
 31. **Tests Feature:** corren contra SQLite en memoria. Migraciones existentes con sintaxis MySQL (`ALTER TABLE ... CHANGE`) fallaran -- es esperado.
 32. **Cobertura:** todo codigo nuevo/modificado debe tener tests.
 
+## Reglas para Flutter Web
+33. **Probar siempre las apps Flutter web en el navegador** después de cualquier cambio en el código Flutter. Usar `webfetch` para verificar que la app carga sin errores HTTP 404/500.
+34. **Revisar todos los errores de consola del navegador.** Usar `grep` en los archivos compilados (`main.dart.js`) para buscar patrones de error (`Error`, `Exception`, `null`, `undefined`) que puedan indicar problemas en tiempo de ejecución.
+35. **Automatizar la verificación** comprobando que las rutas principales de cada app responden 200: `/visorweb2/`, `/control-app/`, y que no hay assets faltantes (archivos JS, CSS, imágenes referenciados pero no existentes).
+
 ## Lecciones aprendidas (errores anteriores)
-33. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
-34. **Las credenciales MySQL del `.env` pueden estar obsoletas.** No asumir que funcionan. Verificar antes de usarlas.
-35. **No crear archivos nuevos sin preguntar.** Confirmar con el usuario antes.
+36. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
+37. **Las credenciales MySQL del `.env` pueden estar obsoletas.** No asumir que funcionan. Verificar antes de usarlas.
+38. **No crear archivos nuevos sin preguntar.** Confirmar con el usuario antes.
 
 ## Procedimientos para web2.faristol.net (Demo2)
 
