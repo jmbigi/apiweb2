@@ -72,9 +72,8 @@ class Menu
             $user = auth()->user(); // Retrieve the authenticated user
             $user->load('roles'); // Load the user's roles
             $userRoles = $user->roles->pluck('name')->all(); // Get an array of role names
-            $userRole = $userRoles[0];            
             
-            if (isset($item['roles']) && in_array($userRole, $item['roles'])) {
+            if (isset($item['roles']) && !empty(array_intersect($userRoles, $item['roles']))) {
 
                 echo '<li class="menu-item ' . $item_class . '" aria-haspopup="true" ' . $item_attr . '>';
                 if (isset($item['parent'])) {

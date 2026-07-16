@@ -17,7 +17,7 @@ return [
             'page' => '/users',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'Composers',
@@ -25,7 +25,7 @@ return [
             'page' => '/composers',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'Composer Request',
@@ -33,7 +33,7 @@ return [
             'page' => '/composer_request',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'Subscription Plan',
@@ -41,7 +41,7 @@ return [
             'page' => '/subscription-plan',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'Subscribed User',
@@ -49,7 +49,7 @@ return [
             'page' => '/subscribed-user',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'Instrument',
@@ -57,7 +57,7 @@ return [
             'page' => '/instruments',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'StyleMusic',
@@ -65,7 +65,7 @@ return [
             'page' => '/style-music',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'FamilyInstrument',
@@ -73,7 +73,7 @@ return [
             'page' => '/family-instruments',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'Music Score',
@@ -81,7 +81,7 @@ return [
             'page' => '/music-score',
             'bullet' => 'line',
             'root' => true,
-            'roles' => ['superadmin','composer'],
+            'roles' => ['superadmin'],
         ],
         [
             'title' => 'Ensembles',
