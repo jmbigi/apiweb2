@@ -1,6 +1,6 @@
 # Versión Julio 2026 — Faristol web2
 
-_Actualizado: 2026-07-14_
+_Actualizado: 2026-07-16_
 
 ---
 
@@ -26,85 +26,97 @@ _Actualizado: 2026-07-14_
 | Limpiar basura (cache/, sitemaps, SEO) | Hecho |
 | Copiar API producción → web2 | Hecho |
 | composer install + npm install | Hecho |
-| .env configurado (DB web2, AWS_BUCKET=faristol-web2) | Hecho |
+| .env configurado (DB web2, AWS_BUCKET=faristol-web2, Wasabi S3) | Hecho |
 | Migraciones existentes aplicadas | Hecho |
+
+### Backend — Base de Datos
+| # | Tarea | Estado |
+|---|---|---|
+| 1 | Migración: `ensemble_id`, `uploaded_by`, `ensemble_folder_id` a `music_scores` | ✅ |
+| 2 | Crear tabla `ensembles` | ✅ |
+| 3 | Crear tabla `ensemble_user` | ✅ |
+| 4 | Crear tabla `rehearsals` | ✅ |
+| 5 | Crear tabla `ensemble_folders` | ✅ |
+
+### Backend — Modelos
+| # | Tarea | Estado |
+|---|---|---|
+| 6 | Actualizar `MusicScore`: belongsTo Ensemble + User (uploaded_by) | ✅ |
+| 7 | Crear modelo `Ensemble`, `EnsembleUser`, `EnsembleFolder`, `Rehearsal` | ✅ |
+| — | Scope `publicOrAccessible()` en MusicScore | ✅ |
+
+### Backend — API
+| # | Tarea | Estado |
+|---|---|---|
+| 8 | `AuthController`: login con cif opcional | ✅ |
+| 9 | `EnsembleController` CRUD (index, store, show, update, destroy) | ✅ |
+| 10 | Members CRUD (add, update, remove) | ✅ |
+| 11 | Rehearsals CRUD (store, update, destroy) | ✅ |
+| 12 | Scores CRUD (list, store) | ✅ |
+| 13 | Folders CRUD (store, update, destroy) | ✅ |
+| — | Bulk upload scores (multi-PDF) | ✅ |
+| — | User lookup by email (para invitar miembros) | ✅ |
+| — | ensemble-status endpoint | ✅ |
+| — | my-ensembles endpoint | ✅ |
+
+### Landing Page
+| # | Tarea | Estado |
+|---|---|---|
+| 14 | Vista `home.blade.php` con 2 cards (Faristol App + Control App) | ✅ |
+
+### Flutter — Subdirectorios
+| # | Tarea | Estado |
+|---|---|---|
+| 15 | Servir `public/visorweb2/` con base href `/visorweb2/` | ✅ |
+| 16 | Servir `public/control-app/` con base href `/control-app/` | ✅ |
+
+### Flutter — visorweb2
+| # | Tarea | Estado |
+|---|---|---|
+| 17 | Cambiar API base a `web2.faristol.net` | ✅ |
+| 18 | Menú hamburguesa con ítem Ensembles | ✅ |
+| 19 | Pantalla My Ensembles | ✅ |
+| 20 | Pantalla Ensemble Detail (rehearsals) | ✅ |
+| 21 | Visor Setlist (atril virtual + player + reorder) | ✅ |
+| 22 | Premium automático (is_ensemble_member flag) | ✅ |
+| — | Botón "Add to setlist" en music score detail | ✅ |
+
+### Flutter — Control App
+| # | Tarea | Estado |
+|---|---|---|
+| 24 | Proyecto Flutter create | ✅ |
+| 25 | Pantalla Login (con CIF opcional) | ✅ |
+| 26 | Dashboard: sidebar, stats cards, gráficos | ✅ |
+| — | Miembros CRUD (añadir/editar/eliminar) | ✅ |
+| — | Repertorio: listado partituras + filtrar por carpeta | ✅ |
+| — | Carpetas CRUD (crear/renombrar/eliminar) | ✅ |
+| — | Subida masiva de PDFs (multi-file → Wasabi) | ✅ |
+| — | Ensayos CRUD (crear/editar/eliminar) | ✅ |
+
+### S3 / Wasabi
+| Tarea | Estado |
+|---|---|
+| Wasabi S3 configurado (bucket `faristol-web2`) | ✅ |
+| Endpoint: `https://s3.us-west-1.wasabisys.com/` | ✅ |
+
+### QA básico
+| # | Tarea | Estado |
+|---|---|---|
+| 33 | Landing page + ambas apps Flutter responden 200 | ✅ |
 
 ---
 
-## 2. Pendiente para Julio — tareas
+## 2. Pendientes
 
-### Backend — Base de Datos (5 tareas)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 1 | Migración: `ensemble_id`, `uploaded_by` y `ensemble_folder_id` a `music_scores` | Alta |
-| 2 | Crear tabla `ensembles` | Alta |
-| 3 | Crear tabla `ensemble_user` | Alta |
-| 4 | Crear tabla `rehearsals` | Alta |
-| 5 | Crear tabla `ensemble_folders` | Media |
-
-### Backend — Modelos (2 tareas)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 6 | Actualizar `MusicScore`: belongsTo Ensemble + User (uploaded_by) | Alta |
-| 7 | Crear modelo `Ensemble`, `EnsembleUser`, `EnsembleFolder`, `Rehearsal` | Alta |
-
-### Backend — API (6 tareas)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 8 | `AuthController`: login con cif opcional, register, logout, me, ensemble-status, refresh | Alta |
-| 9 | `EnsembleController` CRUD | Alta |
-| 10 | `EnsembleMemberController`: members, join, leave, role | Alta |
-| 11 | `RehearsalController` CRUD | Alta |
-| 12 | `EnsembleScoreController`: scores privados (music_scores con ensemble_id) | Alta |
-| 13 | `EnsembleFolderController`: CRUD carpetas | Media |
-
-### Landing Page (1 tarea)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 14 | Vista `home.blade.php` con 2 cards (Faristol App + Control App) | Alta |
-
-### Flutter — Subdirectorios (2 tareas)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 15 | Servir `public/visorweb2/` con base href `/visorweb2/` | Alta |
-| 16 | Servir `public/control-app/` con base href `/control-app/` | Alta |
-
-### Flutter — visorweb2 (7 tareas)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 17 | Cambiar API base a `web2.faristol.net` | Alta |
-| 18 | Menú hamburguesa con ítem Ensembles | Media |
-| 19 | Pantalla My Ensembles | Alta |
-| 20 | Pantalla Rehearsals | Media |
-| 21 | Visor Setlist secuencial (atril virtual) | Alta |
-| 22 | Premium automático según affiliation | Media |
-| 23 | Ensemble folders en UI | Baja |
-
-### Flutter — Control App (4 tareas)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 24 | Proyecto Flutter create | Baja |
-| 25 | Pantalla Login | Baja |
-| 26 | Dashboard: sidebar, stats, gráficos | Baja |
-| 27 | Conversión a escritorio real (Electron/Windows) | Baja (Agosto) |
-
-### QA — Verificación (6 tareas)
-
-| # | Tarea | Prioridad |
-|---|---|---|
-| 28 | Tests API de production siguen pasando | Alta |
-| 29 | Tests nuevos para API de ensembles | Alta |
-| 30 | Verificar: partituras privadas NO visibles por no miembros | Alta |
-| 31 | Verificar: premium automático eleva plan en app | Alta |
-| 32 | Verificar: visor secuencial de setlist funciona | Alta |
-| 33 | Verificar: landing page + ambas apps Flutter funcionan | Alta |
+| # | Área | Tarea | Prioridad |
+|---|---|---|---|
+| 23 | visorweb2 | Ensemble folders en UI (navegación de carpetas) | Baja |
+| 27 | Control App | Conversión a escritorio real (Electron/Windows) | Baja (Agosto) |
+| 28 | QA | Tests API de production siguen pasando | Alta |
+| 29 | QA | Tests nuevos para API de ensembles | Alta |
+| 30 | QA | Verificar: partituras privadas NO visibles por no miembros | Alta |
+| 31 | QA | Verificar: premium automático eleva plan en app | Alta |
+| 32 | QA | Verificar: visor secuencial de setlist funciona | Alta |
 
 ---
 
@@ -116,10 +128,12 @@ _Actualizado: 2026-07-14_
 | Landing page | `/` con 2 cards de enlace |
 | Servir Flutter builds | Apache directo (`public/visorweb2/`, `public/control-app/`) |
 | Login Control App | API real de web2 (`/api/auth/login` con Sanctum + CIF) |
-| Bucket S3 | `faristol-web2` (mismo disco `s3` que producción) |
+| Bucket S3 | `faristol-web2` (disco `Wasabi` en filesystems.php) |
+| Credenciales Wasabi | Mismas que producción (gosite) |
 | SEO | No necesario para prototipo |
-| Setlist visor | Visor secuencial (atril virtual) con avance automático. Sin backend. |
+| Setlist visor | Visor secuencial con avance automático. Sin backend. |
 | Roles ensemble | `ensemble_user.role` (archivero, administrador, maestro, usuario) |
+| Ensemble CRUD | Solo superadmin desde backoffice (no en Control App) |
 
 ---
 
@@ -132,5 +146,8 @@ _Actualizado: 2026-07-14_
 | BD | MariaDB, DB `web2`, usuario `web2` |
 | Chrome headless | `/usr/bin/google-chrome` para PDFs |
 | Flutter SDK | 3.44.4 en `/usr/local/flutter/bin/flutter` |
-| visorweb2 | Pendiente de rebuild con base href `/visorweb2/` |
-| Git | `gitlab.com/libraryscores1/DesktopDemoWeb.git` rama `main` |
+| visorweb2 | Build en `public/visorweb2/` — funcionando |
+| control-app | Build en `public/control-app/` — funcionando |
+| Git (apiweb2) | `github.com/jmbigi/apiweb2.git` rama `main` |
+| Git (visorweb2) | `github.com/jmbigi/visorweb2.git` rama `main` |
+| Git (DesktopDemoWeb) | `gitlab.com/jmbigi/desktop-demo-web.git` rama `master` |

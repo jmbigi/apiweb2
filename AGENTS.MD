@@ -118,10 +118,12 @@ web2.faristol.net/
 
 ## Estado del proyecto
 
-### Rama y repositorio
-- Repo: `git@gitlab.com:libraryscores1/DesktopDemoWeb.git`
-- Rama: `main`
-- Repo visorweb2: `~/apps_flutter/visorweb2/` → `github.com/jmbigi/visorweb2.git` (rama `main`)
+### Repositorios
+| Proyecto | Ruta local | Remoto | Rama |
+|----------|-----------|--------|------|
+| API Backend | `/var/www/web2.faristol.net/` | `github.com/jmbigi/apiweb2.git` | `main` |
+| visorweb2 | `~/apps_flutter/visorweb2/` | `github.com/jmbigi/visorweb2.git` | `main` |
+| Control App | `~/apps_flutter/control-app-web/` | `gitlab.com/jmbigi/desktop-demo-web.git` | `master` |
 
 ### Servicios
 | Componente | Estado | Notas |
@@ -131,22 +133,29 @@ web2.faristol.net/
 | Chrome headless | ✅ Instalado | `/usr/bin/google-chrome` para PDFs |
 | Flutter SDK | ✅ 3.44.4 | `/usr/local/flutter/bin/flutter` |
 | API producción | ✅ Copiada | `~/apps_prod/API_Faristol` → web2 |
-| visorweb2 | Pendiente rebuild | Con base href `/visorweb2/` |
-| control_app | Pendiente crear | Proyecto nuevo Flutter |
+| visorweb2 | ✅ Deployed | `public/visorweb2/` — 200 OK |
+| control-app | ✅ Deployed | `public/control-app/` — 200 OK |
+| S3 Wasabi | ✅ Configurado | bucket `faristol-web2`, endpoint `s3.us-west-1.wasabisys.com` |
 
 ### Scripts disponibles
 | Script | Ruta | Función |
 |--------|------|---------|
-| `build_visorweb2.sh` | `/var/www/web2.faristol.net/build_visorweb2.sh` | Compila Flutter y despliega a `public/visorweb2/` |
-| `traer_visor_web.sh` | `/var/www/web2.faristol.net/traer_visor_web.sh` | Alternativo para desplegar visorweb2 |
+| `deploy_web.sh` | `/root/apps_flutter/deploy_web.sh` | Compila y despliega ambos Flutter web |
 | `actualizar_servidor.sh` | `/var/www/web2.faristol.net/actualizar_servidor.sh` | Git pull + composer + npm + cache clear |
-| `backend-dev-server.sh` | `/var/www/web2.faristol.net/backend-dev-server.sh` | Servidor PHP dev en puerto 8083 |
-| `certbot_testfile.sh` | `/var/www/web2.faristol.net/certbot_testfile.sh` | Prueba ACME Let's Encrypt |
 | `create_admin_safe.sh` | `/root/create_admin_safe.sh` | Crea usuarios superadmin MySQL |
 
 ### Base de datos
 - **Nombre:** `web2`
 - **Usuario:** `web2`
-- **Bucket S3:** `faristol-web2` (Wasabi)
+- **Bucket S3:** `faristol-web2` (Wasabi, us-west-1)
 - **PDFs:** Se generan localmente con Chrome headless
 - **SEO:** No aplica para web2 (sitemaps, robots.txt, ads.txt eliminados)
+
+### Pendientes QA
+1. Tests API de producción (`vendor/bin/phpunit`)
+2. Tests nuevos para API de ensembles
+3. Verificar: partituras privadas NO visibles por no miembros
+4. Verificar: premium automático eleva plan en app
+5. Verificar: visor secuencial de setlist funciona
+6. Ensemble folders en UI de visorweb2 (baja prioridad)
+7. Conversión Control App a escritorio real Electron/Windows (Fase 2)
