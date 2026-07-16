@@ -1,58 +1,58 @@
-ID;Área;RF;Tarea;Estado;Prioridad;Dominio;Observaciones;Preguntas
-1;Setup;—;Limpiar basura web2 (cache/, sitemaps, SEO);✅;Alta;apiweb2;public/cache/, sitemap.xml, sitemap-lang.xml, robots.txt, ads.txt, google*.html eliminados;—
-2;Setup;—;Copiar API producción → web2;✅;Alta;apiweb2;rsync desde ~/apps_prod/API_Faristol;—
-3;Setup;—;composer install + npm install;✅;Alta;apiweb2;Dependencias instaladas;—
-4;Setup;—;Configurar .env (DB, AWS, Wasabi);✅;Alta;apiweb2;DB web2/Web2DB2607, Wasabi bucket faristol-web2;—
-5;Setup;—;Migraciones existentes aplicadas;✅;Alta;apiweb2;php artisan migrate, todas OK;—
-6;BD;RF-04;Migración: ensemble_id + uploaded_by + ensemble_folder_id a music_scores;✅;Alta;apiweb2;alter_music_scores migration;—
-7;BD;RF-01;Crear tabla ensembles;✅;Alta;apiweb2;create_ensembles migration;—
-8;BD;RF-03;Crear tabla ensemble_user;✅;Alta;apiweb2;create_ensemble_user migration;—
-9;BD;RF-11;Crear tabla rehearsals;✅;Alta;apiweb2;create_rehearsals migration;—
-10;BD;RF-06;Crear tabla ensemble_folders;✅;Media;apiweb2;create_ensemble_folders migration;—
-11;BD;RF-06;Validación PATH_MAX 4096 en carpetas;✅;Media;apiweb2;Implementado en EnsembleController (buildFolderPath);—
-12;Modelos;RF-07;MusicScore: belongsTo Ensemble + User (uploaded_by);✅;Alta;apiweb2;scopePublicOrAccessible implementado;—
-13;Modelos;RF-08;Modelos Ensemble, EnsembleUser, EnsembleFolder, Rehearsal;✅;Alta;apiweb2;Con relaciones Eloquent;—
-14;API;RF-04;AuthController: login con CIF opcional;✅;Alta;apiweb2;Valida membresía activa, devuelve ensemble;—
-15;API;—;AuthController: register, logout, me, refresh;✅;Alta;apiweb2;Ya existía de producción, sin modificar;—
-16;API;RF-09;Endpoint ensemble-status;✅;Alta;apiweb2;GET /api/user/ensemble-status;—
-17;API;RF-01;EnsembleController: CRUD (index, store, show, update, destroy);✅;Alta;apiweb2;Solo superadmin para create/update/delete;—
-18;API;RF-17;EnsembleController: miembros CRUD;✅;Alta;apiweb2;addMember, updateMember, removeMember;—
-19;API;RF-06;EnsembleController: carpetas CRUD;✅;Media;apiweb2;storeFolder, updateFolder, destroyFolder;—
-20;API;RF-17;EnsembleController: scores (list, store);✅;Alta;apiweb2;scores, storeScore;—
-21;API;RF-11;EnsembleController: rehearsals CRUD;✅;Alta;apiweb2;storeRehearsal, updateRehearsal, destroyRehearsal;—
-22;API;—;Bulk upload scores (multi-PDF);✅;Alta;apiweb2;POST /ensembles/{id}/scores/bulk-upload;—
-23;API;—;User lookup by email;✅;Media;apiweb2;GET /api/users/lookup?email=;—
-24;API;—;Endpoint my-ensembles;✅;Alta;apiweb2;GET /api/my-ensembles;—
-25;Landing;—;home.blade.php con 2 cards;✅;Alta;apiweb2;Fondo #0C1934, enlaces a /visorweb2/ y /control-app/;—
-26;Subdirs;—;Servir public/visorweb2/ con base href /visorweb2/;✅;Alta;apiweb2;Apache sirve directo;—
-27;Subdirs;—;Servir public/control-app/ con base href /control-app/;✅;Alta;apiweb2;Apache sirve directo;—
-28;visorweb2;—;Cambiar API base a web2.faristol.net;✅;Alta;visorweb2;ApiConstants.baseUrl actualizado;—
-29;visorweb2;RF-08;Menú hamburguesa con ítem Ensembles;✅;Media;visorweb2;Añadido a menu_page.dart y mainpage.dart;—
-30;visorweb2;RF-03;Pantalla My Ensembles;✅;Alta;visorweb2;ensembles_page.dart con lista de ensembles del usuario;—
-31;visorweb2;RF-11;Pantalla Ensemble Detail (rehearsals);✅;Media;visorweb2;ensemble_detail_page.dart;—
-32;visorweb2;RF-14;Visor Setlist secuencial (atril virtual);✅;Alta;visorweb2;setlist_page.dart con play/pause/reorder;—
-33;visorweb2;—;Botón Add to Setlist en music score detail;✅;Alta;visorweb2;music_score_details_page.dart;—
-34;visorweb2;RF-09;Premium automático (is_ensemble_member flag);✅;Media;apiweb2+visorweb2;SubscriptionService + SubscriptionTypeModel;—
-35;visorweb2;RF-06;Ensemble folders en UI visorweb2;❌;Baja;visorweb2;No implementado. Solo en Control App;¿Necesario en visorweb2?
-36;Control App;RF-15;Proyecto Flutter create;✅;Baja;control-app-web;flutter create control-app-web;—
-37;Control App;RF-15;Pantalla Login con CIF opcional;✅;Baja;control-app-web;login_page.dart;—
-38;Control App;RF-17;Dashboard: sidebar, stats cards, actividad;✅;Baja;control-app-web;dashboard_page.dart;—
-39;Control App;RF-17;Gráficos dashboard (roles, ensayos por mes);✅;Baja;control-app-web;buildRoleChart + buildMonthlyChart;—
-40;Control App;RF-17;Miembros CRUD (añadir/editar/eliminar);✅;Alta;control-app-web;lookup + add/edit role + remove;—
-41;Control App;RF-17;Repertorio: listado partituras;✅;Alta;control-app-web;Con compositores e icono PDF;—
-42;Control App;RF-06;Carpetas: crear/renombrar/eliminar;✅;Alta;control-app-web;ChoiceChips + rename/delete dialogs;—
-43;Control App;RF-04;Subida masiva de PDFs (multi-file);✅;Alta;control-app-web+apiweb2;dart:html FileUploadInputElement → Wasabi S3;—
-44;Control App;RF-11;Ensayos CRUD (crear/editar/eliminar);✅;Alta;control-app-web;Formulario con fecha/hora/lugar;—
-45;Control App;RF-18;Sin visualización ni edición de partituras;✅;Alta;control-app-web;Cumplido — solo gestión;—
-46;Control App;RF-19;Sin pagos (sin Stripe);✅;Alta;control-app-web;Cumplido — sin integración de pagos;—
-47;Control App;—;Idioma español;✅;—;control-app-web;Toda la UI en español;—
-48;Control App;—;Conversión a escritorio real (Electron/Windows);⏳;Baja;control-app-web;Pendiente para Agosto;¿Electron o Flutter Windows nativo?
-49;S3;—;Wasabi S3 configurado;✅;Alta;apiweb2;Bucket faristol-web2, endpoint s3.us-west-1.wasabisys.com;—
-50;QA;—;Tests API producción siguen pasando;⏳;Alta;apiweb2;No ejecutados;¿Ejecutar vendor/bin/phpunit?
-51;QA;RF-04;Tests nuevos para API ensembles;⏳;Alta;apiweb2;No creados;¿Crear test suite?
-52;QA;RF-05;Verificar partituras privadas NO visibles por no miembros;⏳;Alta;apiweb2;No verificado;¿Probar con usuario no miembro?
-53;QA;RF-09;Verificar premium automático eleva plan;⏳;Alta;apiweb2+visorweb2;No verificado;¿Probar flujo completo?
-54;QA;RF-14;Verificar visor secuencial setlist funciona;⏳;Alta;visorweb2;No verificado;¿Probar en navegador?
-55;Documentación;—;VERSION_JULIO_2026.md actualizado;✅;—;apiweb2;Tracker de tareas actualizado a 2026-07-16;—
-56;Documentación;—;AGENTS.MD actualizado;✅;—;apiweb2;Reglas y estado actualizados;—
-57;Deploy;—;Script deploy_web.sh;✅;Alta;apiweb2;Compila y despliega ambos Flutter web;—
+ID;Área;RF;Tarea;Estado;Prioridad;Dominio;Observaciones;Preguntas;Respuestas
+1;Setup;—;Limpiar basura web2 (cache/, sitemaps, SEO);✅;Alta;apiweb2;public/cache/, sitemap.xml, sitemap-lang.xml, robots.txt, ads.txt, google*.html eliminados;—;
+2;Setup;—;Copiar API producción → web2;✅;Alta;apiweb2;rsync desde ~/apps_prod/API_Faristol;—;
+3;Setup;—;composer install + npm install;✅;Alta;apiweb2;Dependencias instaladas;—;
+4;Setup;—;Configurar .env (DB, AWS, Wasabi);✅;Alta;apiweb2;DB web2/Web2DB2607, Wasabi bucket faristol-web2;—;
+5;Setup;—;Migraciones existentes aplicadas;✅;Alta;apiweb2;php artisan migrate, todas OK;—;
+6;BD;RF-04;Migración: ensemble_id + uploaded_by + ensemble_folder_id a music_scores;✅;Alta;apiweb2;alter_music_scores migration;—;
+7;BD;RF-01;Crear tabla ensembles;✅;Alta;apiweb2;create_ensembles migration;—;
+8;BD;RF-03;Crear tabla ensemble_user;✅;Alta;apiweb2;create_ensemble_user migration;—;
+9;BD;RF-11;Crear tabla rehearsals;✅;Alta;apiweb2;create_rehearsals migration;—;
+10;BD;RF-06;Crear tabla ensemble_folders;✅;Media;apiweb2;create_ensemble_folders migration;—;
+11;BD;RF-06;Validación PATH_MAX 4096 en carpetas;✅;Media;apiweb2;Implementado en EnsembleController (buildFolderPath);—;
+12;Modelos;RF-07;MusicScore: belongsTo Ensemble + User (uploaded_by);✅;Alta;apiweb2;scopePublicOrAccessible implementado;—;
+13;Modelos;RF-08;Modelos Ensemble, EnsembleUser, EnsembleFolder, Rehearsal;✅;Alta;apiweb2;Con relaciones Eloquent;—;
+14;API;RF-04;AuthController: login con CIF opcional;✅;Alta;apiweb2;Valida membresía activa, devuelve ensemble;—;
+15;API;—;AuthController: register, logout, me, refresh;✅;Alta;apiweb2;Ya existía de producción, sin modificar;—;
+16;API;RF-09;Endpoint ensemble-status;✅;Alta;apiweb2;GET /api/user/ensemble-status;—;
+17;API;RF-01;EnsembleController: CRUD (index, store, show, update, destroy);✅;Alta;apiweb2;Solo superadmin para create/update/delete;—;
+18;API;RF-17;EnsembleController: miembros CRUD;✅;Alta;apiweb2;addMember, updateMember, removeMember;—;
+19;API;RF-06;EnsembleController: carpetas CRUD;✅;Media;apiweb2;storeFolder, updateFolder, destroyFolder;—;
+20;API;RF-17;EnsembleController: scores (list, store);✅;Alta;apiweb2;scores, storeScore;—;
+21;API;RF-11;EnsembleController: rehearsals CRUD;✅;Alta;apiweb2;storeRehearsal, updateRehearsal, destroyRehearsal;—;
+22;API;—;Bulk upload scores (multi-PDF);✅;Alta;apiweb2;POST /ensembles/{id}/scores/bulk-upload;—;
+23;API;—;User lookup by email;✅;Media;apiweb2;GET /api/users/lookup?email=;—;
+24;API;—;Endpoint my-ensembles;✅;Alta;apiweb2;GET /api/my-ensembles;—;
+25;Landing;—;home.blade.php con 2 cards;✅;Alta;apiweb2;Fondo #0C1934, enlaces a /visorweb2/ y /control-app/;—;
+26;Subdirs;—;Servir public/visorweb2/ con base href /visorweb2/;✅;Alta;apiweb2;Apache sirve directo;—;
+27;Subdirs;—;Servir public/control-app/ con base href /control-app/;✅;Alta;apiweb2;Apache sirve directo;—;
+28;visorweb2;—;Cambiar API base a web2.faristol.net;✅;Alta;visorweb2;ApiConstants.baseUrl actualizado;—;
+29;visorweb2;RF-08;Menú hamburguesa con ítem Ensembles;✅;Media;visorweb2;Añadido a menu_page.dart y mainpage.dart;—;
+30;visorweb2;RF-03;Pantalla My Ensembles;✅;Alta;visorweb2;ensembles_page.dart con lista de ensembles del usuario;—;
+31;visorweb2;RF-11;Pantalla Ensemble Detail (rehearsals);✅;Media;visorweb2;ensemble_detail_page.dart;—;
+32;visorweb2;RF-14;Visor Setlist secuencial (atril virtual);✅;Alta;visorweb2;setlist_page.dart con play/pause/reorder;—;
+33;visorweb2;—;Botón Add to Setlist en music score detail;✅;Alta;visorweb2;music_score_details_page.dart;—;
+34;visorweb2;RF-09;Premium automático (is_ensemble_member flag);✅;Media;apiweb2+visorweb2;SubscriptionService + SubscriptionTypeModel;—;
+35;visorweb2;RF-06;Ensemble folders en UI visorweb2;❌;Baja;visorweb2;No implementado. Solo en Control App. En futura App Móvil, Maestro solo elige carpeta al subir;Descartado — no necesario en visorweb2;No, no es necesario. En la actualización futura de la App Móvil, el usuario Maestro sólo podrá elegir la carpeta donde subir la partitura de la Agrupación.
+36;Control App;RF-15;Proyecto Flutter create;✅;Baja;control-app-web;flutter create control-app-web;—;
+37;Control App;RF-15;Pantalla Login con CIF opcional;✅;Baja;control-app-web;login_page.dart;—;
+38;Control App;RF-17;Dashboard: sidebar, stats cards, actividad;✅;Baja;control-app-web;dashboard_page.dart;—;
+39;Control App;RF-17;Gráficos dashboard (roles, ensayos por mes);✅;Baja;control-app-web;buildRoleChart + buildMonthlyChart;—;
+40;Control App;RF-17;Miembros CRUD (añadir/editar/eliminar);✅;Alta;control-app-web;lookup + add/edit role + remove;—;
+41;Control App;RF-17;Repertorio: listado partituras;✅;Alta;control-app-web;Con compositores e icono PDF;—;
+42;Control App;RF-06;Carpetas: crear/renombrar/eliminar;✅;Alta;control-app-web;ChoiceChips + rename/delete dialogs;—;
+43;Control App;RF-04;Subida masiva de PDFs (multi-file);✅;Alta;control-app-web+apiweb2;dart:html FileUploadInputElement → Wasabi S3;—;
+44;Control App;RF-11;Ensayos CRUD (crear/editar/eliminar);✅;Alta;control-app-web;Formulario con fecha/hora/lugar;—;
+45;Control App;RF-18;Sin visualización ni edición de partituras;✅;Alta;control-app-web;Cumplido — solo gestión;—;
+46;Control App;RF-19;Sin pagos (sin Stripe);✅;Alta;control-app-web;Cumplido — sin integración de pagos;—;
+47;Control App;—;Idioma español;✅;—;control-app-web;Toda la UI en español;—;
+48;Control App;—;Conversión a escritorio real (Electron/Windows);⏳;Baja;control-app-web;Pendiente para Agosto;Pendiente resolver en Agosto;Pendiente, para resolver en Agosto.
+49;S3;—;Wasabi S3 configurado;✅;Alta;apiweb2;Bucket faristol-web2, endpoint s3.us-west-1.wasabisys.com;—;
+50;QA;—;Tests API producción siguen pasando;⏳;Alta;apiweb2;No ejecutados;¿Ejecutar vendor/bin/phpunit?;
+51;QA;RF-04;Tests nuevos para API ensembles;⏳;Alta;apiweb2;No creados;¿Crear test suite?;
+52;QA;RF-05;Verificar partituras privadas NO visibles por no miembros;⏳;Alta;apiweb2;No verificado;¿Probar con usuario no miembro?;
+53;QA;RF-09;Verificar premium automático eleva plan;⏳;Alta;apiweb2+visorweb2;No verificado;¿Probar flujo completo?;
+54;QA;RF-14;Verificar visor secuencial setlist funciona;⏳;Alta;visorweb2;No verificado;¿Probar en navegador?;
+55;Documentación;—;VERSION_JULIO_2026.md actualizado;✅;—;apiweb2;Tracker de tareas actualizado a 2026-07-16;—;
+56;Documentación;—;AGENTS.MD actualizado;✅;—;apiweb2;Reglas y estado actualizados;—;
+57;Deploy;—;Script deploy_web.sh;✅;Alta;apiweb2;Compila y despliega ambos Flutter web;—;

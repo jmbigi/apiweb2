@@ -157,5 +157,5 @@ web2.faristol.net/
 3. Verificar: partituras privadas NO visibles por no miembros
 4. Verificar: premium automático eleva plan en app
 5. Verificar: visor secuencial de setlist funciona
-6. Ensemble folders en UI de visorweb2 (baja prioridad)
-7. Conversión Control App a escritorio real Electron/Windows (Fase 2)
+6. Ensemble folders en UI de visorweb2 — Descartado: no necesario. Futura App Móvil: Maestro elige carpeta al subir
+7. Conversión Control App a escritorio real Electron/Windows — Pendiente resolver en Agosto

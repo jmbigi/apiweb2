@@ -110,8 +110,8 @@ _Actualizado: 2026-07-16_
 
 | # | Área | Tarea | Prioridad |
 |---|---|---|---|
-| 23 | visorweb2 | Ensemble folders en UI (navegación de carpetas) | Baja |
-| 27 | Control App | Conversión a escritorio real (Electron/Windows) | Baja (Agosto) |
+| 23 | visorweb2 | Ensemble folders en UI (navegación de carpetas) | Descartado — no necesario en visorweb2. Futura App Móvil: Maestro elige carpeta al subir |
+| 27 | Control App | Conversión a escritorio real (Electron/Windows) | Pendiente resolver en Agosto (Electron vs Flutter Windows nativo) |
 | 28 | QA | Tests API de production siguen pasando | Alta |
 | 29 | QA | Tests nuevos para API de ensembles | Alta |
 | 30 | QA | Verificar: partituras privadas NO visibles por no miembros | Alta |
