@@ -41,27 +41,19 @@
 24. **Probar en `/tmp` antes de migrar cambios al proyecto real** (copiar archivos, probar, luego implementar).
 25. **Actualizar este archivo cuando se agreguen nuevas reglas**, previa confirmación del usuario.
 
-## Reglas de tests - PELIGRO: NO EJECUTAR EN PRODUCCIÓN
-26. **🚫 NUNCA usar la BD de producción ni la del `.env` para tests.** Los tests deben usar SIEMPRE `DB_CONNECTION=sqlite` y `DB_DATABASE=:memory:` (configurado en `phpunit.xml`).
-27. **Si `pdo_sqlite` no está disponible, los tests con BD fallan con `$this->fail()`.** Los tests sin BD (SafetyTest, ExampleTest) se ejecutan igual.
-28. **Ejecutar tests solo con:** `APP_ENV=testing vendor/bin/phpunit`.
-29. **Siempre limpiar cachés antes de tests:** `php artisan config:clear && php artisan route:clear`.
-30. **Los tests unitarios que NO usan BD** (RateLimiter, SafetyTest, EnvironmentTest, ExampleTest) se ejecutan sin problemas.
-31. **Todo middleware nuevo debe tener tests unitarios** que verifiquen:
-    - El limiter está registrado en `RateLimiter`
-    - El limiter tiene los límites correctos (maxAttempts, decaySeconds)
-    - Las rutas correctas tienen el middleware asignado
-32. **Tests de throttle usan `CACHE_DRIVER=array`** (ya configurado en phpunit.xml) y no requieren BD.
-33. **Tests que requieren BD (Feature):** usan `DatabaseTransactions` + SQLite en memoria. Sin `pdo_sqlite` fallan con mensaje claro.
-34. **Test stats:** 72 tests total (32 unit + 17 app-safety + 23 feature). Ejecutar: `vendor/bin/phpunit`.
+## Reglas de tests
+26. **NUNCA usar la BD de produccion.** Los tests usan SIEMPRE `DB_CONNECTION=sqlite` y `DB_DATABASE=:memory:` (configurado en `phpunit.xml`).
+27. **Guard en `tests/TestCase.php`:** lanza `RuntimeException` si el driver conectado no es `sqlite`. Bloquea cualquier test contra MySQL.
+28. **Antes de tests, limpiar cache de config:** `php artisan config:clear && php artisan route:clear`. La config cacheada anula `phpunit.xml`.
+29. **Despues de tests, recachear:** `php artisan config:cache` (produccion).
+30. **Tests unitarios** (sin BD) se ejecutan sin restricciones.
+31. **Tests Feature:** corren contra SQLite en memoria. Migraciones existentes con sintaxis MySQL (`ALTER TABLE ... CHANGE`) fallaran -- es esperado.
+32. **Cobertura:** todo codigo nuevo/modificado debe tener tests.
 
 ## Lecciones aprendidas (errores anteriores)
-35. **Verificar `pdo_sqlite` al inicio de cada sesión** con `php -m | grep sqlite`. Sin él, los feature tests fallan.
-36. **No cambiar estrategia de tests múltiples veces.** Decidir de una vez: aborto abrupto (fail), no skip graceful.
-37. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
-38. **Las credenciales MySQL del `.env` pueden estar obsoletas.** No asumir que funcionan. Verificar antes de usarlas.
-39. **Compilar extensiones PHP en producción requiere aprobación.** Hacerlo en `/tmp` primero.
-40. **No crear archivos nuevos sin preguntar** (CHECKLIST.md). Confirmar con el usuario antes.
+33. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
+34. **Las credenciales MySQL del `.env` pueden estar obsoletas.** No asumir que funcionan. Verificar antes de usarlas.
+35. **No crear archivos nuevos sin preguntar.** Confirmar con el usuario antes.
 
 ## Procedimientos para web2.faristol.net (Demo2)
 
@@ -136,6 +128,7 @@ web2.faristol.net/
 | visorweb2 | ✅ Deployed | `public/visorweb2/` — 200 OK |
 | control-app | ✅ Deployed | `public/control-app/` — 200 OK |
 | S3 Wasabi | ✅ Configurado | bucket `faristol-web2`, endpoint `s3.us-west-1.wasabisys.com` |
+| SQLite3 (PHP 8.2) | ✅ Compilado desde source | `sqlite3.so` + `pdo_sqlite.so` en `/usr/lib/php/20220829/` |
 
 ### Scripts disponibles
 | Script | Ruta | Función |

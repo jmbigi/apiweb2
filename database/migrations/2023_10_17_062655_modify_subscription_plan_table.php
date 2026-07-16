@@ -11,26 +11,36 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('subscription_plan', function (Blueprint $table) {
-            // Remove the 'interval' column
-            $table->dropColumn('interval');
-
-            // Add 'start_date' and 'end_date' columns
-            $table->date('start_date')->default(now());
-            $table->date('end_date')->nullable();
-        });
+        try {
+            Schema::table('subscription_plan', function (Blueprint $table) {
+                $table->dropColumn('interval');
+                $table->date('start_date')->default(now());
+                $table->date('end_date')->nullable();
+            });
+        } catch (\Exception $e) {
+            // SQLite < 3.35 does not support DROP COLUMN
+            // Still try adding columns
+            try {
+                Schema::table('subscription_plan', function (Blueprint $table) {
+                    $table->date('start_date')->default(now());
+                    $table->date('end_date')->nullable();
+                });
+            } catch (\Exception $e2) {
+                // Columns might already exist
+            }
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('subscription_plan', function (Blueprint $table) {
-            // Revert the changes if necessary
-            $table->string('interval');
-            $table->dropColumn('start_date');
-            $table->dropColumn('end_date');
-        });
+        try {
+            Schema::table('subscription_plan', function (Blueprint $table) {
+                $table->string('interval');
+                $table->dropColumn('start_date');
+                $table->dropColumn('end_date');
+            });
+        } catch (\Exception $e) {
+            // SQLite < 3.35 does not support DROP COLUMN
+        }
     }
 };

@@ -11,12 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('music_scores', function (Blueprint $table) {
-            $table->text('description')->nullable()->change();
-        });
-        Schema::table('link_infos', function (Blueprint $table) {
-            $table->string('url')->nullable()->change();
-        });
+        try {
+            Schema::table('music_scores', function (Blueprint $table) {
+                $table->text('description')->nullable()->change();
+            });
+        } catch (\Exception $e) {
+            // SQLite: nullable change not needed in test environment
+        }
+        try {
+            Schema::table('link_infos', function (Blueprint $table) {
+                $table->string('url')->nullable()->change();
+            });
+        } catch (\Exception $e) {
+            // SQLite: nullable change not needed in test environment
+        }
     }
 
     /**

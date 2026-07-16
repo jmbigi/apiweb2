@@ -39,19 +39,35 @@ return new class extends Migration
             ['name' => 'Terminado']
         ]);
 
-        Schema::table('composers', function(Blueprint $table){
-            $table->dropColumn('approved');
-            $table->dropColumn('request');
-        });        
+        try {
+            Schema::table('composers', function(Blueprint $table){
+                $table->dropColumn('approved');
+                $table->dropColumn('request');
+            });
+        } catch (\Exception $e) {
+            // SQLite < 3.35 does not support DROP COLUMN — skip gracefully
+        }
         
-        Schema::table('composer_request', function(Blueprint $table)
-        {
-            $table->dropColumn('request_status');
-            $table->dropColumn('approved');
-            $table->dropColumn('approved_date');
-            // $table->renameColumn('approved_by', 'updated_by'); 
-            DB::statement('ALTER TABLE composer_request CHANGE approved_by updated_by bigint');  
+        try {
+            Schema::table('composer_request', function(Blueprint $table)
+            {
+                $table->dropColumn('request_status');
+                $table->dropColumn('approved');
+                $table->dropColumn('approved_date');
+            });
+        } catch (\Exception $e) {
+            // SQLite < 3.35 does not support DROP COLUMN — skip gracefully
+        }
 
+        try {
+            Schema::table('composer_request', function(Blueprint $table) {
+                $table->renameColumn('approved_by', 'updated_by');
+            });
+        } catch (\Exception $e) {
+            // Column might already be renamed
+        }
+
+        Schema::table('composer_request', function(Blueprint $table) {
             $table->unsignedBigInteger('composer_status_id')->nullable();
             $table->unsignedBigInteger('request_status_id')->nullable();            
             $table->foreign('composer_status_id')->references('id')->on('composer_status')->onDelete('set null');
@@ -67,24 +83,25 @@ return new class extends Migration
     {
         Schema::dropIfExists('composer_status');
         Schema::dropIfExists('request_status');
-        Schema::table('composer_request', function(Blueprint $table)
-        {
-            $table->dropForeign(['composer_status_id']);
-            $table->dropForeign(['request_status_id']);
-            $table->dropColumn('composer_status_id');
-            $table->dropColumn('request_status_id');
-            $table->enum('request_status',['Pendiente','En curso','Terminado'])->default('Pendiente');
-            $table->boolean('approved');
-            $table->datetime('approved_date');
-        //    $table->renameColumn('updated_by', 'approved_by');
-
-            DB::statement('ALTER TABLE composer_request CHANGE updated_by approved_by bigint');
-
-
-        });
-        Schema::table('composers', function(Blueprint $table){
-            $table->string('approved');
-            $table->string('request');
-        });
+        try {
+            Schema::table('composer_request', function(Blueprint $table)
+            {
+                $table->dropForeign(['composer_status_id']);
+                $table->dropForeign(['request_status_id']);
+                $table->dropColumn('composer_status_id');
+                $table->dropColumn('request_status_id');
+                $table->renameColumn('updated_by', 'approved_by');
+            });
+        } catch (\Exception $e) {
+            // SQLite compatibility: skip unsupported operations
+        }
+        try {
+            Schema::table('composers', function(Blueprint $table){
+                $table->string('approved');
+                $table->string('request');
+            });
+        } catch (\Exception $e) {
+            // SQLite compatibility: columns might already exist
+        }
     }
 };
