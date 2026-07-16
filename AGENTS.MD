@@ -53,7 +53,9 @@
 ## Reglas para Flutter Web
 33. **Probar siempre las apps Flutter web en el navegador** después de cualquier cambio en el código Flutter. Usar `webfetch` para verificar que la app carga sin errores HTTP 404/500.
 34. **Revisar todos los errores de consola del navegador.** Usar `grep` en los archivos compilados (`main.dart.js`) para buscar patrones de error (`Error`, `Exception`, `null`, `undefined`) que puedan indicar problemas en tiempo de ejecución.
-35. **Automatizar la verificación** comprobando que las rutas principales de cada app responden 200: `/visorweb2/`, `/control-app/`, y que no hay assets faltantes (archivos JS, CSS, imágenes referenciados pero no existentes).
+35. **Verificar que `base href` coincida con el path de despliegue.** Usar `grep 'base href' public/APP/index.html` para confirmar. Si está mal, rebuildear con `--base-href=/APP/`.
+36. **Verificar que todos los assets JS, CSS, fuentes e imágenes responden 200.** Hacer curl a cada asset listado en el HTML y a los del directorio `assets/`.
+37. **Verificar metadatos del HTML:** título, description, apple-mobile-web-app-title, favicon — que no tengan valores genéricos ("New Flutter project", nombre del proyecto, etc.).
 
 ## Lecciones aprendidas (errores anteriores)
 36. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
