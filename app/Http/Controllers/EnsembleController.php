@@ -9,6 +9,7 @@ use App\Models\Rehearsal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class EnsembleController extends Controller
 {
@@ -131,6 +132,29 @@ class EnsembleController extends Controller
         return response()->json(['status' => true, 'data' => $folders]);
     }
 
+    private function buildFolderPath(string $name, ?int $parentId): string
+    {
+        $path = $name;
+        while ($parentId) {
+            $parent = EnsembleFolder::findOrFail($parentId);
+            $path = $parent->name . '/' . $path;
+            $parentId = $parent->parent_id;
+        }
+        return $path;
+    }
+
+    private function validatePathLength(string $name, ?int $parentId, int $ensembleId): void
+    {
+        $basePath = storage_path("app/music_scores/ensembles/{$ensembleId}/");
+        $fullPath = $basePath . $this->buildFolderPath($name, $parentId);
+
+        if (strlen($fullPath) > 4096) {
+            throw ValidationException::withMessages([
+                'name' => 'La ruta completa excede el límite de 4096 caracteres',
+            ]);
+        }
+    }
+
     public function storeFolder(Request $request, Ensemble $ensemble)
     {
         $validator = Validator::make($request->all(), [
@@ -141,6 +165,8 @@ class EnsembleController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => false, 'errors' => $validator->errors()], 422);
         }
+
+        $this->validatePathLength($request->name, $request->parent_id, $ensemble->id);
 
         $folder = EnsembleFolder::create([
             'ensemble_id' => $ensemble->id,
@@ -160,6 +186,8 @@ class EnsembleController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => false, 'errors' => $validator->errors()], 422);
         }
+
+        $this->validatePathLength($request->name, $folder->parent_id, $folder->ensemble_id);
 
         $folder->update($request->only(['name']));
         return response()->json(['status' => true, 'data' => $folder]);
