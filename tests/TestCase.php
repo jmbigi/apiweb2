@@ -15,8 +15,8 @@ abstract class TestCase extends BaseTestCase
 
         if (DB::connection()->getDriverName() !== 'sqlite') {
             throw new \RuntimeException(
-                'TESTS BLOQUEADOS: Los tests solo pueden ejecutarse con SQLite en memoria. ' .
-                'Driver detectado: ' . DB::connection()->getDriverName()
+                'TESTS BLOQUEADOS: Los tests solo pueden ejecutarse con SQLite en memoria. '.
+                'Driver detectado: '.DB::connection()->getDriverName()
             );
         }
     }

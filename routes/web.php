@@ -155,6 +155,16 @@ Route::middleware(['auth', 'role:superadmin', 'check_token'])->group(function ()
   Route::get('/exportar-uso', function () {
     return Excel::download(new UsoExport, 'uso_usuarios.xlsx');
   })->name('exportar_uso');
+
+  Route::get('/ensembles', [\App\Http\Controllers\admin\EnsembleController::class, 'index'])->name('ensemble.index');
+  Route::post('/get-ensembles', [\App\Http\Controllers\admin\EnsembleController::class, 'index'])->name('get_ensembles');
+  Route::get('ensemble/create', [\App\Http\Controllers\admin\EnsembleController::class, 'create'])->name('ensemble.create');
+  Route::post('ensemble/store', [\App\Http\Controllers\admin\EnsembleController::class, 'store'])->name('ensemble.store');
+  Route::get('ensemble/show/{id}', [\App\Http\Controllers\admin\EnsembleController::class, 'show'])->name('ensemble.show');
+  Route::get('ensemble/edit/{id}', [\App\Http\Controllers\admin\EnsembleController::class, 'edit'])->name('ensemble.edit');
+  Route::patch('ensemble/update/{id}', [\App\Http\Controllers\admin\EnsembleController::class, 'update'])->name('ensemble.update');
+  Route::delete('ensemble/destroy/{id}', [\App\Http\Controllers\admin\EnsembleController::class, 'destroy'])->name('ensemble.destroy');
+  Route::delete('ensemble/{id}/member/{userId}', [\App\Http\Controllers\admin\EnsembleController::class, 'removeMember'])->name('ensemble.member.remove');
 });
 
 Route::get('/subscription-payment/{id}', [SubscriptionController::class, 'subscription_payment'])->name('subscription.payment');

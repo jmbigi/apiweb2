@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\EnsembleFolder;
 use App\Models\Ensemble;
+use App\Models\EnsembleFolder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EnsembleFolderFactory extends Factory

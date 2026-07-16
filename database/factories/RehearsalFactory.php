@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Rehearsal;
 use App\Models\Ensemble;
+use App\Models\Rehearsal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RehearsalFactory extends Factory

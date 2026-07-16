@@ -83,6 +83,14 @@ return [
             'root' => true,
             'roles' => ['superadmin','composer'],
         ],
+        [
+            'title' => 'Ensembles',
+            'icon' => 'media/svg/icons/Communication/Thumbtack.svg',
+            'page' => '/ensembles',
+            'bullet' => 'line',
+            'root' => true,
+            'roles' => ['superadmin'],
+        ],
         
     ]
 

@@ -2,15 +2,16 @@
 
 namespace Database\Factories;
 
+use App\Models\MusicScore;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\MusicScore;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
 class MusicScoreFactory extends Factory
 {
     protected $model = MusicScore::class;
+
     /**
      * Define the model's default state.
      *

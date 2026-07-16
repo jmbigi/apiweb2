@@ -14,7 +14,9 @@ use Tests\TestCase;
 class EnsembleTest extends TestCase
 {
     private User $user;
+
     private User $otherUser;
+
     private static array $tables = [
         'roles', 'users', 'categories', 'composers',
         'ensembles', 'ensemble_user', 'ensemble_folders',
@@ -25,7 +27,7 @@ class EnsembleTest extends TestCase
     {
         parent::setUp();
 
-        if (!Schema::hasTable('users')) {
+        if (! Schema::hasTable('users')) {
             $this->createEnsembleTables();
         } else {
             // Clean all test tables before each test
@@ -425,7 +427,7 @@ class EnsembleTest extends TestCase
     public function test_lookup_user_by_email()
     {
         $response = $this->actingAs($this->user)->getJson(
-            '/api/users/lookup?email=' . $this->otherUser->email
+            '/api/users/lookup?email='.$this->otherUser->email
         );
 
         $response->assertStatus(200)->assertJsonPath('data.email', $this->otherUser->email);
