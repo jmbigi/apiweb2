@@ -61,6 +61,7 @@
 36. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
 37. **Las credenciales MySQL del `.env` pueden estar obsoletas.** No asumir que funcionan. Verificar antes de usarlas.
 38. **No crear archivos nuevos sin preguntar.** Confirmar con el usuario antes.
+39. **Nunca modificar roles, permisos, o configuraciones de acceso (middleware, gates, policies, menu_aside roles) sin orden explícita del usuario.** Cambiar esto puede exponer datos sensibles o romper la seguridad del sistema. Preguntar siempre primero.
 
 ## Procedimientos para web2.faristol.net (Demo2)
 
