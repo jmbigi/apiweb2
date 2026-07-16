@@ -125,6 +125,14 @@ class SubscriptionService
             }
         }
 
+        $isEnsembleMember = false;
+        $user = Auth::user();
+        if ($user instanceof User) {
+            $isEnsembleMember = $user->ensembles()
+                ->wherePivot('status', true)
+                ->exists();
+        }
+
         return [
             'subscription_name' => $subscription_plan_name,
             'is_paid' => $isPaid,
@@ -138,6 +146,7 @@ class SubscriptionService
             'now' => $now,
             'next_month' => $next_month,
             'candidate_premium_trial' => $candidatePremiumTrial,
+            'is_ensemble_member' => $isEnsembleMember,
         ];
     }
 
