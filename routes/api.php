@@ -30,7 +30,7 @@ Route::prefix('auth')->group(function () {
     Route::prefix('user')->group(function () {
         Route::post('/signup', [AuthController::class, 'createUser']);
         Route::get('/verify/resend', [AuthController::class, 'resendEmailVerify']);
-        Route::get('/verify/activate', [AuthController::class, 'activateUser'])->name('verification.verify');
+        Route::get('/verify/activate', [AuthController::class, 'activateUser'])->name('verification.activate');
     });
 });
 
@@ -162,9 +162,9 @@ Route::middleware(['auth:sanctum', 'check_active'])->group(function () {
     Route::prefix('subscription')->group(function () {
         Route::post('/subscribed-user', [SubscriptionController::class, 'subscribed_user'])->name('subscribed_user');
         Route::get('/subscription-plans', [SubscriptionController::class, 'subscription_plans_list'])->name('subscription_plans_list');
-        Route::post('/subscription-payment', [SubscriptionController::class, 'subscription_payment'])->name('subscription.payment');
-        Route::get('/subscription-status', [SubscriptionController::class, 'subscription_status'])->name('subscription.status');
-        Route::post('paypal-webhook', [App\Http\Controllers\admin\SubscriptionController::class, 'paypal_webhook'])->name('paypalWebhook');
+        Route::post('/subscription-payment', [SubscriptionController::class, 'subscription_payment'])->name('subscription.payment.process');
+        Route::get('/subscription-status', [SubscriptionController::class, 'subscription_status'])->name('subscription.status.api');
+        Route::post('paypal-webhook', [App\Http\Controllers\admin\SubscriptionController::class, 'paypal_webhook'])->name('paypal.webhook.api');
     });
 
     // InAppSubscription

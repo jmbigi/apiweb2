@@ -167,13 +167,13 @@ Route::middleware(['auth', 'role:superadmin', 'check_token'])->group(function ()
   Route::delete('ensemble/{id}/member/{userId}', [\App\Http\Controllers\admin\EnsembleController::class, 'removeMember'])->name('ensemble.member.remove');
 });
 
-Route::get('/subscription-payment/{id}', [SubscriptionController::class, 'subscription_payment'])->name('subscription.payment');
+Route::get('/subscription-payment/{id}', [SubscriptionController::class, 'subscription_payment'])->name('subscription.payment.redirect');
 Route::post('subscription-order', [SubscriptionController::class, 'subscription_order'])->name('subscription.order');
-Route::get('subscription-status', [SubscriptionController::class, 'subscription_status'])->name('subscription.status');
+Route::get('subscription-status', [SubscriptionController::class, 'subscription_status'])->name('subscription.status.redirect');
 // Route::middleware(['auth','check_token' ])->group(function () {    
 
 // });
-Route::post('paypal-webhook', [SubscriptionController::class, 'paypal_webhook'])->name('paypalWebhook');
+Route::post('paypal-webhook', [SubscriptionController::class, 'paypal_webhook'])->name('paypal.webhook');
 Route::get('plan-renew-email', [SubscriptionController::class, 'paypalRenewEmail'])->name('paypalRenewEmail');
 
 
