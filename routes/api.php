@@ -176,6 +176,9 @@ Route::middleware(['auth:sanctum', 'check_active'])->group(function () {
     // User ensemble status (premium logic)
     Route::get('/user/ensemble-status', [EnsembleController::class, 'ensembleStatus']);
 
+    // Lookup user by email (for member invitation)
+    Route::get('/users/lookup', [EnsembleController::class, 'lookupUser']);
+
     // My ensembles
     Route::get('/my-ensembles', [EnsembleController::class, 'myEnsembles']);
 
@@ -202,6 +205,7 @@ Route::middleware(['auth:sanctum', 'check_active'])->group(function () {
         // Scores
         Route::get('/{ensemble}/scores', [EnsembleController::class, 'scores']);
         Route::post('/{ensemble}/scores', [EnsembleController::class, 'storeScore']);
+        Route::post('/{ensemble}/scores/bulk-upload', [EnsembleController::class, 'bulkUploadScores']);
 
         // Rehearsals
         Route::get('/{ensemble}/rehearsals', [EnsembleController::class, 'rehearsals']);

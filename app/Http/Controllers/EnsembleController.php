@@ -8,6 +8,7 @@ use App\Models\MusicScore;
 use App\Models\Rehearsal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -227,6 +228,60 @@ class EnsembleController extends Controller
         return response()->json(['status' => true, 'data' => $score], 201);
     }
 
+    public function bulkUploadScores(Request $request, Ensemble $ensemble)
+    {
+        $validator = Validator::make($request->all(), [
+            'files' => 'required|array',
+            'files.*' => 'required|file|mimes:pdf|max:51200',
+            'ensemble_folder_id' => 'nullable|exists:ensemble_folders,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        $uploaded = [];
+        $errors = [];
+
+        foreach ($request->file('files') as $file) {
+            try {
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $score = MusicScore::create([
+                    'name' => $originalName,
+                    'ensemble_id' => $ensemble->id,
+                    'uploaded_by' => $request->user()->id,
+                    'ensemble_folder_id' => $request->ensemble_folder_id,
+                ]);
+
+                $realName = date('U') . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+                $tempPath = $file->storeAs('temp', $realName, 'local');
+                $fileContent = Storage::disk('local')->get($tempPath);
+
+                Storage::disk('Wasabi')->put('music_score/' . $realName, $fileContent);
+                Storage::disk('local')->delete($tempPath);
+
+                $score->files()->create([
+                    'path' => 'music_score/' . $realName,
+                    'storagePlace' => 'Wasabisys',
+                    'extension' => $file->getClientOriginalExtension(),
+                ]);
+
+                $uploaded[] = ['id' => $score->id, 'name' => $originalName];
+            } catch (\Exception $e) {
+                $errors[] = ['file' => $file->getClientOriginalName(), 'error' => $e->getMessage()];
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'uploaded' => $uploaded,
+                'errors' => $errors,
+            ],
+        ]);
+    }
+
     // Rehearsals
     public function rehearsals(Ensemble $ensemble)
     {
@@ -293,6 +348,22 @@ class EnsembleController extends Controller
     {
         $ensembles = $request->user()->ensembles()->withPivot('role')->get();
         return response()->json(['status' => true, 'data' => $ensembles]);
+    }
+
+    // Find user by email for member invitation
+    public function lookupUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        $user = User::where('email', $request->email)->first(['id', 'name', 'email']);
+
+        return response()->json(['status' => true, 'data' => $user]);
     }
 
     // User's ensemble status (for premium logic)
