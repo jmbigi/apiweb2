@@ -37,11 +37,14 @@ if [ -n "$STASH_REF" ]; then
     git stash apply "$STASH_REF" && git stash drop "$STASH_REF"
 fi
 
-# Ejecutar el script de instalación si existe
-if [ -x "./instalar_y_refrescar.sh" ]; then
+# Preparar y ejecutar el script de instalación
+if [ -f "./instalar_y_refrescar.sh" ]; then
+    chmod +x "./instalar_y_refrescar.sh"
+    chmod +x node_modules/.bin/* 2>/dev/null || true
+    find node_modules/@esbuild -type f -name 'esbuild' -exec chmod +x {} \; 2>/dev/null || true
     ./instalar_y_refrescar.sh
 else
-    echo "Advertencia: Script de instalación no encontrado o no ejecutable."
+    echo "Advertencia: Script de instalación no encontrado."
 fi
 
 git status

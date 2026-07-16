@@ -23,8 +23,23 @@ sudo find $PROJECT_PATH -type d -not -perm 775 -exec chmod 775 {} \;    # Direct
 echo "Configurando permisos para storage/framework y bootstrap/cache..."
 sudo chmod -R 775 $PROJECT_PATH/storage/framework $PROJECT_PATH/bootstrap/cache
 
+# Restaurar ejecutables del sistema
 sudo chmod +x actualizar_rama_produccion.sh
 sudo chmod +x setup_permissions.sh
+sudo chmod +x instalar_y_refrescar.sh
+sudo chmod +x actualizar_servidor.sh
+sudo chmod +x build_visorweb2.sh
+sudo chmod +x traer_visor_web.sh
+sudo chmod +x backend-dev-server.sh
+sudo chmod +x certbot_testfile.sh
+
+# Restaurar ejecutables de node_modules (los pierden con el find anterior)
+if [ -d "$PROJECT_PATH/node_modules/.bin" ]; then
+    sudo chmod +x $PROJECT_PATH/node_modules/.bin/*
+fi
+
+# Restaurar binarios específicos de esbuild (vite los necesita)
+find $PROJECT_PATH/node_modules/@esbuild -type f -name 'esbuild' -exec sudo chmod +x {} \; 2>/dev/null
 
 # Confirmación final
 echo "Configuración de permisos completada."
