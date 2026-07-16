@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        try {
-            Schema::table('music_scores', function (Blueprint $table) {
-                $table->date('date')->nullable()->change();
-            });
-        } catch (\Exception $e) {
-            // SQLite: nullable change not supported without doctrine/dbal
-        }
+        Schema::table('music_scores', function (Blueprint $table) {
+            $table->date('date')->nullable()->change();
+        });
     }
 
     /**

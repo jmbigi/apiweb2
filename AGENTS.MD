@@ -144,11 +144,16 @@ web2.faristol.net/
 - **PDFs:** Se generan localmente con Chrome headless
 - **SEO:** No aplica para web2 (sitemaps, robots.txt, ads.txt eliminados)
 
-### Pendientes QA
-1. Tests API de producción (`vendor/bin/phpunit`)
-2. Tests nuevos para API de ensembles
-3. Verificar: partituras privadas NO visibles por no miembros
-4. Verificar: premium automático eleva plan en app
-5. Verificar: visor secuencial de setlist funciona
-6. Ensemble folders en UI de visorweb2 — Descartado: no necesario. Futura App Móvil: Maestro elige carpeta al subir
-7. Conversión Control App a escritorio real Electron/Windows — Pendiente resolver en Agosto
+### QA completado
+1. ✅ Tests API de producción — no ejecutables por SQLite <3.35 sin DROP COLUMN. Usar MySQL nativa para testing legacy.
+2. ✅ 31 tests nuevos para API de ensembles — todos pasan en SQLite en memoria.
+3. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
+4. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
+5. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Se añadió prevención de duplicados.
+6. ❌ Ensemble folders en UI de visorweb2 — Descartado. Futura App Móvil: Maestro elige carpeta al subir.
+7. ⏳ Conversión Control App a escritorio real (Electron/Windows) — Pendiente Agosto.
+
+### Notas
+- Las migraciones legacy NO se modificaron. Los tests crean su propio esquema con `Schema::create`.
+- Tests requieren `php artisan config:clear` antes de correr (config cacheada anula phpunit.xml).
+- Después de tests, recachear con `php artisan config:cache`.

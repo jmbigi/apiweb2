@@ -63,19 +63,25 @@
         }
         .icon-visor { background: linear-gradient(135deg, #667eea, #764ba2); }
         .icon-control { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .icon-admin { background: linear-gradient(135deg, #43e97b, #38f9d7); }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="/visorweb2/" class="card">
+        <a href="/visorweb2/" target="_blank" rel="noopener" class="card">
             <div class="icon icon-visor">♪</div>
             <h2>Faristol App</h2>
             <p>Musical scores viewer and setlist manager for mobile devices</p>
         </a>
-        <a href="/control-app/" class="card">
+        <a href="/control-app/" target="_blank" rel="noopener" class="card">
             <div class="icon icon-control">▷</div>
             <h2>Control App</h2>
             <p>Rehearsal and ensemble management for instructors</p>
+        </a>
+        <a href="/dashboard" class="card">
+            <div class="icon icon-admin">⚙</div>
+            <h2>Faristol Admin</h2>
+            <p>Platform administration, user management, and content control panel</p>
         </a>
     </div>
 </body>

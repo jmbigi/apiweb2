@@ -10,11 +10,15 @@ return new class extends Migration
      * Run the migrations.
      */
 
+     //update table composer field aproved to approved
     public function up(): void
     {
-        // Column types already set by create_composer_request_table migration.
-        // No changes needed — the ->change() calls were removed to avoid
-        // requiring doctrine/dbal (incompatible with Laravel 10 deps).
-        // Rollback: this migration is a no-op now.
+        Schema::table('composer_request', function(Blueprint $table){
+            $table->timestamp('request_date')->default(DB::raw('CURRENT_TIMESTAMP'))->change();
+            $table->enum('request_status',['Pendiente','En curso','Terminado'])->default('Pendiente')->change();
+            $table->text('description')->nullable()->change();
+            $table->boolean('approved')->nullable()->change();
+            $table->datetime('approved_date')->nullable()->change();
+        });   
     }
 };

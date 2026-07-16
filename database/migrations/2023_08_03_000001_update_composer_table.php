@@ -10,17 +10,23 @@ return new class extends Migration
      * Run the migrations.
      */
 
+     //update table composer field aproved to approved
     public function up(): void
     {
         Schema::table('composers', function(Blueprint $table){
-            $table->renameColumn('aproved', 'approved');
+            // $table->renameColumn('aproved','approved');
+            DB::statement('ALTER TABLE composers CHANGE aproved approved datetime');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('composers', function(Blueprint $table){
-            $table->renameColumn('approved', 'aproved');
+            // $table->renameColumn('approved','aproved');
+            DB::statement('ALTER TABLE composers CHANGE approved aproved datetime');
         });
     }
 };

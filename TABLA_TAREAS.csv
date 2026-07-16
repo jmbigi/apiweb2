@@ -23,7 +23,7 @@ ID;Área;RF;Tarea;Estado;Prioridad;Dominio;Observaciones;Preguntas;Respuestas
 22;API;—;Bulk upload scores (multi-PDF);✅;Alta;apiweb2;POST /ensembles/{id}/scores/bulk-upload;—;
 23;API;—;User lookup by email;✅;Media;apiweb2;GET /api/users/lookup?email=;—;
 24;API;—;Endpoint my-ensembles;✅;Alta;apiweb2;GET /api/my-ensembles;—;
-25;Landing;—;home.blade.php con 2 cards;✅;Alta;apiweb2;Fondo #0C1934, enlaces a /visorweb2/ y /control-app/;—;
+25;Landing;—;home.blade.php con 3 cards;✅;Alta;apiweb2;Faristol App + Control App (target=_blank) y Faristol Admin → /dashboard;—;
 26;Subdirs;—;Servir public/visorweb2/ con base href /visorweb2/;✅;Alta;apiweb2;Apache sirve directo;—;
 27;Subdirs;—;Servir public/control-app/ con base href /control-app/;✅;Alta;apiweb2;Apache sirve directo;—;
 28;visorweb2;—;Cambiar API base a web2.faristol.net;✅;Alta;visorweb2;ApiConstants.baseUrl actualizado;—;
@@ -48,11 +48,13 @@ ID;Área;RF;Tarea;Estado;Prioridad;Dominio;Observaciones;Preguntas;Respuestas
 47;Control App;—;Idioma español;✅;—;control-app-web;Toda la UI en español;—;
 48;Control App;—;Conversión a escritorio real (Electron/Windows);⏳;Baja;control-app-web;Pendiente para Agosto;Pendiente resolver en Agosto;Pendiente, para resolver en Agosto.
 49;S3;—;Wasabi S3 configurado;✅;Alta;apiweb2;Bucket faristol-web2, endpoint s3.us-west-1.wasabisys.com;—;
-50;QA;—;Tests API producción siguen pasando;⏳;Alta;apiweb2;No ejecutados;¿Ejecutar vendor/bin/phpunit?;
-51;QA;RF-04;Tests nuevos para API ensembles;⏳;Alta;apiweb2;No creados;¿Crear test suite?;
-52;QA;RF-05;Verificar partituras privadas NO visibles por no miembros;⏳;Alta;apiweb2;No verificado;¿Probar con usuario no miembro?;
-53;QA;RF-09;Verificar premium automático eleva plan;⏳;Alta;apiweb2+visorweb2;No verificado;¿Probar flujo completo?;
-54;QA;RF-14;Verificar visor secuencial setlist funciona;⏳;Alta;visorweb2;No verificado;¿Probar en navegador?;
+50;QA;—;Tests API producción (legacy);⏳;Baja;apiweb2;Requieren MySQL nativa — SQLite <3.35 no soporta DROP COLUMN;—;
+51;QA;RF-04;Tests nuevos para API ensembles;✅;Alta;apiweb2;31 tests, todos pasan en SQLite en memoria;—;
+52;QA;RF-05;Verificar partituras privadas NO visibles por no miembros;✅;Alta;apiweb2;Scope publicOrAccessible verificado en test;—;
+53;QA;RF-09;Verificar premium automático eleva plan;✅;Alta;apiweb2+visorweb2;is_ensemble_member flag verificado via endpoint test;—;
+54;QA;RF-14;Verificar visor secuencial setlist funciona;✅;Alta;visorweb2;Lista, reorder, play, prev/next, progreso + prevención duplicados;—;
 55;Documentación;—;VERSION_JULIO_2026.md actualizado;✅;—;apiweb2;Tracker de tareas actualizado a 2026-07-16;—;
 56;Documentación;—;AGENTS.MD actualizado;✅;—;apiweb2;Reglas y estado actualizados;—;
 57;Deploy;—;Script deploy_web.sh;✅;Alta;apiweb2;Compila y despliega ambos Flutter web;—;
+58;visorweb2;—;Prevención duplicados en Add to setlist;✅;Media;visorweb2;SetlistStore.add() retorna false si ya existe. UI muestra "Already in setlist";—;
+59;Landing;—;3ra card Faristol Admin + target=_blank;✅;Media;apiweb2;Faristol App y Control App abren en pestaña nueva. Faristol Admin → /dashboard;—;

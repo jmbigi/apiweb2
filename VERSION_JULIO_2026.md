@@ -62,7 +62,7 @@ _Actualizado: 2026-07-16_
 ### Landing Page
 | # | Tarea | Estado |
 |---|---|---|
-| 14 | Vista `home.blade.php` con 2 cards (Faristol App + Control App) | ✅ |
+| 14 | Vista `home.blade.php` con 3 cards (Faristol App, Control App, Faristol Admin) | ✅ |
 
 ### Flutter — Subdirectorios
 | # | Tarea | Estado |
@@ -99,10 +99,16 @@ _Actualizado: 2026-07-16_
 | Wasabi S3 configurado (bucket `faristol-web2`) | ✅ |
 | Endpoint: `https://s3.us-west-1.wasabisys.com/` | ✅ |
 
-### QA básico
+### QA
 | # | Tarea | Estado |
 |---|---|---|
 | 33 | Landing page + ambas apps Flutter responden 200 | ✅ |
+| 34 | 31 tests Feature para API de ensembles (SQLite en memoria) | ✅ |
+| 35 | Partituras privadas NO visibles por no miembros | ✅ |
+| 36 | Premium automático: is_ensemble_member flag verificado | ✅ |
+| 37 | Visor secuencial setlist: lista, reorder, play, prev/next | ✅ |
+| 38 | Prevención de duplicados en Add to setlist | ✅ |
+| 39 | Landing page: target=_blank en apps, 3ra card Faristol Admin | ✅ |
 
 ---
 
@@ -112,11 +118,6 @@ _Actualizado: 2026-07-16_
 |---|---|---|---|
 | 23 | visorweb2 | Ensemble folders en UI (navegación de carpetas) | Descartado — no necesario en visorweb2. Futura App Móvil: Maestro elige carpeta al subir |
 | 27 | Control App | Conversión a escritorio real (Electron/Windows) | Pendiente resolver en Agosto (Electron vs Flutter Windows nativo) |
-| 28 | QA | Tests API de production siguen pasando | Alta |
-| 29 | QA | Tests nuevos para API de ensembles | Alta |
-| 30 | QA | Verificar: partituras privadas NO visibles por no miembros | Alta |
-| 31 | QA | Verificar: premium automático eleva plan en app | Alta |
-| 32 | QA | Verificar: visor secuencial de setlist funciona | Alta |
 
 ---
 
@@ -125,7 +126,7 @@ _Actualizado: 2026-07-16_
 | Decisión | Opción elegida |
 |---|---|
 | web2 parte de producción | Copia de `~/apps_prod/API_Faristol` |
-| Landing page | `/` con 2 cards de enlace |
+| Landing page | `/` con 3 cards: Faristol App + Control App (+ `target=_blank`) y Faristol Admin (`/dashboard`) |
 | Servir Flutter builds | Apache directo (`public/visorweb2/`, `public/control-app/`) |
 | Login Control App | API real de web2 (`/api/auth/login` con Sanctum + CIF) |
 | Bucket S3 | `faristol-web2` (disco `Wasabi` en filesystems.php) |
