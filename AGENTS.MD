@@ -14,7 +14,7 @@
    - Verificar seguridad, lógica y efectos secundarios antes de integrar.
 
 ## Reglas de estilo y calidad
-9. **Ejecutar `vendor/bin/pint` (Laravel Pint)** antes de cada commit.
+9. **Ejecutar `pint --test -- '**/*.php'` (Laravel Pint) sobre archivos nuevos/modificados** antes de cada commit. No corregir archivos legacy (pre-Julio 2026) aunque fallen.
 10. **Prohibido cometer `dd()`, `dump()`, `var_dump()`, `ray()`, `print_r()`** en código que se suba a producción.
 11. **Agregar `declare(strict_types=1)`** en todos los archivos PHP nuevos.
 12. **Validar siempre los request** usando Form Requests o `validate()` en los controladores.
@@ -297,9 +297,9 @@ Reglas:
 ### QA completado
 1. ✅ Tests API de producción — no ejecutables por SQLite <3.35 sin DROP COLUMN. Usar MySQL nativa para testing legacy.
 2. ✅ **49 tests** nuevos para API de ensembles (Feature) — todos pasan en SQLite en memoria.
-3. ✅ **8 tests** unitarios visorweb2 — modelos Setlist (serialización, CRUD Hive), Ensemble (parseo JSON).
-4. ✅ **3 tests** unitarios control-app-web — modelo LoginResponse (éxito, error, nulos).
-5. ✅ **60 tests total** (49 Laravel + 8 visorweb2 + 3 control-app) — todos pasan.
+3. ✅ **11 tests** unitarios visorweb2 — modelos Setlist (serialización, CRUD Hive), Ensemble (parseo JSON), Feedback UI (loading, colores).
+4. ✅ **6 tests** unitarios control-app-web — modelo LoginResponse (widget_test) y Feedback UI (SnackBar, ProgressIndicator, showDialog).
+5. ✅ **66 tests total** (49 Laravel + 11 visorweb2 + 6 control-app) — todos pasan.
 6. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
 7. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
 8. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Prevención de duplicados.
