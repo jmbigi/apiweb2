@@ -504,4 +504,193 @@ class EnsembleTest extends TestCase
         $response->assertStatus(200);
         $this->assertFalse($response->json('data.is_ensemble_member'));
     }
+
+    // --- Edge cases ---
+
+    public function test_create_ensemble_missing_name()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/ensembles', [
+            'cif' => 'CIF12345',
+        ]);
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_create_ensemble_missing_cif()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/ensembles', [
+            'name' => 'Test Ensemble',
+        ]);
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_create_ensemble_empty_body()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/ensembles', []);
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_create_ensemble_name_too_long()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/ensembles', [
+            'name' => str_repeat('a', 256),
+            'cif' => 'CIF12345',
+        ]);
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_show_nonexistent_ensemble()
+    {
+        $response = $this->actingAs($this->user)->getJson('/api/ensembles/99999');
+
+        $response->assertStatus(404);
+    }
+
+    public function test_update_nonexistent_ensemble()
+    {
+        $response = $this->actingAs($this->user)->putJson('/api/ensembles/99999', [
+            'name' => 'Updated',
+        ]);
+
+        $response->assertStatus(404);
+    }
+
+    public function test_delete_nonexistent_ensemble()
+    {
+        $response = $this->actingAs($this->user)->deleteJson('/api/ensembles/99999');
+
+        $response->assertStatus(404);
+    }
+
+    public function test_update_ensemble_duplicate_name()
+    {
+        $ensemble1 = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $ensemble2 = Ensemble::factory()->create(['owner_id' => $this->user->id, 'name' => 'Other Ensemble']);
+
+        $response = $this->actingAs($this->user)->putJson("/api/ensembles/{$ensemble2->id}", [
+            'name' => $ensemble1->name,
+        ]);
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_add_member_already_member()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $ensemble->members()->attach($this->otherUser->id, ['role' => 'usuario']);
+
+        $response = $this->actingAs($this->user)->postJson("/api/ensembles/{$ensemble->id}/members", [
+            'user_id' => $this->otherUser->id,
+            'role' => 'maestro',
+        ]);
+
+        $response->assertStatus(409);
+    }
+
+    public function test_add_member_invalid_role()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->postJson("/api/ensembles/{$ensemble->id}/members", [
+            'user_id' => $this->otherUser->id,
+            'role' => 'invalid_role',
+        ]);
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_update_member_nonexistent_user()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->putJson(
+            "/api/ensembles/{$ensemble->id}/members/99999",
+            ['role' => 'archivero']
+        );
+
+        $response->assertStatus(404);
+    }
+
+    public function test_create_folder_missing_name()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/ensembles/{$ensemble->id}/folders",
+            []
+        );
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_create_folder_invalid_parent()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/ensembles/{$ensemble->id}/folders",
+            ['name' => 'Folder', 'parent_id' => 99999]
+        );
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_create_rehearsal_missing_title()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/ensembles/{$ensemble->id}/rehearsals",
+            ['date' => '2026-07-20']
+        );
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_create_rehearsal_missing_date()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/ensembles/{$ensemble->id}/rehearsals",
+            ['title' => 'Ensayo']
+        );
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_ensemble_soft_delete()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $this->actingAs($this->user)->deleteJson("/api/ensembles/{$ensemble->id}");
+
+        $this->assertSoftDeleted($ensemble);
+    }
+
+    public function test_list_ensembles_shows_soft_deleted()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $ensemble->delete();
+
+        // Soft-deleted should NOT appear in index
+        $response = $this->actingAs($this->user)->getJson('/api/ensembles');
+
+        $response->assertStatus(200)->assertJsonCount(0, 'data');
+    }
+
+    public function test_my_ensembles_shows_only_own()
+    {
+        Ensemble::factory()->create(['owner_id' => $this->otherUser->id]);
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+
+        $response = $this->actingAs($this->user)->getJson('/api/my-ensembles');
+
+        $response->assertStatus(200)->assertJsonCount(1, 'data');
+        $this->assertEquals($ensemble->id, $response->json('data.0.id'));
+    }
 }

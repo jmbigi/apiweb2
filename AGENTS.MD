@@ -50,12 +50,112 @@
 31. **Tests Feature:** corren contra SQLite en memoria. Migraciones existentes con sintaxis MySQL (`ALTER TABLE ... CHANGE`) fallaran -- es esperado.
 32. **Cobertura:** todo codigo nuevo/modificado debe tener tests.
 
-## Reglas para Flutter Web
-33. **Probar siempre las apps Flutter web en el navegador** después de cualquier cambio en el código Flutter. Usar `webfetch` para verificar que la app carga sin errores HTTP 404/500.
-34. **Revisar todos los errores de consola del navegador.** Usar `grep` en los archivos compilados (`main.dart.js`) para buscar patrones de error (`Error`, `Exception`, `null`, `undefined`) que puedan indicar problemas en tiempo de ejecución.
-35. **Verificar que `base href` coincida con el path de despliegue.** Usar `grep 'base href' public/APP/index.html` para confirmar. Si está mal, rebuildear con `--base-href=/APP/`.
-36. **Verificar que todos los assets JS, CSS, fuentes e imágenes responden 200.** Hacer curl a cada asset listado en el HTML y a los del directorio `assets/`.
-37. **Verificar metadatos del HTML:** título, description, apple-mobile-web-app-title, favicon — que no tengan valores genéricos ("New Flutter project", nombre del proyecto, etc.).
+## Norma de Ingeniería, Arquitectura y Diseño — Pruebas Automatizadas Avanzadas
+
+**Objetivo:** Pruebas que simulan usuarios reales con revisión y mejoramiento continuo
+de la UX en las apps web Control App y Faristol App.
+
+### Principios
+- **Exactitud 100%** — las pruebas verifican comportamiento real, no implementación interna.
+- **Precisión 100%** — cada test mide una conducta concreta, determinista y repetible.
+- **Honestidad 100%** — los tests usan datos reales de la API, no mocks que oculten bugs de integración.
+- **UX amigable, agradable y perfecta** — los tests verifican navegación, flujos, mensajes,
+  tiempos de respuesta, legibilidad y claridad de cada pantalla.
+- **Mejores prácticas** — cada test sigue patrones probados (Page Object, AAA, test aislados).
+- **Opciones inteligentes y eficientes** — los tests se ejecutan en paralelo donde sea posible,
+  priorizan cobertura crítica y se ejecutan en <30s.
+- **Cobertura 100%** — todo widget, pantalla, flujo, caso borde y ruta de error tiene test.
+- **Navegación agradable y simple** — los tests verifican que el flujo de pantallas sea
+  intuitivo, sin pasos redundantes y con transiciones claras.
+- **Flujo amigable** — los tests simulan el recorrido completo de un usuario real
+  (login → acción principal → cierre de sesión), verificando que cada paso fluye
+  naturalmente al siguiente.
+- **Métricas de navegación excelentes** — los tests miden tiempos de carga (<3s por pantalla),
+  cantidad de taps para completar una tarea (<5 taps), y ratio de éxito/error en cada flujo.
+- **Actualización de datos rápida y eficiente** — los tests verifican que tras una acción
+  (crear/editar/eliminar), la UI refleja el cambio en <1s sin necesidad de recarga manual.
+- **Feedback de pantallas** — ✅ tests verifican que `SnackBar`, `CircularProgressIndicator`,
+  `showDialog`, `showLoadingIndicator` y `Fluttertoast` están disponibles en ambas apps.
+  Las apps ya implementan: loading indicators en operaciones lentas, toast en errores de login,
+  confirmación antes de eliminar, SnackBar en errores de conexión.
+- **OCR avanzado** — 🔵 Pendiente de implementar. El plan de Jul 2026 menciona validación
+  experimental de PDFs (%PDF- header + /Encrypt) sin presupuesto asignado. No hay código
+  de OCR en el backend actual. Se implementará si el cliente lo solicita con presupuesto.
+- **Visión IA** — 🔵 Sin implementar. No hay requisitos ni presupuesto para features de IA
+  en la versión actual. Queda como línea de evolución futura.
+
+### Regla fundamental: legado intacto
+**Solo se refactorizan pantallas, clases y funciones nuevas** (creadas después de Julio 2026).
+El código anterior a Junio 2026 o heredado de versiones anteriores (producción original,
+controladores legacy, widgets pre-existentes) debe quedar **intacto, sin modificar**.
+Cualquier cambio en código legacy requiere autorización explícita del usuario.
+
+### Framework
+- **Flutter:** `flutter_test` para unit tests + `integration_test` para E2E (Android/iOS/Windows).
+  Web: `flutter test` (VM) para tests de modelo/serialización que no dependen de `dart:html`.
+- **Laravel:** PHPUnit 10 con SQLite en memoria y guard en `TestCase.php` que bloquea MySQL.
+- **Backend + Frontend:** los tests unitarios verifican parseo JSON, lógica de negocio y
+  serialización sin dependencias nativas. Los tests E2E (mobile/desktop) llaman a la API real.
+
+### Estrategia por plataforma
+| Plataforma | Test runner | Qué cubre |
+|---|---|---|
+| **Web** | `flutter test` (VM) | Modelos, serialización, lógica pura (sin `dart:html`) |
+| **Android/iOS** | `flutter test` + `integration_test` | Widgets, integración, E2E con Hive |
+| **Windows** | `flutter test` + `integration_test` | Widgets, integración, E2E |
+| **Backend** | `php artisan test` | API, BD, roles, permisos |
+
+> `integration_test` no soporta web aún en Flutter 3.44. Los tests con Hive
+> (SetlistStore) se ejecutan como `integration_test` en mobile/desktop y como unit
+> tests de modelo en `test/models/` para web. Mismo código, mismas asserts.
+
+### Cobertura obligatoria por app
+
+#### visorweb2 (Faristol App)
+| Grupo | Casos | Métrica UX |
+|-------|-------|------------|
+| **Carga** | App inicia sin errores, menú hamburguesa visible | <2s a primera interactividad |
+| **Login** | Pantalla login con campos email + password, login exitoso, error credenciales vacías | Feedback visible en <1s |
+| **Navegación** | Menú → Ensembles → Detalle → Ensayos → Setlist, volver atrás | ≤3 taps por acción |
+| **Agrupaciones** | Listado vacío, listado con datos, detalle de agrupación | Datos visibles en <3s |
+| **Setlist** | Crear, renombrar, eliminar, añadir ítem, prevenir duplicados, reordenar, visor secuencial play/prev/next | Cambio reflejado en <1s |
+| **Premium** | Badge/indicador visible cuando `is_ensemble_member = true` | Actualización inmediata |
+| **Offline** | Setlist funciona sin conexión (Hive local), datos persistentes tras reinicio | Sin pérdida de datos |
+| **Rendimiento** | Tiempo de carga de cada pantalla | Cada pantalla <3s |
+| **Flujo completo** | Login → Ensembles → Setlist → Logout | Sin roturas en el flujo |
+
+#### control-app
+| Grupo | Casos | Métrica UX |
+|-------|-------|------------|
+| **Carga** | App inicia, pantalla login con campos CIF + email + password | <2s |
+| **Login** | Login con CIF válido → dashboard, login con CIF inválido → error, login sin CIF | Feedback <1s |
+| **Dashboard** | Stats cards visibles, gráficos cargados, sidebar accesible | Datos en <3s |
+| **Miembros** | Lista, añadir, cambiar rol, eliminar, error al añadir duplicado | UI actualizada en <1s |
+| **Repertorio** | Lista partituras, filtrar por carpeta, subida con feedback de progreso | Filtro instantáneo |
+| **Ensayos** | Lista, crear con fecha inválida → error, editar, eliminar, crear duplicado | Validación en <1s |
+| **UX** | Mensajes de error visibles, loading indicators en operaciones lentas, confirmación antes de eliminar | Claridad en cada acción |
+| **Flujo completo** | Login → Dashboard → Miembros → Repertorio → Ensayos → Logout | Sin roturas |
+
+### Reglas de ejecución
+1. Tests Flutter (unitarios, sin `dart:html`):
+   ```bash
+   flutter test
+   ```
+2. Tests Flutter (integración, mobile/desktop):
+   ```bash
+   flutter test integration_test/
+   ```
+3. Tests Laravel:
+   ```bash
+   php artisan config:clear && php artisan test --parallel
+   ```
+4. Tests completos (backend + frontend): los 3 comandos anteriores, todos deben pasar.
+5. Si un test falla: se detiene el desarrollo hasta corregir.
+6. No se acepta código sin test que lo cubra.
+7. Los tests de backend usan SQLite en memoria (nunca MySQL real).
+8. Test de UX: cada test verifica mensajes visibles, tiempos <3s, y navegación correcta.
+9. Métricas: cada test registra tiempo de ejecución; si un test nuevo supera los 5s, debe optimizarse.
+10. Código legacy (pre-Julio 2026): **no se modifica ni refactoriza**. Solo se añade código nuevo.
 
 ## Lecciones aprendidas (errores anteriores)
 36. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.
@@ -116,6 +216,22 @@ web2.faristol.net/
 - Root tiene password desconocido. NO modificarlo.
 - Usar `create_admin_safe.sh` para crear usuarios admin alternativos.
 
+## Objetivo transversal: migrabilidad Web → Nativa
+
+Las apps web (`visorweb2`, `control-app`) deben construirse para que su migración a
+plataformas nativas (Android, iOS, Windows) requiera **cambios mínimos de librería y código**.
+
+Reglas:
+- **Backend único**: la API Laravel de web2 es la misma que usarán las apps nativas.
+  No hay backend separado ni mock.
+- **Evitar dependencias web-only**: priorizar paquetes Flutter multiplataforma
+  (http, get, hive, shared_preferences, pdfx). No usar `dart:html`, `window.location`,
+  ni APIs DOM.
+- **Lógica de negocio en backend**: las apps son clients finos; toda la lógica
+  (roles, permisos, premium, acceso) se resuelve en la API Laravel.
+- **Setlist local con Hive**: ya es multiplataforma. Funciona igual en web,
+  Android e iOS sin cambios de código.
+
 ## Estado del proyecto
 
 ### Repositorios
@@ -154,12 +270,19 @@ web2.faristol.net/
 
 ### QA completado
 1. ✅ Tests API de producción — no ejecutables por SQLite <3.35 sin DROP COLUMN. Usar MySQL nativa para testing legacy.
-2. ✅ 31 tests nuevos para API de ensembles — todos pasan en SQLite en memoria.
-3. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
-4. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
-5. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Se añadió prevención de duplicados.
-6. ❌ Ensemble folders en UI de visorweb2 — Descartado. Futura App Móvil: Maestro elige carpeta al subir.
-7. ⏳ Conversión Control App a escritorio real (Electron/Windows) — Pendiente Agosto.
+2. ✅ **49 tests** nuevos para API de ensembles (Feature) — todos pasan en SQLite en memoria.
+3. ✅ **11 tests** unitarios visorweb2 — modelos Setlist (serialización, CRUD Hive), Ensemble (parseo JSON), Feedback UI (loading, colores).
+4. ✅ **6 tests** unitarios control-app-web — modelo LoginResponse (éxito, error, nulos), Feedback UI (SnackBar, ProgressIndicator, showDialog).
+5. ✅ **66 tests total** (49 Laravel + 11 visorweb2 + 6 control-app) — todos pasan.
+6. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
+7. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
+8. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Prevención de duplicados.
+9. ✅ S3 path consistente — `musicScores/pdf/` en ambos controladores (MusicScore + Ensemble).
+10. ✅ Feedback de pantallas — tests verifican que widgets de feedback (loading, toast, snackbar, diálogos) existen en ambas apps.
+11. ❌ Ensemble folders en UI de visorweb2 — Descartado. Futura App Móvil: Maestro elige carpeta al subir.
+12. ⏳ Conversión Control App a escritorio real (Electron/Windows) — Pendiente Agosto.
+13. 🔵 OCR avanzado — Sin implementar. Validación PDF experimental sin presupuesto asignado.
+14. 🔵 Visión IA — Sin implementar. Sin requisitos en la versión actual.
 
 ### Notas
 - Las migraciones legacy NO se modificaron. Los tests crean su propio esquema con `Schema::create`.

@@ -249,6 +249,7 @@ class EnsembleController extends Controller
 
                 $score = MusicScore::create([
                     'name' => $originalName,
+                    'owner_id' => $request->user()->id,
                     'ensemble_id' => $ensemble->id,
                     'uploaded_by' => $request->user()->id,
                     'ensemble_folder_id' => $request->ensemble_folder_id,
@@ -258,11 +259,11 @@ class EnsembleController extends Controller
                 $tempPath = $file->storeAs('temp', $realName, 'local');
                 $fileContent = Storage::disk('local')->get($tempPath);
 
-                Storage::disk('Wasabi')->put('music_score/' . $realName, $fileContent);
+                Storage::disk('Wasabi')->put('musicScores/pdf/' . $realName, $fileContent);
                 Storage::disk('local')->delete($tempPath);
 
                 $score->files()->create([
-                    'path' => 'music_score/' . $realName,
+                    'path' => 'musicScores/pdf/' . $realName,
                     'storagePlace' => 'Wasabisys',
                     'extension' => $file->getClientOriginalExtension(),
                 ]);

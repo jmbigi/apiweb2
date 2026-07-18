@@ -16,7 +16,11 @@ class MusicScore extends Model
         'name',
         'description',
         'date',
-        'status'
+        'status',
+        'owner_id',
+        'ensemble_id',
+        'uploaded_by',
+        'ensemble_folder_id',
     ];
 
     public function composers()
