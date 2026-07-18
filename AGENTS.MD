@@ -78,11 +78,16 @@ de la UX en las apps web Control App y Faristol App.
   `showDialog`, `showLoadingIndicator` y `Fluttertoast` están disponibles en ambas apps.
   Las apps ya implementan: loading indicators en operaciones lentas, toast en errores de login,
   confirmación antes de eliminar, SnackBar en errores de conexión.
-- **OCR avanzado** — 🔵 Pendiente de implementar. El plan de Jul 2026 menciona validación
-  experimental de PDFs (%PDF- header + /Encrypt) sin presupuesto asignado. No hay código
-  de OCR en el backend actual. Se implementará si el cliente lo solicita con presupuesto.
-- **Visión IA** — 🔵 Sin implementar. No hay requisitos ni presupuesto para features de IA
-  en la versión actual. Queda como línea de evolución futura.
+  **Testing visual:** Playwright navega las apps, toma screenshots y extrae el DOM para
+  verificar que los textos y elementos clave están visibles en la interfaz real.
+- **OCR avanzado** — ✅ Sistema de testing visual usa **Tesseract OCR** para extraer texto
+  de screenshots de las apps, verificar contenido visible y detectar elementos UI.
+  Implementado en `tests/visual/ocr_vision.py`. Analiza densidad de texto, regiones vacías,
+  contraste y diferencias con baselines.
+- **Visión IA** — ✅ Sistema de testing visual usa **Pillow + ImageMagick** para comparación
+  pixel-exacta de screenshots vs baselines, detección de cambios visuales no intencionales,
+  análisis de densidad UI y score de contraste. Implementado en `tests/visual/`.
+  Reporte JSON con métricas: `tests/visual/report.json`.
 
 ### Regla fundamental: legado intacto
 **Solo se refactorizan pantallas, clases y funciones nuevas** (creadas después de Julio 2026).
@@ -156,6 +161,14 @@ Cualquier cambio en código legacy requiere autorización explícita del usuario
 8. Test de UX: cada test verifica mensajes visibles, tiempos <3s, y navegación correcta.
 9. Métricas: cada test registra tiempo de ejecución; si un test nuevo supera los 5s, debe optimizarse.
 10. Código legacy (pre-Julio 2026): **no se modifica ni refactoriza**. Solo se añade código nuevo.
+11. Tests visuales (Feedback + OCR + Visión IA):
+    ```bash
+    cd tests/visual && node runner.js       # Playwright + OCR básico
+    python3 ocr_vision.py                    # OCR profundo + análisis IA
+    ```
+    Estos tests navegan las apps reales en Chrome headless, toman screenshots,
+    extraen texto con Tesseract OCR, comparan con baselines, y generan reporte
+    JSON con métricas de UI (densidad, contraste, regiones vacías).
 
 ## Lecciones aprendidas (errores anteriores)
 36. **`config()` no está disponible antes de `parent::setUp()`** en TestCase. Usar `getenv()` o `$_ENV` si se necesita verificar antes.

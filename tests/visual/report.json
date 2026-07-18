@@ -1,0 +1,108 @@
+{
+  "control-app-login": {
+    "analysis": {
+      "dimensions": "1280x800",
+      "ocr": {
+        "text_boxes": 7,
+        "total_chars": 26,
+        "words_found": [
+          "d",
+          "Control",
+          "App",
+          "á",
+          "&",
+          "Iniciar",
+          "sesión"
+        ],
+        "word_count": 7
+      },
+      "ui": {
+        "density": 0.25,
+        "empty_regions": {
+          "empty_pct": 91.8,
+          "empty_zones": 94
+        },
+        "contrast_score": 13.3
+      }
+    },
+    "comparison": {
+      "match": true,
+      "diff_pct": 0.0,
+      "diff_file": "diffs/control-app-login.png"
+    }
+  },
+  "landing": {
+    "analysis": {
+      "dimensions": "1920x1080",
+      "ocr": {
+        "text_boxes": 22,
+        "total_chars": 127,
+        "words_found": [
+          "Faristol",
+          "App",
+          "Musical",
+          "scores",
+          "viewer",
+          "and",
+          "setist",
+          "AS",
+          "Control",
+          "App",
+          "SEO",
+          "SO",
+          "Faristol",
+          "Admi.",
+          "Platiorm",
+          "administration,",
+          "user",
+          "management,",
+          "and",
+          "content",
+          "control",
+          "Pel"
+        ],
+        "word_count": 22
+      },
+      "ui": {
+        "density": 0.61,
+        "empty_regions": {
+          "empty_pct": 98.9,
+          "empty_zones": 205
+        },
+        "contrast_score": 5.7
+      }
+    },
+    "comparison": {
+      "match": true,
+      "diff_pct": 0.0,
+      "diff_file": "diffs/landing.png"
+    }
+  },
+  "visorweb2-home": {
+    "analysis": {
+      "dimensions": "430x932",
+      "ocr": {
+        "text_boxes": 2,
+        "total_chars": 11,
+        "words_found": [
+          "Sponsored",
+          "Ad"
+        ],
+        "word_count": 2
+      },
+      "ui": {
+        "density": 0.27,
+        "empty_regions": {
+          "empty_pct": 119.8,
+          "empty_zones": 48
+        },
+        "contrast_score": 39.0
+      }
+    },
+    "comparison": {
+      "match": true,
+      "diff_pct": 0.0,
+      "diff_file": "diffs/visorweb2-home.png"
+    }
+  }
+}
