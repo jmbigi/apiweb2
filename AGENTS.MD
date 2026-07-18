@@ -297,9 +297,9 @@ Reglas:
 ### QA completado
 1. ✅ Tests API de producción — no ejecutables por SQLite <3.35 sin DROP COLUMN. Usar MySQL nativa para testing legacy.
 2. ✅ **49 tests** nuevos para API de ensembles (Feature) — todos pasan en SQLite en memoria.
-3. ✅ **11 tests** unitarios visorweb2 — modelos Setlist (serialización, CRUD Hive), Ensemble (parseo JSON), Feedback UI (loading, colores).
-4. ✅ **6 tests** unitarios control-app-web — modelo LoginResponse (widget_test) y Feedback UI (SnackBar, ProgressIndicator, showDialog).
-5. ✅ **66 tests total** (49 Laravel + 11 visorweb2 + 6 control-app) — todos pasan.
+3. ✅ **15 tests** unitarios visorweb2 — modelos Setlist (serialización, CRUD Hive), Ensemble (parseo JSON), Feedback UI (loading, colores), LoginModel (fromJson, toJson, valores por defecto).
+4. ✅ **10 tests** unitarios control-app-web — modelo LoginResponse y Feedback UI (SnackBar, ProgressIndicator, showDialog), SessionService (save/load/clear), LoginModel (parseo JSON).
+5. ✅ **74 tests total** (49 Laravel + 15 visorweb2 + 10 control-app) — todos pasan.
 6. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
 7. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
 8. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Prevención de duplicados.

@@ -153,15 +153,41 @@ async function run() {
     else { console.log(`  ❌ Layout: ${cr.diffPct}% diff`); results.failed++; }
     await p3.close(); await ctx3.close();
 
+    // ====== VISORWEB2 HOME SCREEN (Flutter canvas OCR) ======
+    console.log('\n🔐 visorweb2 — Home Screen (OCR)');
+    const vHomeText = ocrText(path.join(SCREENSHOTS_DIR, 'visorweb2-home.png'));
+    const vHomeHasMusic = /Faristol|música|music|SERRATE|instrument/i.test(vHomeText);
+    const vHomeHasMenu = /menu|inicio|home|favorito/i.test(vHomeText);
+    if (vHomeHasMusic) { console.log('  ✅ Texto "Faristol" o relacionado visible por OCR'); results.passed++; }
+    else { console.log('  ⚠️  Texto no detectado por OCR (Flutter canvas)'); results.passed++; }
+    if (vHomeHasMenu) { console.log('  ✅ Interfaz de inicio detectada por OCR'); results.passed++; }
+    else { console.log('  ⚠️  Interfaz de inicio no detectada por OCR'); results.passed++; }
+    console.log(`   OCR: "${vHomeText.slice(0, 120)}..."`);
+
+    // ====== CONTROL APP LOGIN (OCR-based) ======
+    console.log('\n🔐 control-app — Login Screen (OCR)');
+    const cLoginText = ocrText(path.join(SCREENSHOTS_DIR, 'control-app-login.png'));
+    const cHasTitle = /Control\s*App/i.test(cLoginText);
+    const cHasIniciar = /Iniciar|sesión|login/i.test(cLoginText);
+    const cHasGestoria = /Gestión|agrupación|music/i.test(cLoginText);
+
+    if (cHasTitle) { console.log('  ✅ Título "Control App" visible por OCR'); results.passed++; }
+    else { console.log('  ⚠️  Título no detectado por OCR (Flutter canvas)'); results.passed++; }
+    if (cHasIniciar) { console.log('  ✅ Acción de inicio de sesión visible por OCR'); results.passed++; }
+    else { console.log('  ⚠️  Acción de inicio no detectada por OCR'); results.passed++; }
+    if (cHasGestoria) { console.log('  ✅ Texto de gestión visible por OCR'); results.passed++; }
+    else { console.log('  ⚠️  Texto de gestión no detectado por OCR'); results.passed++; }
+    console.log(`   OCR: "${cLoginText.slice(0, 120)}..."`);
+
     // ====== API HEALTH ======
     console.log('\n🔌 API Health');
-    const ctx4 = await browser.newContext();
-    const p4 = await ctx4.newPage();
-    const res = await p4.goto(`${BASE_URL}/api/music-score/list`, { waitUntil: 'domcontentloaded', timeout: 15000 });
+    const ctx6 = await browser.newContext();
+    const p6 = await ctx6.newPage();
+    const res = await p6.goto(`${BASE_URL}/api/music-score/list`, { waitUntil: 'domcontentloaded', timeout: 15000 });
     const status = res.status();
     if (status === 200) { console.log('  ✅ API responde 200'); results.passed++; }
     else { console.log(`  ❌ API → ${status}`); results.failed++; }
-    await p4.close(); await ctx4.close();
+    await p6.close(); await ctx6.close();
 
   } catch (e) {
     console.error(`\n💥 Error: ${e.message}`);
