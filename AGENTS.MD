@@ -52,42 +52,55 @@
 
 ## Norma de Ingeniería, Arquitectura y Diseño — Pruebas Automatizadas Avanzadas
 
-**Objetivo:** Pruebas que simulan usuarios reales con revisión y mejoramiento continuo
-de la UX en las apps web Control App y Faristol App.
+**Objetivo:** Pruebas automatizadas que simulan situaciones reales de usuarios reales,
+con revisión y mejoramiento continuo de la UX en las apps web Control App y Faristol App.
 
 ### Principios
-- **Exactitud 100%** — las pruebas verifican comportamiento real, no implementación interna.
+
+- **Exactitud 100%** — las pruebas verifican comportamiento real contra la API real,
+  no implementación interna ni mocks que oculten bugs de integración.
 - **Precisión 100%** — cada test mide una conducta concreta, determinista y repetible.
-- **Honestidad 100%** — los tests usan datos reales de la API, no mocks que oculten bugs de integración.
-- **UX amigable, agradable y perfecta** — los tests verifican navegación, flujos, mensajes,
-  tiempos de respuesta, legibilidad y claridad de cada pantalla.
-- **Mejores prácticas** — cada test sigue patrones probados (Page Object, AAA, test aislados).
-- **Opciones inteligentes y eficientes** — los tests se ejecutan en paralelo donde sea posible,
-  priorizan cobertura crítica y se ejecutan en <30s.
+- **Honestidad 100%** — los tests usan datos reales, reflejan el estado real del sistema
+  y reportan resultados sin falsos positivos.
+- **UX amigable, agradable y perfecta** — los tests verifican navegación, flujos,
+  mensajes, tiempos de respuesta, legibilidad y claridad de cada pantalla.
+- **Mejores prácticas** — cada test sigue patrones probados (AAA, test aislados, datos
+  de prueba autocontenidos).
+- **Opciones inteligentes y eficientes** — los tests priorizan cobertura crítica,
+  se ejecutan en paralelo donde sea posible y completan en <30s.
 - **Cobertura 100%** — todo widget, pantalla, flujo, caso borde y ruta de error tiene test.
+  Se prueban todos los elementos gráficos, todos los mensajes, todos los estados,
+  todos los errores.
 - **Navegación agradable y simple** — los tests verifican que el flujo de pantallas sea
   intuitivo, sin pasos redundantes y con transiciones claras.
 - **Flujo amigable** — los tests simulan el recorrido completo de un usuario real
   (login → acción principal → cierre de sesión), verificando que cada paso fluye
   naturalmente al siguiente.
-- **Métricas de navegación excelentes** — los tests miden tiempos de carga (<3s por pantalla),
-  cantidad de taps para completar una tarea (<5 taps), y ratio de éxito/error en cada flujo.
-- **Actualización de datos rápida y eficiente** — los tests verifican que tras una acción
-  (crear/editar/eliminar), la UI refleja el cambio en <1s sin necesidad de recarga manual.
-- **Feedback de pantallas** — ✅ tests verifican que `SnackBar`, `CircularProgressIndicator`,
-  `showDialog`, `showLoadingIndicator` y `Fluttertoast` están disponibles en ambas apps.
-  Las apps ya implementan: loading indicators en operaciones lentas, toast en errores de login,
-  confirmación antes de eliminar, SnackBar en errores de conexión.
-  **Testing visual:** Playwright navega las apps, toma screenshots y extrae el DOM para
-  verificar que los textos y elementos clave están visibles en la interfaz real.
-- **OCR avanzado** — ✅ Sistema de testing visual usa **Tesseract OCR** para extraer texto
-  de screenshots de las apps, verificar contenido visible y detectar elementos UI.
-  Implementado en `tests/visual/ocr_vision.py`. Analiza densidad de texto, regiones vacías,
-  contraste y diferencias con baselines.
-- **Visión IA** — ✅ Sistema de testing visual usa **Pillow + ImageMagick** para comparación
-  pixel-exacta de screenshots vs baselines, detección de cambios visuales no intencionales,
-  análisis de densidad UI y score de contraste. Implementado en `tests/visual/`.
-  Reporte JSON con métricas: `tests/visual/report.json`.
+- **Métricas de navegación excelentes** — los tests miden tiempos de carga (<3s por
+  pantalla), cantidad de taps/clics para completar una tarea (<5), y ratio de
+  éxito/error en cada flujo.
+- **Actualización de datos rápida y eficiente** — tras una acción (crear/editar/eliminar),
+  la UI refleja el cambio en <1s sin recarga manual.
+
+### Herramientas de revisión visual
+
+Para revisar las apps se usan tres técnicas combinadas:
+
+1. **Pantallazos (screenshots)** — Playwright navega las apps reales en Chrome headless,
+   toma screenshots y verifica que textos y elementos clave están visibles en el DOM.
+   Implementado en `tests/visual/runner.js`.
+2. **OCR avanzado** — Tesseract OCR extrae texto de los screenshots para verificar
+   contenido visible, densidad de texto, regiones vacías y contraste.
+   Implementado en `tests/visual/ocr_vision.py`.
+3. **Visión IA** — Pillow + ImageMagick comparan pixel a cada screenshot contra
+   baselines, detectan cambios visuales no intencionales y generan reporte JSON
+   con métricas de UI. Implementado en `tests/visual/`.
+
+Estas herramientas se ejecutan con:
+```bash
+cd tests/visual && node runner.js    # Playwright + screenshots + DOM check
+python3 ocr_vision.py                 # OCR profundo + análisis IA + reporte JSON
+```
 
 ### Regla fundamental: legado intacto
 **Solo se refactorizan pantallas, clases y funciones nuevas** (creadas después de Julio 2026).
@@ -161,7 +174,7 @@ Cualquier cambio en código legacy requiere autorización explícita del usuario
 8. Test de UX: cada test verifica mensajes visibles, tiempos <3s, y navegación correcta.
 9. Métricas: cada test registra tiempo de ejecución; si un test nuevo supera los 5s, debe optimizarse.
 10. Código legacy (pre-Julio 2026): **no se modifica ni refactoriza**. Solo se añade código nuevo.
-11. Tests visuales (Feedback + OCR + Visión IA):
+11. Tests visuales (OCR + Visión IA):
     ```bash
     cd tests/visual && node runner.js       # Playwright + OCR básico
     python3 ocr_vision.py                    # OCR profundo + análisis IA
