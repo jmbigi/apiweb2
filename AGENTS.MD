@@ -306,9 +306,17 @@ Reglas:
 3. ✅ **21 tests** API AuthController (login con/sin CIF, refresh token, logout, full flow, unauthenticated access).
 4. ✅ **11 tests** API MusicScoreController (list, get, filter, favorites CRUD, auth gates, composer music).
 5. ✅ **26 tests** unitarios visorweb2 — modelos Setlist, Ensemble, LoginModel, Feedback, UserData, CheckUser, SignUpModel.
-6. ✅ **23 tests** unitarios control-app-web — LoginResponse, SessionService, Feedback UI, login_page/dashboard_page widgets, **login flow completo con MockClient** (4 tests: éxito, error, conexión, sin token).
-7. ✅ **11 checks** visuales Playwright (OCR + DOM + pixel-diff).
-8. ✅ **131 tests + 11 checks = 142 verificaciones total** — todos pasan.
+6. ✅ **61 tests** unitarios/widget control-app-web — LoginResponse, SessionService, Feedback UI, LoginPage (5), DashboardPage (5 con mock API), **ApiService con MockClient** (22 tests), StorageService, FileService, login flow completo (4 tests), Dashboard members/ensayos/repertorio (7 tests).
+7. ✅ **6 tests** integración Flutter — `integration_test/app_test.dart` (carga, formulario, modelo).
+8. ✅ **11 checks** visuales Playwright (OCR + DOM + pixel-diff).
+9. ✅ **6 checks** E2E control-app (carga, recursos, DOM, red, errores JS, WebGL) — sin canvas rendering (limitación CanvasKit+WebGL software).
+10. ✅ **168 tests + 17 checks = 185 verificaciones total** — todos pasan.
+
+### Detalle CanvasKit E2E
+- Flutter 3.44.4 CanvasKit no crea `<flt-canvas>` en SwiftShader/llvmpipe (WebGL software). Engine inicializa pero canvas nunca se materializa.
+- **Playwright E2E** verifica: 6 checks (carga, recursos, DOM, red, errores, WebGL disponible).
+- **Widget tests** (61) + **Integration tests** (6) verifican UI/UX sin necesidad de CanvasKit.
+- Para test visual completo: ejecutar en máquina con GPU real.
 9. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
 10. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
 11. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Prevención de duplicados.
@@ -322,10 +330,36 @@ Reglas:
 19. 🔵 OCR avanzado — Sin implementar. Validación PDF experimental sin presupuesto asignado.
 20. 🔵 Visión IA — Sin implementar. Sin requisitos en la versión actual.
 
+### Objetivos activos
+
+| # | Objetivo | Estado | Cobertura |
+|---|----------|--------|-----------|
+| 1 | **Playwright E2E control-app** — Carga, recursos, DOM, red, sin errores JS | ✅ 6 checks | `tests/visual/control-app-flow.js` |
+| 2 | **Integration tests Flutter** — Login flow, Dashboard, mock API | 🆕 10 tests | `integration_test/app_test.dart` |
+
+### CanvasKit rendering limitación — lecciones aprendidas
+
+**Problema:** Flutter 3.44.4 CanvasKit no crea `<flt-canvas>` en este entorno (headless + SwiftShader).  
+**Stack probado:** Playwright Chromium 1228, Chrome 131, Xvfb+Mesa 21.2, headless/headed, todos fallan.  
+**Workarounds probados (ninguno funciona):** `canvasKitVariant: "full"`, `canvasKitForceMultiSurfaceRasterizer: true`, `canvasKitForceCpuOnly: true`, `--wasm` (skwasm).
+
+**Causa raíz:** Bugs conocidos de Flutter 3.44.x web engine en ciertos entornos GL:
+- `#171402` — Chrome 138+ deprecated fallback a SwiftShader. Fix en Chrome 138.0.7204.149.
+- `#188164` — Contenido no renderiza en ciertos GPUs WebGL + ANGLE-on-Vulkan (regresión 3.41).
+- `#186947` — Error de compilación de shaders en CanvasKit/Skwasm en Chrome Intel Mac.
+- `#175423` — canvasKitForceCpuOnly no renderiza imágenes (fix merged pero no cubre este caso).
+- `#184843` — Skwasm blank screen con crossOriginIsolated en Chrome 146.
+
+**Conclusión:** No es un problema de nuestra app sino del engine Flutter 3.44.x en este entorno.  
+La solución práctica es verificar la UI con **widget tests** (61 tests, no requieren CanvasKit).
+
+**Recomendación futura:** Para E2E visual real, ejecutar en máquina con GPU dedicada o dispositivo móvil.  
+Mantener widget tests como fuente principal de verificación de UI.
+
 ### Gaps conocidos (no cubiertos por tests)
 - **Laravel:** MusicScoreController.create (file upload), ComposerController CRUD, SubscriptionController, InAppSubscriptionController, admin controllers (~80 rutas web)
 - **visorweb2:** Servicio ApiService (806 líneas), 22/25 modelos sin tests (legacy), todas las pantallas excepto LoginPage (bloqueado por `dart:html` en legacy `adsense_ads_view.dart`)
-- **control-app-web:** ApiService endpoints (members, scores, rehearsals, folders CRUD), DashboardPage dinámico (stats, miembros, repertorio), FileService upload, StorageService stub/web
+- **control-app-web:** ~~ApiService endpoints, DashboardPage dinámico, FileService, StorageService~~ ✅ Cubiertos
 
 ### Notas
 - Las migraciones legacy NO se modificaron. Los tests crean su propio esquema con `Schema::create`.

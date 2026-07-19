@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const { execSync } = require('child_process');
+const { execSync, spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -8,6 +8,7 @@ const SCREENSHOTS_DIR = path.join(__dirname, 'screenshots');
 const BASELINES_DIR = path.join(__dirname, 'baselines');
 const DIFFS_DIR = path.join(__dirname, 'diffs');
 const UPDATE_BASELINES = process.argv.includes('--update-baselines');
+const RUN_E2E = process.argv.includes('--e2e') || process.argv.includes('--all');
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -178,6 +179,19 @@ async function run() {
     if (cHasGestoria) { console.log('  ✅ Texto de gestión visible por OCR'); results.passed++; }
     else { console.log('  ⚠️  Texto de gestión no detectado por OCR'); results.passed++; }
     console.log(`   OCR: "${cLoginText.slice(0, 120)}..."`);
+
+    // ====== CONTROL APP E2E FLOW ======
+    if (RUN_E2E) {
+      console.log('\n🎭 Control App — Flujo E2E Completo');
+      const e2eResult = spawn('node', [path.join(__dirname, 'control-app-flow.js')], {
+        stdio: 'inherit',
+        env: { ...process.env, BASE_URL },
+      });
+      const e2eCode = await new Promise(resolve => e2eResult.on('close', resolve));
+      if (e2eCode === 0) { results.passed++; }
+      else { results.failed++; }
+      console.log(`   E2E → código ${e2eCode} (0=ok)`);
+    }
 
     // ====== API HEALTH ======
     console.log('\n🔌 API Health');
