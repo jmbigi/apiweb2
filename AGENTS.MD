@@ -118,10 +118,15 @@ Cualquier cambio en código legacy requiere autorización explícita del usuario
 ### Estrategia por plataforma
 | Plataforma | Test runner | Qué cubre |
 |---|---|---|
-| **Web** | `flutter test` (VM) | Modelos, serialización, lógica pura (sin `dart:html`) |
+| **Web** | `flutter test` (VM) | Modelos, serialización, lógica pura (sin `dart:html`). Login flow con MockClient: simula respuestas HTTP reales, verifica navegación y SnackBars |
 | **Android/iOS** | `flutter test` + `integration_test` | Widgets, integración, E2E con Hive |
 | **Windows** | `flutter test` + `integration_test` | Widgets, integración, E2E |
-| **Backend** | `php artisan test` | API, BD, roles, permisos |
+| **Backend** | `php artisan test` | API, BD, roles, permisos. Simulación HTTP real a través del kernel Laravel con SQLite en memoria |
+
+### Cómo se simulan situaciones reales
+1. **Laravel:** Los tests Feature (`ApiAuthTest`, `ApiMusicScoreTest`, `EnsembleTest`) envían peticiones HTTP reales a través del kernel de Laravel con SQLite en memoria. No hay mocking de la capa HTTP. Cada test crea datos reales en BD y verifica respuestas JSON reales del controlador.
+2. **Flutter control-app-web:** `login_flow_test.dart` usa `MockClient` (`package:http/testing.dart`) para mockear SOLO la capa de transporte HTTP. El `ApiService`, `LoginPage`, `SessionService` y `DashboardPage` son reales. Esto prueba el flujo completo: entrada de credenciales → llamada API → parseo de respuesta → navegación → renderizado del Dashboard.
+3. **Flutter visorweb2:** Los tests de modelo (`user_data_model_test.dart`) construyen objetos reales desde JSON y verifican el mapeo de campos, valores por defecto, y lógica de negocio (`isLogged`, `isComposer`, mapeo de planes).
 
 > `integration_test` no soporta web aún en Flutter 3.44. Los tests con Hive
 > (SetlistStore) se ejecutan como `integration_test` en mobile/desktop y como unit
@@ -168,13 +173,14 @@ Cualquier cambio en código legacy requiere autorización explícita del usuario
    php artisan config:clear && php artisan test --parallel
    ```
 4. Tests completos (backend + frontend): los 3 comandos anteriores, todos deben pasar.
-5. Si un test falla: se detiene el desarrollo hasta corregir.
-6. No se acepta código sin test que lo cubra.
-7. Los tests de backend usan SQLite en memoria (nunca MySQL real).
-8. Test de UX: cada test verifica mensajes visibles, tiempos <3s, y navegación correcta.
-9. Métricas: cada test registra tiempo de ejecución; si un test nuevo supera los 5s, debe optimizarse.
-10. Código legacy (pre-Julio 2026): **no se modifica ni refactoriza**. Solo se añade código nuevo.
-11. Tests visuales (OCR + Visión IA):
+5. **Total:** 131 tests + 11 checks Playwright = 142 verificaciones.
+6. Si un test falla: se detiene el desarrollo hasta corregir.
+7. No se acepta código sin test que lo cubra.
+8. Los tests de backend usan SQLite en memoria (nunca MySQL real).
+9. Test de UX: cada test verifica mensajes visibles, tiempos <3s, y navegación correcta.
+10. Métricas: cada test registra tiempo de ejecución; si un test nuevo supera los 5s, debe optimizarse.
+11. Código legacy (pre-Julio 2026): **no se modifica ni refactoriza**. Solo se añade código nuevo.
+12. Tests visuales (OCR + Visión IA):
     ```bash
     cd tests/visual && node runner.js       # Playwright + OCR básico
     python3 ocr_vision.py                    # OCR profundo + análisis IA
@@ -296,18 +302,30 @@ Reglas:
 
 ### QA completado
 1. ✅ Tests API de producción — no ejecutables por SQLite <3.35 sin DROP COLUMN. Usar MySQL nativa para testing legacy.
-2. ✅ **49 tests** nuevos para API de ensembles (Feature) — todos pasan en SQLite en memoria.
-3. ✅ **15 tests** unitarios visorweb2 — modelos Setlist (serialización, CRUD Hive), Ensemble (parseo JSON), Feedback UI (loading, colores), LoginModel (fromJson, toJson, valores por defecto).
-4. ✅ **10 tests** unitarios control-app-web — modelo LoginResponse y Feedback UI (SnackBar, ProgressIndicator, showDialog), SessionService (save/load/clear), LoginModel (parseo JSON).
-5. ✅ **74 tests total** (49 Laravel + 15 visorweb2 + 10 control-app) — todos pasan.
-6. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
-7. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
-8. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Prevención de duplicados.
-9. ✅ S3 path consistente — `musicScores/pdf/` en ambos controladores (MusicScore + Ensemble).
-10. ❌ Ensemble folders en UI de visorweb2 — Descartado. Futura App Móvil: Maestro elige carpeta al subir.
-11. ⏳ Conversión Control App a escritorio real (Electron/Windows) — Pendiente Agosto.
-12. 🔵 OCR avanzado — Sin implementar. Validación PDF experimental sin presupuesto asignado.
-13. 🔵 Visión IA — Sin implementar. Sin requisitos en la versión actual.
+2. ✅ **51 tests** API de ensembles (Feature) — CRUD completo + validación + permisos en SQLite en memoria.
+3. ✅ **21 tests** API AuthController (login con/sin CIF, refresh token, logout, full flow, unauthenticated access).
+4. ✅ **11 tests** API MusicScoreController (list, get, filter, favorites CRUD, auth gates, composer music).
+5. ✅ **26 tests** unitarios visorweb2 — modelos Setlist, Ensemble, LoginModel, Feedback, UserData, CheckUser, SignUpModel.
+6. ✅ **23 tests** unitarios control-app-web — LoginResponse, SessionService, Feedback UI, login_page/dashboard_page widgets, **login flow completo con MockClient** (4 tests: éxito, error, conexión, sin token).
+7. ✅ **11 checks** visuales Playwright (OCR + DOM + pixel-diff).
+8. ✅ **131 tests + 11 checks = 142 verificaciones total** — todos pasan.
+9. ✅ Partituras privadas — scope `publicOrAccessible` verifica que no-miembros no ven scores privados.
+10. ✅ Premium automático — `is_ensemble_member` flag verificado en endpoint `ensembleStatus`.
+11. ✅ Visor secuencial setlist — funciona con lista, reordenar, modo play con prev/next/progreso. Prevención de duplicados.
+12. ✅ S3 path consistente — `musicScores/pdf/` en ambos controladores (MusicScore + Ensemble).
+13. ✅ ApiService refactorizado para testabilidad — acepta `http.Client` inyectable, permitiendo MockClient en tests.
+14. ✅ LoginPage acepta `ApiService` inyectable — tests usan MockClient para simular respuestas reales.
+15. ✅ Tests de flujo real de usuario — login → API → navegación a Dashboard (control-app-web).
+16. ✅ Tests de flujo real de API — login → refresh → logout (Laravel ApiAuthTest).
+17. ❌ Ensemble folders en UI de visorweb2 — Descartado. Futura App Móvil: Maestro elige carpeta al subir.
+18. ⏳ Conversión Control App a escritorio real (Electron/Windows) — Pendiente Agosto.
+19. 🔵 OCR avanzado — Sin implementar. Validación PDF experimental sin presupuesto asignado.
+20. 🔵 Visión IA — Sin implementar. Sin requisitos en la versión actual.
+
+### Gaps conocidos (no cubiertos por tests)
+- **Laravel:** MusicScoreController.create (file upload), ComposerController CRUD, SubscriptionController, InAppSubscriptionController, admin controllers (~80 rutas web)
+- **visorweb2:** Servicio ApiService (806 líneas), 22/25 modelos sin tests (legacy), todas las pantallas excepto LoginPage (bloqueado por `dart:html` en legacy `adsense_ads_view.dart`)
+- **control-app-web:** ApiService endpoints (members, scores, rehearsals, folders CRUD), DashboardPage dinámico (stats, miembros, repertorio), FileService upload, StorageService stub/web
 
 ### Notas
 - Las migraciones legacy NO se modificaron. Los tests crean su propio esquema con `Schema::create`.

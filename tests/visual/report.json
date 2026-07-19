@@ -96,12 +96,12 @@
           "empty_pct": 119.8,
           "empty_zones": 48
         },
-        "contrast_score": 39.0
+        "contrast_score": 35.5
       }
     },
     "comparison": {
-      "match": true,
-      "diff_pct": 0.0,
+      "match": false,
+      "diff_pct": 15.826,
       "diff_file": "diffs/visorweb2-home.png"
     }
   }
