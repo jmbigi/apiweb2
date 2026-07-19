@@ -7,8 +7,10 @@ use App\Models\EnsembleFolder;
 use App\Models\MusicScore;
 use App\Models\Rehearsal;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class EnsembleTest extends TestCase
@@ -124,6 +126,8 @@ class EnsembleTest extends TestCase
             $table->id();
             $table->morphs('fileable');
             $table->string('path');
+            $table->string('storagePlace')->default('Wasabi');
+            $table->string('extension')->nullable();
             $table->timestamps();
         });
 
@@ -692,5 +696,99 @@ class EnsembleTest extends TestCase
 
         $response->assertStatus(200)->assertJsonCount(1, 'data');
         $this->assertEquals($ensemble->id, $response->json('data.0.id'));
+    }
+
+    // ── Bulk Upload Scores ──
+
+    public function test_bulk_upload_scores_requires_auth()
+    {
+        $ensemble = Ensemble::factory()->create();
+
+        $response = $this->postJson("/api/ensembles/{$ensemble->id}/scores/bulk-upload", []);
+
+        $response->assertStatus(401);
+    }
+
+    public function test_bulk_upload_scores_validation_no_files()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/ensembles/{$ensemble->id}/scores/bulk-upload",
+            ['files' => []]
+        );
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_bulk_upload_scores_validation_invalid_file_type()
+    {
+        Storage::fake('Wasabi');
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $txtFile = UploadedFile::fake()->create('notes.txt', 100);
+
+        $response = $this->actingAs($this->user)->post(
+            "/api/ensembles/{$ensemble->id}/scores/bulk-upload",
+            ['files' => [$txtFile]]
+        );
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
+    }
+
+    public function test_bulk_upload_success()
+    {
+        Storage::fake('Wasabi');
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $pdf1 = UploadedFile::fake()->create('Marcha_Real.pdf', 100, 'application/pdf');
+        $pdf2 = UploadedFile::fake()->create('Sinfonia_No5.pdf', 100, 'application/pdf');
+
+        $response = $this->actingAs($this->user)->post(
+            "/api/ensembles/{$ensemble->id}/scores/bulk-upload",
+            ['files' => [$pdf1, $pdf2]]
+        );
+
+        $response->assertStatus(200)->assertJson(['status' => true]);
+        $data = $response->json('data');
+        $this->assertCount(2, $data['uploaded']);
+        $this->assertEmpty($data['errors']);
+
+        $this->assertDatabaseHas('music_scores', ['name' => 'Marcha_Real', 'ensemble_id' => $ensemble->id]);
+        $this->assertDatabaseHas('music_scores', ['name' => 'Sinfonia_No5', 'ensemble_id' => $ensemble->id]);
+    }
+
+    public function test_bulk_upload_with_folder()
+    {
+        Storage::fake('Wasabi');
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $folder = EnsembleFolder::factory()->create(['ensemble_id' => $ensemble->id, 'name' => 'Clásico']);
+
+        $pdf = UploadedFile::fake()->create('Beethoven.pdf', 100, 'application/pdf');
+
+        $response = $this->actingAs($this->user)->post(
+            "/api/ensembles/{$ensemble->id}/scores/bulk-upload",
+            ['files' => [$pdf], 'ensemble_folder_id' => $folder->id]
+        );
+
+        $response->assertStatus(200)->assertJson(['status' => true]);
+        $this->assertDatabaseHas('music_scores', [
+            'name' => 'Beethoven',
+            'ensemble_folder_id' => $folder->id,
+        ]);
+    }
+
+    public function test_bulk_upload_folder_not_found()
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+
+        $pdf = UploadedFile::fake()->create('test.pdf', 100, 'application/pdf');
+
+        $response = $this->actingAs($this->user)->post(
+            "/api/ensembles/{$ensemble->id}/scores/bulk-upload",
+            ['files' => [$pdf], 'ensemble_folder_id' => 99999]
+        );
+
+        $response->assertStatus(422)->assertJson(['status' => false]);
     }
 }
