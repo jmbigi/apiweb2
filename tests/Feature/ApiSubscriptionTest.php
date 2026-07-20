@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Order;
 use App\Models\SubscriptionPlan;
+use App\Models\SubscribedUser;
 use App\Models\User;
+use App\Models\Webhook;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +21,7 @@ class ApiSubscriptionTest extends TestCase
         'users', 'personal_access_tokens',
         'subscription_plan', 'subscribed_user', 'premium_trials',
         'ensembles', 'ensemble_user',
+        'webhook_log', 'order',
     ];
 
     protected function setUp(): void
@@ -94,6 +98,32 @@ class ApiSubscriptionTest extends TestCase
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('used_count')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('webhook_log', function ($table) {
+            $table->id();
+            $table->text('response')->nullable();
+            $table->string('plan_id')->nullable();
+            $table->string('subscription_id')->nullable();
+            $table->string('order_id')->nullable();
+            $table->string('event_type')->nullable();
+            $table->string('status')->nullable();
+            $table->string('user_id')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('order', function ($table) {
+            $table->id();
+            $table->string('userId')->nullable();
+            $table->string('subscription_plan_id')->nullable();
+            $table->string('orderId')->nullable();
+            $table->string('paymentSource')->nullable();
+            $table->string('subscriptionID')->nullable();
+            $table->string('paypal_plan_id')->nullable();
+            $table->string('paypal_plan_name')->nullable();
+            $table->string('paypal_plan_price')->nullable();
+            $table->string('message')->nullable();
             $table->timestamps();
         });
 
@@ -402,5 +432,61 @@ class ApiSubscriptionTest extends TestCase
     {
         $this->getJson('/api/subscription/subscription-status')
             ->assertStatus(401);
+    }
+
+    public function test_paypal_webhook_renewed_creates_log_and_order(): void
+    {
+        $plan = SubscriptionPlan::create([
+            'name' => 'Premium',
+            'type' => 1,
+            'price' => 9.99,
+            'status' => 1,
+            'start_date' => now(),
+            'plan_id' => 'P-123TEST',
+        ]);
+
+        SubscribedUser::create([
+            'user_id' => $this->user->id,
+            'subscription_plan_id' => $plan->id,
+        ]);
+
+        $payload = [
+            'event_type' => 'BILLING.SUBSCRIPTION.RENEWED',
+            'resource' => [
+                'custom_id' => (string) $this->user->id,
+                'id' => 'SUB-TEST-001',
+                'plan_id' => 'P-123TEST',
+                'status' => 'ACTIVE',
+            ],
+        ];
+
+        $response = $this->withHeaders($this->authHeaders())
+            ->postJson('/api/subscription/paypal-webhook', $payload);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('webhook_log', [
+            'event_type' => 'BILLING.SUBSCRIPTION.RENEWED',
+            'plan_id' => 'P-123TEST',
+            'subscription_id' => 'SUB-TEST-001',
+        ]);
+
+        $this->assertDatabaseHas('order', [
+            'userId' => (string) $this->user->id,
+            'subscriptionID' => 'SUB-TEST-001',
+        ]);
+
+        $this->assertDatabaseHas('subscribed_user', [
+            'user_id' => $this->user->id,
+            'paypal_subscription_id' => 'SUB-TEST-001',
+            'paypal_plan_id' => 'P-123TEST',
+        ]);
+    }
+
+    public function test_paypal_webhook_requires_auth(): void
+    {
+        $this->postJson('/api/subscription/paypal-webhook', [
+            'event_type' => 'BILLING.SUBSCRIPTION.RENEWED',
+        ])->assertStatus(401);
     }
 }
