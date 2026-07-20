@@ -6,7 +6,7 @@
 3. **No tomar decisiones peligrosas de manera automática.** Toda acción destructiva requiere confirmación explícita.
 4. **Todo cambio debe probarse primero en `/tmp`** antes de implementarse en el proyecto real.
 5. **Antes de comitear o realizar cualquier cambio en producción, probar de manera segura** (entorno de pruebas).
-6. **Antes de comitear, pasar todos los tests:** `php artisan test --parallel` (o `vendor/bin/phpunit`).
+6. **Antes de comitear, pasar todos los tests:** Ejecutar `bash run-tests.sh` (lanza Laravel + Flutter + Pint + Playwright). Alternativamente: `php artisan test` (solo Laravel).
 7. **Los tests deben tener una cobertura cercana al 100%** del código nuevo/modificado.
 8. **Protecciones contra código generado con IA:**
    - Todo código generado por IA debe ser revisado línea por línea por un humano antes de aceptarse.
