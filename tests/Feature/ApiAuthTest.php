@@ -6,6 +6,7 @@ use App\Models\Ensemble;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
@@ -39,6 +40,18 @@ class ApiAuthTest extends TestCase
             'password' => Hash::make('password123'),
             'status' => 1,
         ]);
+
+        DB::table('roles')->insert([
+            'name' => 'musician',
+            'display_name' => 'Musician',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    private function authHeaders(string $token): array
+    {
+        return ['Authorization' => "Bearer {$token}", 'Accept' => 'application/json'];
     }
 
     private function createAuthTables(): void
@@ -51,6 +64,7 @@ class ApiAuthTest extends TestCase
             $table->string('password');
             $table->rememberToken();
             $table->boolean('status')->default(1);
+            $table->string('otp')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -335,5 +349,137 @@ class ApiAuthTest extends TestCase
         $this->getJson('/api/auth/user/get/1')->assertStatus(401);
         $this->postJson('/api/auth/logout')->assertStatus(401);
         $this->postJson('/api/auth/token/refresh')->assertStatus(401);
+    }
+
+    public function test_signup_creates_user_successfully(): void
+    {
+        Mail::fake();
+        $response = $this->postJson('/api/auth/user/signup', [
+            'name' => 'New User',
+            'email' => 'new@example.com',
+            'password' => 'secret123',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'User Created Successfully')
+            ->assertJsonPath('user_name', 'New User')
+            ->assertJsonStructure(['token', 'user_id']);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'new@example.com',
+            'name' => 'New User',
+        ]);
+    }
+
+    public function test_signup_with_duplicate_email_returns_validation_error(): void
+    {
+        Mail::fake();
+        $response = $this->postJson('/api/auth/user/signup', [
+            'name' => 'Duplicate',
+            'email' => 'test@example.com',
+            'password' => 'secret123',
+        ]);
+
+        $response->assertStatus(401)
+            ->assertJsonPath('status', false)
+            ->assertJsonPath('message', 'validation error');
+    }
+
+    public function test_signup_with_missing_fields_returns_validation_error(): void
+    {
+        Mail::fake();
+        $response = $this->postJson('/api/auth/user/signup', []);
+
+        $response->assertStatus(401)
+            ->assertJsonPath('status', false)
+            ->assertJsonPath('message', 'validation error');
+    }
+
+    public function test_request_otp_sends_to_existing_user(): void
+    {
+        Mail::fake();
+        $response = $this->postJson('/api/auth/user/request-otp', [
+            'email' => 'test@example.com',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', 200)
+            ->assertJsonPath('message', 'OTP sent successfully');
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+        ]);
+        $user = User::where('email', 'test@example.com')->first();
+        $this->assertNotNull($user->otp);
+        $this->assertMatchesRegularExpression('/^\d{4}$/', $user->otp);
+    }
+
+    public function test_request_otp_with_invalid_email_returns_error(): void
+    {
+        $response = $this->postJson('/api/auth/user/request-otp', [
+            'email' => 'nonexistent@example.com',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', 401)
+            ->assertJsonPath('message', 'Invalid');
+    }
+
+    public function test_verify_otp_with_valid_code_succeeds(): void
+    {
+        User::where('email', 'test@example.com')->update(['otp' => '4321']);
+
+        $response = $this->postJson('/api/auth/user/verify-otp', [
+            'email' => 'test@example.com',
+            'otp' => '4321',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', 200)
+            ->assertJsonPath('message', 'Success')
+            ->assertJsonStructure(['user' => ['name', 'email']]);
+    }
+
+    public function test_verify_otp_with_invalid_code_fails(): void
+    {
+        User::where('email', 'test@example.com')->update(['otp' => '4321']);
+
+        $response = $this->postJson('/api/auth/user/verify-otp', [
+            'email' => 'test@example.com',
+            'otp' => '0000',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', 401)
+            ->assertJsonPath('message', 'Invalid');
+    }
+
+    public function test_change_password_succeeds(): void
+    {
+        $response = $this->postJson('/api/auth/user/change-password', [
+            'email' => 'test@example.com',
+            'password' => 'newpass456',
+            'confirm_password' => 'newpass456',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Password changed successfully');
+
+        $this->assertTrue(Hash::check('newpass456', User::where('email', 'test@example.com')->first()->password));
+    }
+
+    public function test_change_password_with_mismatched_confirmation_fails(): void
+    {
+        $response = $this->postJson('/api/auth/user/change-password', [
+            'email' => 'test@example.com',
+            'password' => 'newpass456',
+            'confirm_password' => 'different',
+        ]);
+
+        $response->assertStatus(401)
+            ->assertJsonPath('status', false)
+            ->assertJsonPath('message', 'validation error');
     }
 }
