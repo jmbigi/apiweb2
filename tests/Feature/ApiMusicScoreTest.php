@@ -177,6 +177,8 @@ class ApiMusicScoreTest extends TestCase
         Schema::create('family_instruments', function ($table) {
             $table->id();
             $table->string('name');
+            $table->timestamp('request')->nullable();
+            $table->timestamp('approved')->nullable();
             $table->timestamps();
         });
     }
@@ -529,10 +531,63 @@ class ApiMusicScoreTest extends TestCase
         ])->assertStatus(401);
     }
 
+    public function test_instrument_suggest_successfully(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+        $headers = ['Authorization' => "Bearer {$token}", 'Accept' => 'application/json'];
+        $familyId = \App\Models\FamilyInstruments::where('name', 'Not categorized')->value('id');
+
+        $response = $this->withHeaders($headers)
+            ->postJson('/api/instruments/suggest', [
+                'name' => 'Suggested Instrument',
+                'family_instruments_id' => $familyId,
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Saved suggested');
+
+        $this->assertDatabaseHas('instruments', ['name' => 'Suggested Instrument']);
+    }
+
+    public function test_instrument_family_suggest_successfully(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+        $headers = ['Authorization' => "Bearer {$token}", 'Accept' => 'application/json'];
+
+        $response = $this->withHeaders($headers)
+            ->postJson('/api/instruments/family/suggest', [
+                'name' => 'New Family',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Saved suggested');
+
+        $this->assertDatabaseHas('family_instruments', ['name' => 'New Family']);
+    }
+
     public function test_style_music_suggest_requires_auth(): void
     {
         $this->postJson('/api/style-music/suggest', [
             'name' => 'Test Style',
         ])->assertStatus(401);
+    }
+
+    public function test_style_music_suggest_successfully(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+        $headers = ['Authorization' => "Bearer {$token}", 'Accept' => 'application/json'];
+
+        $response = $this->withHeaders($headers)
+            ->postJson('/api/style-music/suggest', [
+                'name' => 'Suggested Style',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Saved suggested');
+
+        $this->assertDatabaseHas('style_musics', ['name' => 'Suggested Style']);
     }
 }
