@@ -7,6 +7,7 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\View\View;
 use Tests\TestCase;
 
 class ApiSubscriptionTest extends TestCase
@@ -343,5 +344,63 @@ class ApiSubscriptionTest extends TestCase
 
         $response->assertStatus(404)
             ->assertJsonPath('status', false);
+    }
+
+    public function test_subscription_payment_returns_view(): void
+    {
+        $plan = SubscriptionPlan::create([
+            'name' => 'Premium',
+            'type' => 1,
+            'price' => 9.99,
+            'status' => 1,
+            'start_date' => now(),
+        ]);
+
+        $response = $this->withHeaders($this->authHeaders())
+            ->post('/api/subscription/subscription-payment', [
+                'plan_id' => $plan->id,
+                'user_id' => $this->user->id,
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertViewHas('paypal_plan');
+        $response->assertViewHas('user_id', $this->user->id);
+    }
+
+    public function test_subscription_payment_requires_auth(): void
+    {
+        $response = $this->postJson('/api/subscription/subscription-payment', [
+            'plan_id' => 1,
+            'user_id' => 1,
+        ]);
+
+        $response->assertStatus(401);
+    }
+
+    public function test_subscription_status_with_price(): void
+    {
+        $response = $this->withHeaders($this->authHeaders())
+            ->getJson('/api/subscription/subscription-status?price=19.99');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Payment Success')
+            ->assertJsonPath('data', '19.99');
+    }
+
+    public function test_subscription_status_without_price(): void
+    {
+        $response = $this->withHeaders($this->authHeaders())
+            ->getJson('/api/subscription/subscription-status');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', false)
+            ->assertJsonPath('message', 'Payment Failed');
+    }
+
+    public function test_subscription_status_requires_auth(): void
+    {
+        $this->getJson('/api/subscription/subscription-status')
+            ->assertStatus(401);
     }
 }
