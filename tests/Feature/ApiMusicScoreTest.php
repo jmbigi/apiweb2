@@ -45,6 +45,19 @@ class ApiMusicScoreTest extends TestCase
         if (! FamilyInstruments::where('name', 'Not categorized')->exists()) {
             FamilyInstruments::create(['name' => 'Not categorized']);
         }
+
+        putenv('WAS_ACCESS_KEY_ID=dummy');
+        putenv('WAS_SECRET_ACCESS_KEY=dummy');
+        putenv('WAS_BUCKET=dummy');
+        putenv('WAS_ENDPOINT=https://s3.dummy.com');
+        config(['filesystems.disks.Wasabi' => [
+            'driver' => 's3',
+            'key' => 'dummy',
+            'secret' => 'dummy',
+            'region' => 'us-west-1',
+            'bucket' => 'dummy',
+            'endpoint' => 'https://s3.dummy.com',
+        ]]);
     }
 
     private function createMusicScoreTables(): void
@@ -387,5 +400,77 @@ class ApiMusicScoreTest extends TestCase
         $this->assertDatabaseHas('files_s3_s', [
             'extension' => 'pdf',
         ]);
+    }
+
+    public function test_update_score_successfully(): void
+    {
+        Storage::fake('Wasabi');
+
+        $instrument = Instrument::create(['name' => 'Guitar']);
+        $style = StyleMusic::create(['name' => 'Jazz']);
+        $pdf = UploadedFile::fake()->create('test.pdf', 100, 'application/pdf');
+
+        $token = $this->user->createToken('test')->plainTextToken;
+        $headers = ['Authorization' => "Bearer {$token}", 'Accept' => 'application/json'];
+
+        $createResponse = $this->withHeaders($headers)->post('/api/music-score/create', [
+            'name' => 'Original Piece',
+            'pdf' => $pdf,
+            'instrument_id' => json_encode([$instrument->id]),
+            'style_id' => json_encode([$style->id]),
+            'links' => 'https://example.com/original',
+        ]);
+
+        $createResponse->assertStatus(200);
+        $scoreId = MusicScore::where('name', 'Original Piece')->first()->id;
+
+        $updateResponse = $this->withHeaders($headers)->post("/api/music-score/update/{$scoreId}", [
+            'id' => $scoreId,
+            'name' => 'Updated Piece',
+            'instrument_id' => json_encode([$instrument->id]),
+            'style_id' => json_encode([$style->id]),
+            'links' => 'https://example.com/updated',
+        ]);
+
+        $updateResponse->assertStatus(200)
+            ->assertJsonPath('status', true);
+
+        $this->assertDatabaseHas('music_scores', [
+            'id' => $scoreId,
+            'name' => 'Updated Piece',
+        ]);
+    }
+
+    public function test_delete_score_successfully(): void
+    {
+        Storage::fake('Wasabi');
+
+        $instrument = Instrument::create(['name' => 'Drums']);
+        $style = StyleMusic::create(['name' => 'Rock']);
+        $pdf = UploadedFile::fake()->create('delete.pdf', 100, 'application/pdf');
+
+        $token = $this->user->createToken('test')->plainTextToken;
+        $headers = ['Authorization' => "Bearer {$token}", 'Accept' => 'application/json'];
+
+        $createResponse = $this->withHeaders($headers)->post('/api/music-score/create', [
+            'name' => 'Delete Me',
+            'pdf' => $pdf,
+            'instrument_id' => json_encode([$instrument->id]),
+            'style_id' => json_encode([$style->id]),
+            'links' => 'https://example.com/delete',
+        ]);
+
+        $createResponse->assertStatus(200);
+        $scoreId = MusicScore::where('name', 'Delete Me')->first()->id;
+
+        $deleteResponse = $this->withHeaders($headers)->delete("/api/music-score/delete/{$scoreId}", [
+            'id' => $scoreId,
+        ]);
+
+        $deleteResponse->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Music Score Deleted');
+
+        $this->assertDatabaseMissing('music_scores', ['id' => $scoreId]);
     }
 }
