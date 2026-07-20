@@ -396,6 +396,54 @@ class ApiComposerTest extends TestCase
         $this->postJson('/api/composer-request/create', [])->assertStatus(401);
     }
 
+    public function test_composer_request_create_successfully(): void
+    {
+        \App\Models\Role::create(['name' => 'composer', 'display_name' => 'Composer']);
+        \App\Models\Role::create(['name' => 'musician', 'display_name' => 'Musician']);
+
+        \App\Models\ComposerStatus::create(['name' => 'Pending']);
+        \App\Models\RequestStatus::create(['name' => 'Open']);
+
+        $response = $this->actingAs($this->user)->postJson('/api/composer-request/create', [
+            'user_id' => $this->user->id,
+            'name' => 'Johann',
+            'surname' => 'Bach',
+            'public_name' => 'J.S. Bach',
+            'vat_number' => 'VAT-BACH-01',
+            'street' => 'Music St 10',
+            'city' => 'Leipzig',
+            'postal_code' => '04103',
+            'country' => 'Germany',
+            'notification_email' => 'bach@test.com',
+            'telephone' => '+49123456789',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Composer Request Created');
+
+        $this->assertDatabaseHas('composers', [
+            'public_name' => 'J.S. Bach',
+            'vat_number' => 'VAT-BACH-01',
+        ]);
+
+        $this->assertDatabaseHas('composer_request', [
+            'composers_id' => Composer::where('vat_number', 'VAT-BACH-01')->first()->id,
+        ]);
+    }
+
+    public function test_composer_request_create_validation_error(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->postJson('/api/composer-request/create', [
+                'user_id' => $this->user->id,
+            ]);
+
+        $response->assertStatus(401)
+            ->assertJsonPath('status', false)
+            ->assertJsonPath('message', 'validation error');
+    }
+
     public function test_composer_request_delete_soft_deletes(): void
     {
         $composer = Composer::create(['public_name' => 'Del', 'users_id' => $this->user->id]);
