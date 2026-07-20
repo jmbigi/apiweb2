@@ -95,6 +95,10 @@ class ApiComposerTest extends TestCase
             $table->foreignId('composers_id')->nullable()->constrained('composers')->nullOnDelete();
             $table->foreignId('composer_status_id')->nullable()->constrained('composer_status')->nullOnDelete();
             $table->foreignId('request_status_id')->nullable()->constrained('request_status')->nullOnDelete();
+            $table->timestamp('request_date')->nullable();
+            $table->text('description')->nullable();
+            $table->text('comment')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -389,6 +393,7 @@ class ApiComposerTest extends TestCase
         $this->getJson('/api/composer-request/get/1')->assertStatus(401);
         $this->deleteJson('/api/composer-request/delete/1')->assertStatus(401);
         $this->postJson('/api/composer-request/update-status/1', [])->assertStatus(401);
+        $this->postJson('/api/composer-request/create', [])->assertStatus(401);
     }
 
     public function test_composer_request_delete_soft_deletes(): void
