@@ -356,6 +356,18 @@ La solución práctica es verificar la UI con **widget tests** (61 tests, no req
 **Recomendación futura:** Para E2E visual real, ejecutar en máquina con GPU dedicada o dispositivo móvil.  
 Mantener widget tests como fuente principal de verificación de UI.
 
+### owner_id en music_scores de ensemble
+
+**Regla:** Para partituras creadas dentro de un ensemble, `music_scores.owner_id` debe ser el fundador del ensemble (`ensembles.owner_id`), no el usuario que las sube.
+
+**Archivos modificados:**
+- `app/Http/Controllers/EnsembleController.php:222` — `storeScore`: añadido `'owner_id' => $ensemble->owner_id`
+- `app/Http/Controllers/EnsembleController.php:252` — `bulkUploadScores`: cambiado de `$request->user()->id` a `$ensemble->owner_id`
+
+**Justificación:** La partitura pertenece al ensemble como entidad, no al miembro que la sube. El campo `uploaded_by` registra quién la subió, mientras que `owner_id` identifica al dueño (fundador del ensemble).
+
+**Tests:** `test_store_score_creates_single_score`, `test_store_score_requires_auth`, `test_store_score_validation_error` — verifican que `owner_id` = fundador del ensemble.
+
 ### Gaps conocidos (no cubiertos por tests)
 - **Laravel:** MusicScoreController.create (file upload), ComposerController CRUD, SubscriptionController, InAppSubscriptionController, admin controllers (~80 rutas web)
 - **visorweb2:** Servicio ApiService (806 líneas), 22/25 modelos sin tests (legacy), todas las pantallas excepto LoginPage (bloqueado por `dart:html` en legacy `adsense_ads_view.dart`)

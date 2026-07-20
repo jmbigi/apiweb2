@@ -814,4 +814,46 @@ class EnsembleTest extends TestCase
             ->assertStatus(401);
     }
 
+    public function test_store_score_creates_single_score(): void
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+
+        $response = $this->actingAs($this->user)
+            ->postJson("/api/ensembles/{$ensemble->id}/scores", [
+                'name' => 'New Ensemble Score',
+            ]);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('data.name', 'New Ensemble Score')
+            ->assertJsonPath('data.owner_id', $this->user->id);
+
+        $this->assertDatabaseHas('music_scores', [
+            'name' => 'New Ensemble Score',
+            'ensemble_id' => $ensemble->id,
+            'owner_id' => $this->user->id,
+        ]);
+    }
+
+    public function test_store_score_requires_auth(): void
+    {
+        $ensemble = Ensemble::factory()->create();
+
+        $this->postJson("/api/ensembles/{$ensemble->id}/scores", [
+            'name' => 'Unauthorized',
+        ])->assertStatus(401);
+    }
+
+    public function test_store_score_validation_error(): void
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+
+        $response = $this->actingAs($this->user)
+            ->postJson("/api/ensembles/{$ensemble->id}/scores", []);
+
+        $response->assertStatus(422)
+            ->assertJsonPath('status', false);
+    }
 }

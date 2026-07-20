@@ -221,6 +221,7 @@ class EnsembleController extends Controller
         $score = MusicScore::create([
             'name' => $request->name,
             'ensemble_id' => $ensemble->id,
+            'owner_id' => $ensemble->owner_id,
             'uploaded_by' => $request->user()->id,
             'ensemble_folder_id' => $request->ensemble_folder_id,
         ]);
@@ -249,7 +250,7 @@ class EnsembleController extends Controller
 
                 $score = MusicScore::create([
                     'name' => $originalName,
-                    'owner_id' => $request->user()->id,
+                    'owner_id' => $ensemble->owner_id,
                     'ensemble_id' => $ensemble->id,
                     'uploaded_by' => $request->user()->id,
                     'ensemble_folder_id' => $request->ensemble_folder_id,
