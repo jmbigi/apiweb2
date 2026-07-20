@@ -387,5 +387,56 @@ class ApiComposerTest extends TestCase
     {
         $this->getJson('/api/composer-request/list')->assertStatus(401);
         $this->getJson('/api/composer-request/get/1')->assertStatus(401);
+        $this->deleteJson('/api/composer-request/delete/1')->assertStatus(401);
+        $this->postJson('/api/composer-request/update-status/1', [])->assertStatus(401);
+    }
+
+    public function test_composer_request_delete_soft_deletes(): void
+    {
+        $composer = Composer::create(['public_name' => 'Del', 'users_id' => $this->user->id]);
+        $cs = \App\Models\ComposerStatus::create(['name' => 'P']);
+        $rs = \App\Models\RequestStatus::create(['name' => 'O']);
+        $request = ComposerRequest::create([
+            'composers_id' => $composer->id,
+            'composer_status_id' => $cs->id,
+            'request_status_id' => $rs->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->deleteJson("/api/composer-request/delete/{$request->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Composer Request Deleted');
+
+        $this->assertSoftDeleted('composer_request', ['id' => $request->id]);
+    }
+
+    public function test_composer_request_update_status(): void
+    {
+        \App\Models\Role::create(['name' => 'composer', 'display_name' => 'Composer']);
+        $composer = Composer::create(['public_name' => 'Upd', 'users_id' => $this->user->id]);
+        $cs1 = \App\Models\ComposerStatus::create(['name' => 'Initial']);
+        $cs2 = \App\Models\ComposerStatus::create(['name' => 'Approved']);
+        $rs = \App\Models\RequestStatus::create(['name' => 'Open']);
+        $request = ComposerRequest::create([
+            'composers_id' => $composer->id,
+            'composer_status_id' => $cs1->id,
+            'request_status_id' => $rs->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->postJson("/api/composer-request/update-status/{$request->id}", [
+                'composer_status_id' => $cs2->id,
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Composer Status Updated');
+
+        $this->assertDatabaseHas('composer_request', [
+            'id' => $request->id,
+            'composer_status_id' => $cs2->id,
+        ]);
     }
 }

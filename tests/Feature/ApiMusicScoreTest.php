@@ -495,4 +495,44 @@ class ApiMusicScoreTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonCount(2, 'data');
     }
+
+    public function test_create_instrument_successfully(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+        $headers = ['Authorization' => "Bearer {$token}", 'Accept' => 'application/json'];
+
+        $response = $this->withHeaders($headers)
+            ->postJson('/api/instruments/create', [
+                'instrument_name' => 'New Test Instrument',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true);
+
+        $this->assertDatabaseHas('instruments', [
+            'name' => 'New Test Instrument',
+        ]);
+    }
+
+    public function test_create_instrument_requires_auth(): void
+    {
+        $this->postJson('/api/instruments/create', [
+            'instrument_name' => 'Hacked',
+        ])->assertStatus(401);
+    }
+
+    public function test_instrument_suggest_requires_auth(): void
+    {
+        $this->postJson('/api/instruments/suggest', [
+            'name' => 'Test',
+            'family_instruments_id' => 1,
+        ])->assertStatus(401);
+    }
+
+    public function test_style_music_suggest_requires_auth(): void
+    {
+        $this->postJson('/api/style-music/suggest', [
+            'name' => 'Test Style',
+        ])->assertStatus(401);
+    }
 }
