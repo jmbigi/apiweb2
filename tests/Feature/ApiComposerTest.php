@@ -394,6 +394,7 @@ class ApiComposerTest extends TestCase
         $this->deleteJson('/api/composer-request/delete/1')->assertStatus(401);
         $this->postJson('/api/composer-request/update-status/1', [])->assertStatus(401);
         $this->postJson('/api/composer-request/create', [])->assertStatus(401);
+        $this->postJson('/api/composer-request/update/1', [])->assertStatus(401);
     }
 
     public function test_composer_request_create_successfully(): void
@@ -491,5 +492,69 @@ class ApiComposerTest extends TestCase
             'id' => $request->id,
             'composer_status_id' => $cs2->id,
         ]);
+    }
+
+    public function test_composer_request_update_successfully(): void
+    {
+        \App\Models\Role::create(['name' => 'composer', 'display_name' => 'Composer']);
+
+        $composer = Composer::create([
+            'public_name' => 'Old Name',
+            'users_id' => $this->user->id,
+            'vat_number' => 'VAT-OLD-001',
+            'name' => 'Old',
+            'surname' => 'Name',
+            'street' => 'Old St',
+            'city' => 'Old City',
+            'postal_code' => '00000',
+            'country' => 'Old Country',
+            'telephone' => '+111111111',
+        ]);
+
+        $cs = \App\Models\ComposerStatus::create(['name' => 'Pending']);
+        $rs = \App\Models\RequestStatus::create(['name' => 'Open']);
+
+        $composerRequest = ComposerRequest::create([
+            'composers_id' => $composer->id,
+            'composer_status_id' => $cs->id,
+            'request_status_id' => $rs->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->postJson("/api/composer-request/update/{$composerRequest->id}", [
+                'id' => $composerRequest->id,
+                'user_id' => $this->user->id,
+                'name' => 'Johann',
+                'surname' => 'Bach',
+                'public_name' => 'J.S. Bach',
+                'vat_number' => 'VAT-NEW-001',
+                'street' => 'Music St 10',
+                'city' => 'Leipzig',
+                'postal_code' => '04103',
+                'country' => 'Germany',
+                'notification_email' => 'bach@test.com',
+                'telephone' => '+49123456789',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'Composer Request Updated');
+
+        $this->assertDatabaseHas('composers', [
+            'id' => $composer->id,
+            'public_name' => 'J.S. Bach',
+            'vat_number' => 'VAT-NEW-001',
+        ]);
+    }
+
+    public function test_composer_request_update_not_found(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->postJson('/api/composer-request/update/99999', [
+                'id' => 99999,
+                'user_id' => $this->user->id,
+            ]);
+
+        $response->assertStatus(404);
     }
 }
