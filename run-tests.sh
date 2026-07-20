@@ -74,9 +74,7 @@ else
 fi
 echo ""
 
-# Recachear config para producción (Regla 29)
-echo -e "${AMARILLO}Recacheando config...${NC}"
-php artisan config:cache 2>/dev/null || echo -e "${AMARILLO}  (no critical)${NC}"
+# Nota: en producción, recachear config con: php artisan config:cache
 echo ""
 
 echo -e "${VERDE}========================================${NC}"

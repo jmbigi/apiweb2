@@ -45,7 +45,7 @@
 26. **NUNCA usar la BD de produccion.** Los tests usan SIEMPRE `DB_CONNECTION=sqlite` y `DB_DATABASE=:memory:` (configurado en `phpunit.xml`).
 27. **Guard en `tests/TestCase.php`:** lanza `RuntimeException` si el driver conectado no es `sqlite`. Bloquea cualquier test contra MySQL.
 28. **Antes de tests, limpiar cache de config:** `php artisan config:clear && php artisan route:clear`. La config cacheada anula `phpunit.xml`.
-29. **Despues de tests, recachear:** `php artisan config:cache` (produccion).
+29. **Despues de tests:** `php artisan config:clear` (desarrollo) o `php artisan config:cache` (solo en despliegue a producción). No cachear config en desarrollo, porque `phpunit.xml` anula la config cacheada y los tests fallan con `RuntimeException: Driver detectado: mysql`.
 30. **Tests unitarios** (sin BD) se ejecutan sin restricciones.
 31. **Tests Feature:** corren contra SQLite en memoria. Migraciones existentes con sintaxis MySQL (`ALTER TABLE ... CHANGE`) fallaran -- es esperado.
 32. **Cobertura:** todo codigo nuevo/modificado debe tener tests.
