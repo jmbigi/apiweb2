@@ -473,4 +473,26 @@ class ApiMusicScoreTest extends TestCase
 
         $this->assertDatabaseMissing('music_scores', ['id' => $scoreId]);
     }
+
+    public function test_instruments_list_returns_data(): void
+    {
+        \App\Models\Instrument::create(['name' => 'Guitar', 'request' => now(), 'approved' => now()]);
+        \App\Models\Instrument::create(['name' => 'Piano', 'request' => now(), 'approved' => now()]);
+
+        $response = $this->getJson('/api/instruments/list');
+
+        $response->assertStatus(200)
+            ->assertJsonCount(2, 'data');
+    }
+
+    public function test_style_music_list_returns_data(): void
+    {
+        \App\Models\StyleMusic::create(['name' => 'Classical', 'request' => now(), 'approved' => now()]);
+        \App\Models\StyleMusic::create(['name' => 'Jazz', 'request' => now(), 'approved' => now()]);
+
+        $response = $this->getJson('/api/style-music/list');
+
+        $response->assertStatus(200)
+            ->assertJsonCount(2, 'data');
+    }
 }
