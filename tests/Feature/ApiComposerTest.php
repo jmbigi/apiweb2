@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Composer;
+use App\Models\ComposerRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -334,5 +335,57 @@ class ApiComposerTest extends TestCase
     {
         $this->postJson('/api/composer/update/1', ['id' => 1, 'user_id' => 1, 'name' => 'a', 'surname' => 'b', 'public_name' => 'c', 'vat_number' => 'd', 'street' => 'e', 'city' => 'f', 'postal_code' => 'g', 'country' => 'h', 'notification_email' => 'a@b.com', 'telephone' => '1'])->assertStatus(401);
         $this->deleteJson('/api/composer/delete/1')->assertStatus(401);
+    }
+
+    public function test_composer_request_list_returns_data(): void
+    {
+        $composer = Composer::create([
+            'public_name' => 'Test Composer',
+            'users_id' => $this->user->id,
+        ]);
+        $composerStatus = \App\Models\ComposerStatus::create(['name' => 'Pending']);
+        $requestStatus = \App\Models\RequestStatus::create(['name' => 'Open']);
+
+        ComposerRequest::create([
+            'composers_id' => $composer->id,
+            'composer_status_id' => $composerStatus->id,
+            'request_status_id' => $requestStatus->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->getJson('/api/composer-request/list');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonCount(1, 'data');
+    }
+
+    public function test_composer_request_get_returns_single(): void
+    {
+        $composer = Composer::create([
+            'public_name' => 'Single Composer',
+            'users_id' => $this->user->id,
+        ]);
+        $composerStatus = \App\Models\ComposerStatus::create(['name' => 'Approved']);
+        $requestStatus = \App\Models\RequestStatus::create(['name' => 'Closed']);
+
+        $request = ComposerRequest::create([
+            'composers_id' => $composer->id,
+            'composer_status_id' => $composerStatus->id,
+            'request_status_id' => $requestStatus->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->getJson("/api/composer-request/get/{$request->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('data.id', $request->id);
+    }
+
+    public function test_composer_request_requires_auth(): void
+    {
+        $this->getJson('/api/composer-request/list')->assertStatus(401);
+        $this->getJson('/api/composer-request/get/1')->assertStatus(401);
     }
 }
