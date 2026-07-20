@@ -482,4 +482,90 @@ class ApiAuthTest extends TestCase
             ->assertJsonPath('status', false)
             ->assertJsonPath('message', 'validation error');
     }
+
+    public function test_update_user_successfully(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+
+        $response = $this->withHeaders($this->authHeaders($token))
+            ->postJson("/api/auth/user/edit/{$this->user->id}", [
+                'name' => 'Updated Name',
+                'email' => 'updated@example.com',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'User updated Successfully');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $this->user->id,
+            'name' => 'Updated Name',
+            'email' => 'updated@example.com',
+        ]);
+    }
+
+    public function test_update_user_validation_error(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+
+        $response = $this->withHeaders($this->authHeaders($token))
+            ->postJson("/api/auth/user/edit/{$this->user->id}", []);
+
+        $response->assertStatus(401)
+            ->assertJsonPath('status', false)
+            ->assertJsonPath('message', 'validation error');
+    }
+
+    public function test_update_user_requires_auth(): void
+    {
+        $response = $this->postJson("/api/auth/user/edit/{$this->user->id}", [
+            'name' => 'Hacker',
+            'email' => 'hacker@example.com',
+        ]);
+
+        $response->assertStatus(401);
+    }
+
+    public function test_delete_user_successfully(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+        $userId = $this->user->id;
+
+        $response = $this->withHeaders($this->authHeaders($token))
+            ->deleteJson("/api/auth/user/delete/{$userId}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonPath('message', 'User deleted');
+
+        $this->assertSoftDeleted('users', ['id' => $userId]);
+    }
+
+    public function test_delete_user_requires_auth(): void
+    {
+        $this->deleteJson("/api/auth/user/delete/{$this->user->id}")
+            ->assertStatus(401);
+    }
+
+    public function test_check_composer_no_composer_record(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+
+        $response = $this->withHeaders($this->authHeaders($token))
+            ->getJson('/api/auth/user/check-composer');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', false);
+    }
+
+    public function test_check_subscription_returns_ok(): void
+    {
+        $token = $this->user->createToken('test')->plainTextToken;
+
+        $response = $this->withHeaders($this->authHeaders($token))
+            ->getJson('/api/auth/user/check-subscription');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true);
+    }
 }
