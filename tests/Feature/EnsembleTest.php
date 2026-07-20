@@ -791,4 +791,27 @@ class EnsembleTest extends TestCase
 
         $response->assertStatus(422)->assertJson(['status' => false]);
     }
+
+    public function test_list_members_returns_member_list(): void
+    {
+        $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
+        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->otherUser->id, ['role' => 'maestro']);
+
+        $response = $this->actingAs($this->user)
+            ->getJson("/api/ensembles/{$ensemble->id}/members");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', true)
+            ->assertJsonCount(2, 'data');
+    }
+
+    public function test_list_members_requires_auth(): void
+    {
+        $ensemble = Ensemble::factory()->create();
+
+        $this->getJson("/api/ensembles/{$ensemble->id}/members")
+            ->assertStatus(401);
+    }
+
 }
