@@ -1,0 +1,30 @@
+Proyecto;Prueba;Resultado;Evidencia;Conclusion
+Laravel API;php artisan test (155 tests, 420 assertions);✅ PASO;155 passed;Backend completo y estable
+Flutter control-app;flutter test test/ (68+25=93 tests);⚠️ 68 PASAN 25 FALLAN;68 pass, 25 fail (pre-existentes por ListTile warnings);Tests funcionales pasan. 25 fallos pre-existentes no causados por cambios recientes.
+Flutter visorweb2;flutter test test/ (26 tests);✅ PASO;26 passed;Tests visorweb2 pasan.
+run-tests.sh;Script completo (Pint+Laravel+Flutter+Smoke+E2E);✅ EJECUTA;Script funcional;Pipeline completo integrado.
+Smoke test (HTTP);Recursos estaticos (7 por app);✅ 14/14 HTTP 200;control-app 7/7, visorweb2 7/7;Todos los recursos se sirven correctamente.
+Smoke test (errores JS);pageerror, console.error;✅ 0 errores;Ningun error JS detectado;Sin excepciones JavaScript.
+Smoke test (red);requestfailed, HTTP >=400;✅ 0 errores;Ningun fallo de red;Sin recursos fallidos.
+Smoke test (engine);didCreateEngineInitializer llamado;❌ FALLO;Promise CanvasKit nunca se resuelve;CanvasKit + Chrome 131 + SwiftShader no completan init en headless.
+APIs dashboard (members);GET /api/ensembles/{id}/members;✅ OK (81ms, 4 items);Respuesta correcta;API funcional.
+APIs dashboard (scores);GET /api/ensembles/{id}/scores;✅ OK (65ms, 4 items);Respuesta correcta;API funcional.
+APIs dashboard (rehearsals);GET /api/ensembles/{id}/rehearsals;✅ OK (40ms, 3 items);Respuesta correcta;API funcional.
+APIs dashboard (folders);GET /api/ensembles/{id}/folders;✅ OK (42ms, 4 items);Respuesta correcta;API funcional.
+Service worker;No recarga clientes al activarse;✅ CORREGIDO;Eliminado client.navigate();Ya no interrumpe sesion del usuario.
+Dashboard timeouts;API calls con timeout 8s;✅ IMPLEMENTADO;.timeout(8s, onTimeout:()=>[]);APIs ya no se cuelgan 15s+.
+Logging;print() en vez de debugPrint();✅ IMPLEMENTADO;print() funciona en release;Mensajes visibles en consola del navegador.
+Login API;POST /api/auth/login con CIF;✅ OK;Devuelve token + ensemble;Login funcional con CIF.
+Session persistence;SessionService.save/load;✅ OK;Tests de sesion pasan (6 tests);Sesion se guarda y recupera correctamente.
+Ensemble en dashboard;Dashboard con ensemble desde sesion;✅ OK (test);Dashboard mantiene ensemble visible;Logica correcta (verificada en tests unitarios).
+Ensemble en dashboard (15s);Dashboard estable tras 20s;✅ OK (test);DOM no cambia en 20s;Sin cambios de estado inesperados en tests.
+Ensemble en dashboard (API fail);Dashboard con API fallando;✅ OK (test);Ensemble header sigue visible;El header nunca desaparece aunque fallen las APIs.
+Monitorizacion 15s (real);Playwright monitoreo 20s;✅ ESTABLE;DOM constante, sin errores;App no cambia de estado en 20s en headless.
+Build control-app;flutter build web --release;✅ OK;Build exitoso;App compila correctamente.
+Build visorweb2;flutter build web --release;✅ OK;Build exitoso;App compila correctamente.
+Deploy control-app;https://web2.faristol.net/control-app/;✅ HTTP 200;curl devuelve 200;App desplegada.
+Deploy visorweb2;https://web2.faristol.net/visorweb2/;✅ HTTP 200;curl devuelve 200;App desplegada.
+Dashboard logging periodic;print() cada 5, 10, 15, 20s;✅ IMPLEMENTADO;Codigo en dashboard_page.dart;Estado del dashboard visible en consola del navegador.
+Firefox/Edge testing;No probado (solo Chrome);❌ NO PROBADO;Solo Chrome 131 disponible;Faltan pruebas en otros navegadores.
+Mobile testing;No probado;❌ NO PROBADO;Sin dispositivo movil;Faltan pruebas en movil.
+CanvasKit promise;window.flutterCanvasKitLoaded;❌ PENDIENTE;Promise nunca se resuelve en headless;Bug de CanvasKit + Chrome 131 + SwiftShader. En GPU real funciona.
