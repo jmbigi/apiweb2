@@ -2,6 +2,7 @@
 
 **Fecha:** 2026-07-21
 **Entorno:** Ubuntu 20.04, Chrome 148.0.7778.178, Flutter 3.44.4, Playwright 1.52+
+**Entorno de validación externa:** Arch Linux, Chromium 150, Flutter 3.44.7, Playwright 1.61 — mismo resultado (confirmado por análisis independiente)
 
 ---
 
@@ -76,7 +77,7 @@ La evidencia sitúa el punto de fallo después de la invocación de `runApp()` y
 
 **Se ha confirmado que el framework Flutter llega al primer frame:** `SchedulerBinding.addPostFrameCallback` se ejecuta y establece `localStorage['__flutter_first_frame'] = 'ok'`. Sin embargo, el canvas `<flt-canvas>` nunca se crea (ni siquiera temporalmente — el MutationObserver no registró ningún evento de creación/eliminación de elementos canvas o flt-canvas). El frame se renderiza pero no tiene superficie de salida visible.
 
-**Causa más probable:** CanvasKit no puede crear una superficie de render WebGL en este entorno. Aunque `WebGL2` funciona en pruebas aisladas, la combinación específica de Chrome + SwiftShader + Mesa 21.2.6 + Ubuntu 20.04 no cumple todos los requisitos que CanvasKit necesita para establecer el pipeline de renderizado. El framework Flutter funciona, pero no tiene dónde pintar los frames.
+**Causa raíz identificada:** `CanvasKit.MakeWebGLContext()` retorna `null` cuando se invoca sin argumentos (tal como lo llama el engine de Flutter), aunque `canvas.getContext('webgl2')` funciona en JavaScript plano. Esto ha sido confirmado en dos entornos independientes: Ubuntu 20.04 + Chrome 148 + Flutter 3.44.4 y Arch Linux + Chromium 150 + Flutter 3.44.7. El problema está en la capa de integración entre CanvasKit (compilado a Wasm) y SwiftShader, no en la aplicación ni en la configuración de Flutter.
 
 ### 3.2. Sin canvas, no hay renderizado visual
 
@@ -143,7 +144,7 @@ En este servidor (Chrome 148/149 + Flutter 3.44.4 + Ubuntu 20.04), el engine de 
 | Service worker interfiere | ❌ **DESCARTADA** | Mismo comportamiento con serviceWorkers:'block'. |
 | Flags de Chrome incorrectos | ❌ **DESCARTADA** | Probadas 8 combinaciones de flags. |
 | El problema es específico de Chrome 148 | ❌ **DESCARTADA** | Chromium 149 (Playwright nativo) reproduce el mismo comportamiento. |
-| El problema es reproducible en otro entorno | 🔲 **PENDIENTE** | Probar en GitHub Actions o VM limpia. |
+| El problema es reproducible en otro entorno | ✅ **CONFIRMADO** | Arch Linux + Chromium 150 + Flutter 3.44.7 reproduce exactamente el mismo comportamiento (análisis independiente). Causa raíz: `CanvasKit.MakeWebGLContext()` retorna `null`. |
 | Otro renderer (Skwasm) | ❌ **DESCARTADA** | Probado con `--wasm` — mismo resultado. HTML renderer no disponible en Flutter 3.44. |
 | Trace CDP completo | 🔲 **PENDIENTE** | Baja prioridad (no hay errores que capturar). |
 | Canvas se crea y luego se elimina | ❌ **DESCARTADA** | MutationObserver confirma que nunca se crea. |
@@ -158,5 +159,6 @@ En este servidor (Chrome 148/149 + Flutter 3.44.4 + Ubuntu 20.04), el engine de 
 4. ✅ **Instrumentar primer frame** (`SchedulerBinding.addPostFrameCallback`) — Completado. Frame se renderiza, confirmado.
 5. ✅ **Instrumentar `FlutterError.onError`** — Completado. 0 errores capturados.
 6. ✅ **MutationObserver DOM** — Completado. Confirma que canvas nunca se crea, ni temporalmente.
-7. 🔲 **Reproducir en GitHub Actions / VM limpia** — Pendiente. No accesible desde este servidor.
-8. 🔲 **Probar con otro Flutter SDK** — Pendiente. Para descartar regresión del SDK local.
+7. ✅ **Reproducir en otro entorno** — Completado. Arch Linux + Chromium 150 + Flutter 3.44.7 confirma el mismo problema. Causa raíz: `CanvasKit.MakeWebGLContext()` retorna `null`.
+8. 🔲 **Probar con Flutter SDK anterior (3.22.x)** — Pendiente. Para determinar si es una regresión reciente.
+9. 🔲 **Probar en entorno con GPU real** — Pendiente. Para verificar que la app funciona correctamente con aceleración gráfica real.
