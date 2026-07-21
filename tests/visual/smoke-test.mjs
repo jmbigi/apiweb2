@@ -104,9 +104,11 @@ async function main() {
     console.log('  [3/5] Esperando engine Flutter (60s max)...');
     let engineInitialized = false;
 
+    // Sennal de inicializacion: __flutterAppStarted se establece cuando
+    // runApp() se ejecuta (ya sea por el engine real o por el safety net)
     try {
       await page.waitForFunction(
-        () => window._flutter?.loader?.didCreateEngineInitializer === null,
+        () => window.__flutterAppStarted === true,
         { timeout: 60000, polling: 1000 }
       );
       engineInitialized = true;
@@ -118,17 +120,15 @@ async function main() {
         const ckLoaded = window.flutterCanvasKitLoaded;
         return {
           loaderType: typeof fl,
-          hasInitFn: fl ? 'didCreateEngineInitializer' in fl : false,
           initType: typeof fl?.didCreateEngineInitializer,
           initCalled: fl?.didCreateEngineInitializer === null,
           hasCanvasKit: !!window.flutterCanvasKit,
           ckPromiseState: ckLoaded?.toString()?.substring(0, 50) || 'undefined',
-          ckPromiseIsPending: typeof ckLoaded?.then === 'function' && ckLoaded !== undefined,
           flutterView: !!document.querySelector('flutter-view'),
           glassPane: !!document.querySelector('flt-glass-pane'),
-          sceneHost: !!document.querySelector('flt-scene-host'),
+          appStarted: window.__flutterAppStarted === true,
+          engineReady: window.__flutterEngineReady === true,
           scripts: Array.from(document.scripts).map(s => s.src?.split('/').pop()),
-          elapsed: Date.now() - window.performance?.timing?.navigationStart || 0,
         };
       });
 
@@ -137,10 +137,11 @@ async function main() {
       console.log(`      loader: ${diag.loaderType}`);
       console.log(`      didCreateEngineInitializer: ${diag.initType} (llamado: ${diag.initCalled})`);
       console.log(`      CanvasKit: ${diag.hasCanvasKit ? 'cargado' : 'no disponible'}`);
-      console.log(`      Promise CanvasKit: ${diag.ckPromiseIsPending ? 'PENDIENTE (nunca se resuelve)' : diag.ckPromiseState}`);
+      console.log(`      Promise CanvasKit: ${diag.ckPromiseState}`);
+      console.log(`      __flutterAppStarted: ${diag.appStarted}`);
+      console.log(`      __flutterEngineReady: ${diag.engineReady}`);
       console.log(`      scripts: ${diag.scripts.join(', ')}`);
 
-      // Tomar screenshot para diagnostico
       await page.screenshot({ path: `/tmp/smoke-fail-${app.name}.png`, fullPage: true });
       console.log(`    Screenshot guardado: /tmp/smoke-fail-${app.name}.png`);
     }
