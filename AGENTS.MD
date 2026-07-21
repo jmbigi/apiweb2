@@ -396,12 +396,12 @@ Mantener widget tests como fuente principal de verificación de UI.
 | Tests de widgets Flutter | `flutter test` | ✅ Sí | Requiere `_clearErrors` para ListTile warnings |
 | Smoke test HTTP + engine | Playwright + `smoke-test.mjs` | ✅ Sí | Verifica HTTP 200 + engine init + 0 errores |
 | Pruebas de API | Playwright + `control-app-api-test.mjs` | ✅ Sí | Verifica login + 4 endpoints del dashboard |
-| E2E visual con Playwright | Playwright + Chrome | ⚠️ Parcial | CanvasKit no renderiza en headless sin GPU. Las screenshots salen en blanco. |
+| E2E visual con Playwright | Playwright + Chrome | ⚠️ No determinado | En este entorno concreto la app no completa la inicialización del engine. La causa no está identificada (ver lección aprendida). Chromium Headless + SwiftShader funciona en otros entornos CI/CD. |
 | Pruebas con login real | Playwright + API login | ✅ Sí | Se inyecta sesión en localStorage y se recarga |
-| Pruebas de regresión visual | `pixelmatch` / `jest-image-snapshot` | ❌ No | Requiere GPU para renderizado real |
+| Pruebas de regresión visual | `pixelmatch` / `jest-image-snapshot` | ❌ Pendiente | Depende de resolver la inicialización del engine en headless |
 | Integración continua | `bash run-tests.sh` | ✅ Sí | Pipeline completo: Pint → Laravel → Flutter → Smoke → E2E |
 
-**Para pruebas visuales reales (E2E con CanvasKit), se necesita un entorno con GPU** (CI/CD con GPU, GitHub Actions, o máquina local). Este servidor headless no tiene GPU, por lo que las screenshots de Flutter web salen en blanco. La lógica de la app se verifica correctamente mediante tests unitarios, de API y smoke test.
+**Nota sobre CanvasKit en headless:** En este entorno concreto (Chrome 148, Flutter 3.44.4, Ubuntu 20.04), la app Flutter web no completa la inicialización del engine en Chromium Headless. Sin embargo, esto NO es una limitación general de CanvasKit, Chromium Headless ni de la falta de GPU. Existen numerosos proyectos que ejecutan pruebas E2E de Flutter Web en CI/CD headless con éxito (GitHub Actions, GitLab CI, etc.). La causa exacta en este entorno no está determinada.
 
 ### Notas
 - Las migraciones legacy NO se modificaron. Los tests crean su propio esquema con `Schema::create`.
