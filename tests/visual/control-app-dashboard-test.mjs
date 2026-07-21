@@ -10,8 +10,14 @@ async function wait(ms) {
 }
 
 async function main() {
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const browser = await chromium.launch({
+    headless: true,
+    args: ['--enable-unsafe-swiftshader', '--no-sandbox'],
+  });
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    locale: 'es-ES',
+  });
   const page = await context.newPage();
 
   console.log('1. Login via API directa...');
