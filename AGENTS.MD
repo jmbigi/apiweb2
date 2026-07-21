@@ -385,6 +385,7 @@ Mantener widget tests como fuente principal de verificación de UI.
 3. **Probar antes de desplegar.** Usar `flutter test` para los tests unitarios y el smoke test de Playwright antes de hacer deploy.
 4. **Usar la condición correcta en tests.** `didCreateEngineInitializer === null` nunca se cumple en modo callback. Usar `flutter-view` presente en el DOM como señal de que `runApp()` se ejecutó.
 5. **Debug build + source maps + consola del navegador** es la forma más rápida de diagnosticar errores de Flutter web.
+6. **`--debug` con dartdevc NO soluciona la falta de canvas** en headless. Sirve para diagnosticar errores de código (nombres reales en stack traces), pero el canvas no se crea ni en debug ni en release. El problema está en `initializeEngine()` que no completa su Promise, y el modo de compilación es irrelevante.
 
 ### Capacidad de pruebas automatizadas
 

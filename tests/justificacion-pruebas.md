@@ -81,6 +81,25 @@ En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter w
 
 **Esto NO es una limitación general de Chromium Headless ni de CanvasKit.** Es una observación específica de este entorno y esta configuración. En otros entornos CI/CD con configuraciones similares, Flutter Web funciona correctamente.
 
+### 3.4. `--debug` vs `--release` (dartdevc vs dart2js)
+
+El modo de compilación (`--debug` con dartdevc o `--release` con dart2js) **no afecta** la creación del canvas. En ambos modos:
+- ✅ El código Dart se ejecuta (`main()`, `runApp()`, `initState()`)
+- ❌ El canvas `<flt-canvas>` no se crea
+- ❌ `initializeEngine()` no completa su Promise
+
+**Lo que SÍ aporta `--debug` + `--source-maps`:**
+- Stack traces con nombres reales (`Offset`, `dashboard_page.dart:361`) en vez de minificados (`minified:eU`)
+- Errores de tipo (como `ParentDataWidget`) se muestran claramente
+- Permite identificar bugs en el código de la app que en release pasan desapercibidos
+
+**Lo que NO aporta `--debug`:**
+- No hace que el canvas se cree
+- No resuelve la inicialización del engine
+- El build es ~4x más grande (11MB vs 2.8MB) y más lento
+
+**Conclusión:** `--debug` es una herramienta de diagnóstico, no una solución para el problema del canvas. Para depurar errores de la app (como el `ParentDataWidget` que se corrigió), es invaluable. Para lograr que el canvas se cree en headless, se necesita investigar el engine de Flutter, no cambiar el modo de compilación.
+
 ### Pruebas disponibles
 
 | Tipo | Estado | Comando |
