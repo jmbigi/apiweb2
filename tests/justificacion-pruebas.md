@@ -63,12 +63,12 @@ A pesar de que:
 **La evidencia disponible no permite identificar la causa raíz.** Con instrumentación mediante proxy se ha determinado que:
 
 1. ✅ `didCreateEngineInitializer` es llamado
-2. ✅ `initializeEngine(config)` inicia
-3. ✅ `initializeEngine(config)` completa (~310ms)
-4. ✅ `runApp()` es llamado
+2. ✅ `initializeEngine(config)` inicia (proxy registra la entrada)
+3. ✅ `initializeEngine(config)` completa (proxy registra la salida, ~310ms después de la entrada)
+4. ✅ `runApp()` es invocado (proxy registra la llamada)
 5. ❌ El canvas `<flt-canvas>` nunca se crea
 
-El engine se inicializa completamente (pasos 1-4). La creación del canvas ocurre dentro del framework Flutter, después de `runApp()`, en un punto que no está instrumentado. **No se observaron errores, excepciones ni logs en las fuentes instrumentadas** (Playwright, consola del navegador, eventos de red, CDP Runtime, proxy del bootstrap). Se necesita instrumentación a nivel del framework Flutter para determinar la causa.
+La evidencia sitúa el punto de fallo después de la invocación de `runApp()` y antes de la aparición del primer elemento de renderizado (`<flt-canvas>`). La instrumentación del bootstrap no cubre el código del framework Flutter posterior a `runApp()`. **No se observaron errores, excepciones ni logs en las fuentes instrumentadas** (Playwright, consola del navegador, eventos de red, CDP Runtime, proxy del bootstrap). El componente exacto responsable aún no ha sido identificado.
 
 ### 3.2. Sin canvas, no hay renderizado visual
 
@@ -88,7 +88,7 @@ Basado en la evidencia, NO se puede afirmar que:
 | "Ubuntu 20.04 es la causa del problema" | ❌ No existe evidencia de que Ubuntu 20.04 sea, por sí mismo, la causa. |
 | "El problema es la falta de GPU" | ❌ Falso. WebGL2 funciona correctamente. |
 | "Flutter 3.44.4 es incompatible con Chrome 148" | ❌ No hay evidencia. Es una hipótesis. |
-| "GitHub Actions tiene GPU" | ❌ Falso. GitHub Actions normalmente ejecuta Playwright mediante renderizado por software, sin GPU física dedicada. |
+| "GitHub Actions tiene GPU" | ❌ GitHub Actions usa runners sin GPU física, pero no está demostrado que en ese entorno la aplicación complete la creación del canvas. |
 
 ## 4. `--debug` vs `--release` (dartdevc vs dart2js)
 
@@ -107,7 +107,7 @@ En las pruebas realizadas **no se observó diferencia** entre ambos modos respec
 
 En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter web no alcanza un estado observable en el que el canvas de renderizado (`<flt-canvas>`) se materialice. El código Dart se ejecuta (`main()`, `runApp()`, `initState()`), la instrumentación confirma que `initializeEngine()` completa y `runApp()` es invocado, pero el canvas nunca aparece. La evidencia disponible no permite identificar la causa raíz.
 
-**Esto NO es una limitación general de Chromium Headless ni de CanvasKit.** Existen proyectos que ejecutan pruebas automatizadas de Flutter Web en Chromium Headless y entornos CI/CD con éxito. El comportamiento observado es específico de este entorno y esta configuración.
+**No existe evidencia suficiente para atribuir el problema a una limitación inherente de Chromium Headless o CanvasKit.** Existen implementaciones documentadas donde Flutter Web funciona bajo Playwright y Chromium Headless, aunque ello no descarta incompatibilidades específicas entre versiones o configuraciones. El comportamiento observado no se ha reproducido en otros entornos.
 
 ### Pruebas disponibles
 
