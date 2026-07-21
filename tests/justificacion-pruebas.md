@@ -60,7 +60,15 @@ A pesar de que:
 
 **El elemento `<flt-canvas>` nunca se crea en el DOM.** Sin canvas, CanvasKit no puede renderizar nada visualmente.
 
-**La evidencia disponible no permite identificar la causa raíz.** No hay errores, excepciones ni logs que permitan determinar el punto exacto donde se interrumpe el flujo entre `didCreateEngineInitializer` y la creación del canvas. Sería necesario instrumentar el engine con un proxy en `initializeEngine()` o capturar un trace de CDP para determinar si el engine entra en esa función y, si lo hace, por qué no completa.
+**La evidencia disponible no permite identificar la causa raíz.** Con instrumentación mediante proxy se ha determinado que:
+
+1. ✅ `didCreateEngineInitializer` es llamado
+2. ✅ `initializeEngine(config)` inicia
+3. ✅ `initializeEngine(config)` completa (~310ms)
+4. ✅ `runApp()` es llamado
+5. ❌ El canvas `<flt-canvas>` nunca se crea
+
+El engine se inicializa completamente (pasos 1-4). La creación del canvas ocurre dentro del framework Flutter, después de `runApp()`, en un punto que no está instrumentado. No hay errores, excepciones ni logs que indiquen por qué el framework no crea el canvas. Se necesita instrumentación a nivel del framework (no del bootstrap) para determinar la causa.
 
 ### 3.2. Sin canvas, no hay renderizado visual
 
