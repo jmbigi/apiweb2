@@ -27,7 +27,7 @@
 | 16 | `flt-scene-host` NO se crea | `document.querySelector('flt-scene-host')` es `null` | `page.evaluate` |
 | 17 | `canvas` (HTML5) NO se crea | `document.querySelector('canvas')` es `null` | `page.evaluate` |
 
-**Nota sobre #9:** La propiedad `didCreateEngineInitializer` permanece como `function` después de 60s. En modo callback (que es el que usa el bootstrap), la función original no elimina la propiedad del loader tras ser invocada, por lo que esta señal no permite determinar si fue llamada o no. Para determinar si la función fue invocada habría que instrumentarla con un proxy (como se hizo en pruebas anteriores, donde se confirmó que SÍ fue llamada). El punto exacto donde se detiene el flujo está después de la invocación de `didCreateEngineInitializer` y antes de que `runApp()` complete la creación del canvas — sin instrumentación adicional no es posible precisar más.
+**Nota sobre #9:** La propiedad `didCreateEngineInitializer` permanece como `function` después de 60s. En modo callback (que es el que usa el bootstrap), la función original no elimina la propiedad del loader tras ser invocada, por lo que esta señal no permite determinar si fue llamada o no. Mediante una instrumentación independiente con proxy (realizada durante la fase de diagnóstico) se confirmó que la función SÍ fue invocada. El punto exacto donde se interrumpe el flujo está después de la invocación de `didCreateEngineInitializer` — sin instrumentación adicional no es posible precisar más.
 
 ## 2. Lo que funciona correctamente
 
@@ -68,7 +68,7 @@ A pesar de que:
 4. ✅ `runApp()` es llamado
 5. ❌ El canvas `<flt-canvas>` nunca se crea
 
-El engine se inicializa completamente (pasos 1-4). La creación del canvas ocurre dentro del framework Flutter, después de `runApp()`, en un punto que no está instrumentado. No hay errores, excepciones ni logs que indiquen por qué el framework no crea el canvas. Se necesita instrumentación a nivel del framework (no del bootstrap) para determinar la causa.
+El engine se inicializa completamente (pasos 1-4). La creación del canvas ocurre dentro del framework Flutter, después de `runApp()`, en un punto que no está instrumentado. **No se observaron errores, excepciones ni logs en las fuentes instrumentadas** (Playwright, consola del navegador, eventos de red, CDP Runtime, proxy del bootstrap). Se necesita instrumentación a nivel del framework Flutter para determinar la causa.
 
 ### 3.2. Sin canvas, no hay renderizado visual
 
@@ -85,10 +85,10 @@ Basado en la evidencia, NO se puede afirmar que:
 |---|---|
 | "CanvasKit no funciona en headless" | ❌ Falso. Existen proyectos que ejecutan pruebas de Flutter Web en Chromium Headless con éxito. |
 | "Hace falta GPU física" | ❌ Falso. SwiftShader provee WebGL por software. |
-| "Ubuntu 20.04 no es compatible" | ❌ Falso. Playwright soporta Ubuntu 20.04 oficialmente. |
+| "Ubuntu 20.04 es la causa del problema" | ❌ No existe evidencia de que Ubuntu 20.04 sea, por sí mismo, la causa. |
 | "El problema es la falta de GPU" | ❌ Falso. WebGL2 funciona correctamente. |
 | "Flutter 3.44.4 es incompatible con Chrome 148" | ❌ No hay evidencia. Es una hipótesis. |
-| "GitHub Actions tiene GPU" | ❌ Falso. GitHub Actions no dispone de GPU física y ejecuta Playwright con SwiftShader. |
+| "GitHub Actions tiene GPU" | ❌ Falso. GitHub Actions normalmente ejecuta Playwright mediante renderizado por software, sin GPU física dedicada. |
 
 ## 4. `--debug` vs `--release` (dartdevc vs dart2js)
 
@@ -101,11 +101,11 @@ En las pruebas realizadas **no se observó diferencia** entre ambos modos respec
 - Los errores de tipo (como `ParentDataWidget`) se muestran con nombres de archivo y línea reales
 - Permite identificar bugs en el código Dart que en release pasan desapercibidos
 
-**El modo de compilación es irrelevante para el problema del canvas.** Para diagnosticar por qué no se crea, se necesita instrumentación del engine, no cambiar el compilador.
+**En las pruebas realizadas no se observó que el modo de compilación modificara el comportamiento respecto a la creación del canvas.** Para diagnosticar por qué no se crea, se necesita instrumentación del engine, no cambiar el compilador.
 
 ## 5. Conclusión
 
-En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter web no completa la creación del canvas de renderizado. El código Dart se ejecuta (`main()`, `runApp()`, `initState()`), pero `<flt-canvas>` nunca se materializa. La evidencia disponible no permite identificar la causa raíz.
+En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter web no alcanza un estado observable en el que el canvas de renderizado (`<flt-canvas>`) se materialice. El código Dart se ejecuta (`main()`, `runApp()`, `initState()`), la instrumentación confirma que `initializeEngine()` completa y `runApp()` es invocado, pero el canvas nunca aparece. La evidencia disponible no permite identificar la causa raíz.
 
 **Esto NO es una limitación general de Chromium Headless ni de CanvasKit.** Existen proyectos que ejecutan pruebas automatizadas de Flutter Web en Chromium Headless y entornos CI/CD con éxito. El comportamiento observado es específico de este entorno y esta configuración.
 
@@ -123,7 +123,7 @@ En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter w
 
 ### Próximos pasos recomendados
 
-1. **Instrumentar `didCreateEngineInitializer()` e `initializeEngine()` con un proxy** para determinar el último punto alcanzado por el bootstrap. Es la opción más barata y rápida.
-2. **Obtener un trace de Playwright** (`page.context().tracing.start()`) con CDP si la instrumentación anterior no identifica el problema.
+1. ✅ **Instrumentar `didCreateEngineInitializer()` e `initializeEngine()` con un proxy** — Completado. Confirmó que el bootstrap llega hasta `runApp()`. El problema está en el framework, post-`runApp()`.
+2. **Obtener un trace de Playwright** (`page.context().tracing.start()`) con CDP para registrar eventos del framework (no del bootstrap).
 3. **Reproducir el problema en otro entorno CI/CD** (ej. GitHub Actions) para determinar si es específico de este servidor o reproducible en una instalación limpia.
 4. Si se confirma reproducible, verificar si corresponde a una regresión conocida del engine de Flutter o de Chromium.
