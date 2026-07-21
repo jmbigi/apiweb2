@@ -19,10 +19,10 @@
 | 8 | `_flutter.loader` existe | `typeof loader === 'object'` | `page.evaluate` |
 | 9 | `didCreateEngineInitializer` disponible como función | `typeof loader.didCreateEngineInitializer === 'function'` | `page.evaluate` |
 | 10 | `main()` de Dart se ejecuta | `print('[DART] main() called')` aparece en consola | logging instrumentado |
-| 11 | `runApp()` se ejecuta | `print('[DART] runApp() returned')` aparece en consola | logging instrumentado |
+| 11 | `runApp()` se invoca (el código Dart alcanza la llamada, no implica que haya frames renderizados) | `print('[DART] runApp() returned')` aparece en consola | logging instrumentado |
 | 12 | `_AppEntryState.initState()` se ejecuta | `print('[DART] _AppEntryState.initState() called')` aparece | logging instrumentado |
 | 13 | `_resolveStartup()` se ejecuta | `print('[DART] _resolveStartup() called')` aparece | logging instrumentado |
-| 14 | `flutter-view` está presente en el DOM | Selector `flutter-view` encuentra el elemento | `page.waitForSelector` |
+| 14 | `flutter-view` está presente en el DOM (DOM parcial del engine montado) | Selector `flutter-view` encuentra el elemento | `page.waitForSelector` |
 | 15 | `flt-canvas` NO se crea | `document.querySelector('flt-canvas')` es `null` | `page.evaluate` |
 | 16 | `flt-scene-host` NO se crea | `document.querySelector('flt-scene-host')` es `null` | `page.evaluate` |
 | 17 | `canvas` (HTML5) NO se crea | `document.querySelector('canvas')` es `null` | `page.evaluate` |
@@ -60,7 +60,7 @@ A pesar de que:
 
 **El elemento `<flt-canvas>` nunca se crea en el DOM.** Sin canvas, CanvasKit no puede renderizar nada visualmente.
 
-**La causa no está identificada.** No hay errores, excepciones ni logs que permitan determinar el punto exacto donde se interrumpe el flujo entre `didCreateEngineInitializer` y la creación del canvas. Sería necesario instrumentar el engine con un proxy en `initializeEngine()` o capturar un trace de CDP para determinar si el engine entra en esa función y, si lo hace, por qué no completa.
+**La evidencia disponible no permite identificar la causa raíz.** No hay errores, excepciones ni logs que permitan determinar el punto exacto donde se interrumpe el flujo entre `didCreateEngineInitializer` y la creación del canvas. Sería necesario instrumentar el engine con un proxy en `initializeEngine()` o capturar un trace de CDP para determinar si el engine entra en esa función y, si lo hace, por qué no completa.
 
 ### 3.2. Sin canvas, no hay renderizado visual
 
@@ -84,7 +84,7 @@ Basado en la evidencia, NO se puede afirmar que:
 
 ## 4. `--debug` vs `--release` (dartdevc vs dart2js)
 
-El modo de compilación **no afecta** la creación del canvas. En ambos modos:
+En las pruebas realizadas **no se observó diferencia** entre ambos modos respecto a la creación del canvas. En ambos modos:
 - ✅ El código Dart se ejecuta (`main()`, `runApp()`, `initState()`)
 - ❌ El canvas `<flt-canvas>` no se crea
 
@@ -97,7 +97,7 @@ El modo de compilación **no afecta** la creación del canvas. En ambos modos:
 
 ## 5. Conclusión
 
-En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter web no completa la creación del canvas de renderizado. El código Dart se ejecuta (`main()`, `runApp()`, widgets), pero `<flt-canvas>` nunca se materializa. La causa exacta no está identificada.
+En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter web no completa la creación del canvas de renderizado. El código Dart se ejecuta (`main()`, `runApp()`, `initState()`), pero `<flt-canvas>` nunca se materializa. La evidencia disponible no permite identificar la causa raíz.
 
 **Esto NO es una limitación general de Chromium Headless ni de CanvasKit.** Existen proyectos que ejecutan pruebas automatizadas de Flutter Web en Chromium Headless y entornos CI/CD con éxito. El comportamiento observado es específico de este entorno y esta configuración.
 
@@ -115,6 +115,7 @@ En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter w
 
 ### Próximos pasos recomendados
 
-1. **Obtener un trace de Playwright** (`page.context().tracing.start()`) y activar el protocolo CDP para registrar eventos `Runtime`, `Log` y `Tracing`. Esto permitiría identificar si el engine entra en `initializeEngine()` y dónde se detiene.
-2. **Reproducir el problema en otro entorno CI/CD** (ej. GitHub Actions) para determinar si es específico de este servidor o reproducible en una instalación limpia.
-3. Si se confirma que es reproducible en otros entornos, verificar si corresponde a una regresión conocida del engine de Flutter o de Chromium antes de considerar una actualización.
+1. **Instrumentar `didCreateEngineInitializer()` e `initializeEngine()` con un proxy** para determinar el último punto alcanzado por el bootstrap. Es la opción más barata y rápida.
+2. **Obtener un trace de Playwright** (`page.context().tracing.start()`) con CDP si la instrumentación anterior no identifica el problema.
+3. **Reproducir el problema en otro entorno CI/CD** (ej. GitHub Actions) para determinar si es específico de este servidor o reproducible en una instalación limpia.
+4. Si se confirma reproducible, verificar si corresponde a una regresión conocida del engine de Flutter o de Chromium.
