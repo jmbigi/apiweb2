@@ -104,15 +104,14 @@ async function main() {
     console.log('  [3/5] Esperando engine Flutter (60s max)...');
     let engineInitialized = false;
 
-    // Sennal de inicializacion: __flutterAppStarted se establece cuando
-    // runApp() se ejecuta (ya sea por el engine real o por el safety net)
+    // Sennal de inicializacion: esperar a que main.dart.js se ejecute.
+    // Verificamos buscando el tag <flutter-view> que se crea cuando
+    // runApp() es llamado. Es mas confiable que didCreateEngineInitializer
+    // porque en modo callback esa propiedad no se elimina del loader.
     try {
-      await page.waitForFunction(
-        () => window.__flutterAppStarted === true,
-        { timeout: 60000, polling: 1000 }
-      );
+      await page.waitForSelector('flutter-view', { timeout: 30000 });
       engineInitialized = true;
-      console.log('    ✅ Engine inicializado correctamente');
+      console.log('    ✅ Engine inicializado correctamente (flutter-view presente)');
     } catch {
       // Diagnostico detallado
       const diag = await page.evaluate(() => {
