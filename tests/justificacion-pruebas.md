@@ -70,6 +70,8 @@ A pesar de que:
 
 La evidencia sitúa el punto de fallo después de la invocación de `runApp()` y antes de la aparición del primer elemento de renderizado (`<flt-canvas>`). La instrumentación del bootstrap no cubre el código del framework Flutter posterior a `runApp()`. **No se observaron errores, excepciones ni logs en las fuentes instrumentadas** (Playwright, consola del navegador, eventos de red, CDP Runtime, proxy del bootstrap). El componente exacto responsable aún no ha sido identificado.
 
+**Se ha descartado que el problema sea de la aplicación:** un proyecto `flutter create` mínimo, sin ningún código personalizado, desplegado en el mismo servidor, presenta exactamente el mismo comportamiento: `flt-canvas` no se crea, `didCreateEngineInitializer` no completa. El problema es del entorno, no de la app.
+
 ### 3.2. Sin canvas, no hay renderizado visual
 
 Consecuencias:
@@ -121,9 +123,30 @@ En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter w
 | Regresión visual | ❌ | Depende del E2E visual |
 | Trace CDP | 🔲 Pendiente | `page.context().tracing.start(); ... tracing.stop()` |
 
+### Hipótesis descartadas vs pendientes
+
+| Hipótesis | Estado | Evidencia |
+|-----------|--------|-----------|
+| El problema es de la aplicación | ❌ **DESCARTADA** | Un proyecto `flutter create` mínimo tiene el mismo comportamiento. |
+| Falta GPU física | ❌ **DESCARTADA** | WebGL2 funciona con SwiftShader. |
+| CanvasKit no cargó | ❌ **DESCARTADA** | `window.flutterCanvasKit` existe con 178 métodos. |
+| El Promise de CanvasKit no resuelve | ❌ **DESCARTADA** | `await Promise.race([ckLoaded, timeout])` → resolved. |
+| Error JS durante bootstrap | ❌ **DESCARTADA** | 0 pageerror, 0 console.error, 0 requestfailed. |
+| Service worker interfiere | ❌ **DESCARTADA** | Mismo comportamiento con serviceWorkers:'block'. |
+| Flags de Chrome incorrectos | ❌ **DESCARTADA** | Probadas 8 combinaciones de flags. |
+| El problema es específico de Chrome 148 | 🔲 **PENDIENTE** | Probar con otra versión de Chromium. |
+| El problema es reproducible en otro entorno | 🔲 **PENDIENTE** | Probar en GitHub Actions o VM limpia. |
+| Otro renderer (Skwasm, HTML) | 🔲 **PENDIENTE** | Flutter 3.44 no incluye HTML renderer. Probar `--wasm`. |
+| Trace CDP completo | 🔲 **PENDIENTE** | `page.context().tracing.start()` + Runtime, Log, Tracing. |
+| Instrumentación del primer frame | 🔲 **PENDIENTE** | `SchedulerBinding.addPostFrameCallback`. |
+| Excepciones absorbidas por el framework | 🔲 **PENDIENTE** | `FlutterError.onError` + `PlatformDispatcher.instance.onError`. |
+
 ### Próximos pasos recomendados
 
-1. ✅ **Instrumentar `didCreateEngineInitializer()` e `initializeEngine()` con un proxy** — Completado. Confirmó que el bootstrap llega hasta `runApp()`. El problema está en el framework, post-`runApp()`.
-2. **Obtener un trace de Playwright** (`page.context().tracing.start()`) con CDP para registrar eventos del framework (no del bootstrap).
-3. **Reproducir el problema en otro entorno CI/CD** (ej. GitHub Actions) para determinar si es específico de este servidor o reproducible en una instalación limpia.
-4. Si se confirma reproducible, verificar si corresponde a una regresión conocida del engine de Flutter o de Chromium.
+1. ✅ **Instrumentar `didCreateEngineInitializer()` e `initializeEngine()` con un proxy** — Completado.
+2. ✅ **Proyecto `flutter create` mínimo** — Completado. Confirma problema del entorno. [https://web2.faristol.net/test-canvas/](https://web2.faristol.net/test-canvas/) (temporal).
+3. 🔲 **Probar con otra versión de Chromium** (ej. la que distribuye Playwright).
+4. 🔲 **Reproducir el problema en otro entorno CI/CD** (GitHub Actions, VM limpia).
+5. 🔲 **Trace CDP completo** con `Runtime`, `Log`, `Tracing`.
+6. 🔲 **Instrumentar primer frame** con `SchedulerBinding.addPostFrameCallback`.
+7. 🔲 **Instrumentar excepciones absorbidas** (`FlutterError.onError`, `PlatformDispatcher.instance.onError`).
