@@ -113,9 +113,11 @@ En las pruebas realizadas **no se observó diferencia** entre ambos modos respec
 
 ## 5. Conclusión
 
-En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter web no alcanza un estado observable en el que el canvas de renderizado (`<flt-canvas>`) se materialice. El código Dart se ejecuta (`main()`, `runApp()`, `initState()`), la instrumentación confirma que `initializeEngine()` completa y `runApp()` es invocado, pero el canvas nunca aparece. La evidencia disponible no permite identificar la causa raíz.
+En este servidor (Chrome 148/149 + Flutter 3.44.4 + Ubuntu 20.04), el engine de Flutter web no crea el canvas de renderizado (`<flt-canvas>`). El código Dart se ejecuta (`main()`, `runApp()`, `initState()`), el framework llega al primer frame (`addPostFrameCallback` se ejecuta), pero el canvas nunca se materializa en el DOM (ni siquiera temporalmente). No hay errores JS, no hay excepciones del framework, no hay fallos de red.
 
-**No existe evidencia suficiente para atribuir el problema a una limitación inherente de Chromium Headless o CanvasKit.** Existen implementaciones documentadas donde Flutter Web funciona bajo Playwright y Chromium Headless, aunque ello no descarta incompatibilidades específicas entre versiones o configuraciones. El comportamiento observado no se ha reproducido en otros entornos.
+**La causa más probable es que CanvasKit no puede crear una superficie de render WebGL** que cumpla todos sus requisitos en la combinación específica de Chrome + SwiftShader + Mesa 21.2.6 + Ubuntu 20.04. El framework Flutter funciona completamente, pero no tiene dónde pintar los frames. Se ha descartado que sea un problema de la aplicación (`flutter create` mínimo falla igual), del navegador (Chrome 148 y 149 fallan igual), ni del servicio worker, flags de Chrome, o errores JS.
+
+**No existe evidencia suficiente para atribuir el problema a una limitación inherente de Chromium Headless o CanvasKit.** Existen implementaciones documentadas donde Flutter Web funciona bajo Playwright y Chromium Headless. La causa podría ser una incompatibilidad entre la versión de Mesa (21.2.6), el driver SwiftShader de Chrome, y los requisitos de CanvasKit.
 
 ### Pruebas disponibles
 
@@ -150,10 +152,11 @@ En este servidor (Chrome 148 + Flutter 3.44.4 + dart2js), el engine de Flutter w
 
 ### Próximos pasos recomendados
 
-1. ✅ **Instrumentar `didCreateEngineInitializer()` e `initializeEngine()` con un proxy** — Completado.
-2. ✅ **Proyecto `flutter create` mínimo** — Completado. Confirma problema del entorno. [https://web2.faristol.net/test-canvas/](https://web2.faristol.net/test-canvas/) (temporal).
-3. 🔲 **Probar con otra versión de Chromium** (ej. la que distribuye Playwright).
-4. 🔲 **Reproducir el problema en otro entorno CI/CD** (GitHub Actions, VM limpia).
-5. 🔲 **Trace CDP completo** con `Runtime`, `Log`, `Tracing`.
-6. 🔲 **Instrumentar primer frame** con `SchedulerBinding.addPostFrameCallback`.
-7. 🔲 **Instrumentar excepciones absorbidas** (`FlutterError.onError`, `PlatformDispatcher.instance.onError`).
+1. ✅ **Instrumentar bootstrap con proxy** — Completado. Bootstrap llega hasta `runApp()`.
+2. ✅ **`flutter create` mínimo** — Completado. Confirma problema del entorno, no de la app.
+3. ✅ **Probar con Chromium 149 (Playwright nativo)** — Completado. Mismo resultado que Chrome 148.
+4. ✅ **Instrumentar primer frame** (`SchedulerBinding.addPostFrameCallback`) — Completado. Frame se renderiza, confirmado.
+5. ✅ **Instrumentar `FlutterError.onError`** — Completado. 0 errores capturados.
+6. ✅ **MutationObserver DOM** — Completado. Confirma que canvas nunca se crea, ni temporalmente.
+7. 🔲 **Reproducir en GitHub Actions / VM limpia** — Pendiente. No accesible desde este servidor.
+8. 🔲 **Probar con otro Flutter SDK** — Pendiente. Para descartar regresión del SDK local.
