@@ -12,8 +12,8 @@ echo -e "${AMARILLO}  RUN-TESTS — Suite completa${NC}"
 echo -e "${AMARILLO}========================================${NC}"
 echo ""
 
-# 1. Laravel Pint — solo archivos nuevos/modificados (no corregir legacy)
-echo -e "${AMARILLO}[1/4] Laravel Pint${NC}"
+# 1. Laravel Pint
+echo -e "${AMARILLO}[1/5] Laravel Pint${NC}"
 if [ -f "vendor/bin/pint" ]; then
     git diff --name-only --diff-filter=ACMR HEAD | grep '\.php$' > /tmp/pint_files.txt || true
     if [ -s /tmp/pint_files.txt ]; then
@@ -33,7 +33,7 @@ echo -e "${VERDE}✓ Pint OK${NC}"
 echo ""
 
 # 2. Tests Laravel
-echo -e "${AMARILLO}[2/4] Tests Laravel${NC}"
+echo -e "${AMARILLO}[2/5] Tests Laravel${NC}"
 php artisan config:clear 2>/dev/null || true
 if php artisan test --compact 2>&1; then
     echo -e "${VERDE}✓ Tests Laravel OK${NC}"
@@ -44,7 +44,7 @@ fi
 echo ""
 
 # 3. Tests Flutter
-echo -e "${AMARILLO}[3/4] Tests Flutter (control-app-web)${NC}"
+echo -e "${AMARILLO}[3/5] Tests Flutter (control-app-web)${NC}"
 FLUTTER_DIR="/root/apps_flutter/control-app-web"
 if [ -d "$FLUTTER_DIR" ]; then
     cd "$FLUTTER_DIR"
@@ -61,8 +61,22 @@ else
 fi
 echo ""
 
-# 4. Playwright E2E (opcional)
-echo -e "${AMARILLO}[4/4] Playwright E2E${NC}"
+# 4. Playwright smoke test (recursos HTTP + errores JS + engine Flutter)
+echo -e "${AMARILLO}[4/5] Smoke test (HTTP + Flutter init)${NC}"
+if command -v xvfb-run &> /dev/null && [ -f "tests/visual/smoke-test.mjs" ]; then
+    if xvfb-run node tests/visual/smoke-test.mjs 2>&1; then
+        echo -e "${VERDE}✓ Smoke test OK${NC}"
+    else
+        echo -e "${ROJO}✗ Smoke test falló${NC}"
+        exit 1
+    fi
+else
+    echo -e "  xvfb-run o smoke-test.mjs no disponible — saltando"
+fi
+echo ""
+
+# 5. Playwright E2E (opcional, solo si hay GPU)
+echo -e "${AMARILLO}[5/5] Playwright E2E${NC}"
 if command -v xvfb-run &> /dev/null && [ -f "tests/visual/runner.js" ]; then
     if xvfb-run node tests/visual/runner.js 2>&1; then
         echo -e "${VERDE}✓ Playwright E2E OK${NC}"
@@ -74,8 +88,8 @@ else
 fi
 echo ""
 
-# Nota: en producción, recachear config con: php artisan config:cache
-echo ""
+# Nota: después de tests, limpiar config cache
+php artisan config:clear 2>/dev/null || true
 
 echo -e "${VERDE}========================================${NC}"
 echo -e "${VERDE}  TODOS LOS TESTS PASARON${NC}"
