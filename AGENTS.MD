@@ -373,6 +373,36 @@ Mantener widget tests como fuente principal de verificación de UI.
 - **visorweb2:** Servicio ApiService (806 líneas), 22/25 modelos sin tests (legacy), todas las pantallas excepto LoginPage (bloqueado por `dart:html` en legacy `adsense_ads_view.dart`)
 - **control-app-web:** ~~ApiService endpoints, DashboardPage dinámico, FileService, StorageService~~ ✅ Cubiertos
 
+### Lección aprendida — 2026-07-21 (debug de Flutter web en headless)
+
+**Problema:** Error `Incorrect use of ParentDataWidget` y `Offset is not subtype of FlexParentData` en release build. El dashboard se veía en gris y los datos no cargaban correctamente.
+
+**Causa raíz:** `Expanded` estaba dentro de `Padding` en vez de ser hijo directo de `Row`. Flutter requiere que `Expanded` sea hijo DIRECTO de `Row`/`Column`/`Flex`.
+
+**Lecciones:**
+1. **Siempre compilar en debug con `--source-maps` primero** para ver nombres reales de clases y archivos en los errores. El release build (`dart2js`) minifica los nombres y los errores son inescrutables (`minified:eU`, `minified:h_`).
+2. **No asumir causas sin evidencia.** Se perdieron ~10 horas asumiendo GPU, CanvasKit, service worker, etc. cuando el error era un `Padding` en el lugar equivocado.
+3. **Probar antes de desplegar.** Usar `flutter test` para los tests unitarios y el smoke test de Playwright antes de hacer deploy.
+4. **Usar la condición correcta en tests.** `didCreateEngineInitializer === null` nunca se cumple en modo callback. Usar `flutter-view` presente en el DOM como señal de que `runApp()` se ejecutó.
+5. **Debug build + source maps + consola del navegador** es la forma más rápida de diagnosticar errores de Flutter web.
+
+### Capacidad de pruebas automatizadas
+
+**Sí, puedo realizar pruebas automatizadas** en este entorno, con las siguientes limitaciones:
+
+| Tipo de prueba | Herramienta | ¿Funciona? | Limitación |
+|---|---|---|---|
+| Tests unitarios Dart | `flutter test` | ✅ Sí | Sin limitación |
+| Tests de widgets Flutter | `flutter test` | ✅ Sí | Requiere `_clearErrors` para ListTile warnings |
+| Smoke test HTTP + engine | Playwright + `smoke-test.mjs` | ✅ Sí | Verifica HTTP 200 + engine init + 0 errores |
+| Pruebas de API | Playwright + `control-app-api-test.mjs` | ✅ Sí | Verifica login + 4 endpoints del dashboard |
+| E2E visual con Playwright | Playwright + Chrome | ⚠️ Parcial | CanvasKit no renderiza en headless sin GPU. Las screenshots salen en blanco. |
+| Pruebas con login real | Playwright + API login | ✅ Sí | Se inyecta sesión en localStorage y se recarga |
+| Pruebas de regresión visual | `pixelmatch` / `jest-image-snapshot` | ❌ No | Requiere GPU para renderizado real |
+| Integración continua | `bash run-tests.sh` | ✅ Sí | Pipeline completo: Pint → Laravel → Flutter → Smoke → E2E |
+
+**Para pruebas visuales reales (E2E con CanvasKit), se necesita un entorno con GPU** (CI/CD con GPU, GitHub Actions, o máquina local). Este servidor headless no tiene GPU, por lo que las screenshots de Flutter web salen en blanco. La lógica de la app se verifica correctamente mediante tests unitarios, de API y smoke test.
+
 ### Notas
 - Las migraciones legacy NO se modificaron. Los tests crean su propio esquema con `Schema::create`.
 - Tests requieren `php artisan config:clear` antes de correr (config cacheada anula phpunit.xml).
