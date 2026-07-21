@@ -1,3 +1,7 @@
+// Smoke test para Flutter Web
+// Valida: recursos HTTP, engine initialization, ausencia de errores
+// Sin xvfb-run (Chrome headless new mode basta)
+
 import { chromium } from 'playwright';
 
 const BASE = 'https://web2.faristol.net';
@@ -7,143 +11,144 @@ const APPS = [
 ];
 
 const KEY_RESOURCES = [
+  'index.html',
   'flutter_bootstrap.js',
   'main.dart.js',
   'canvaskit/canvaskit.js',
   'canvaskit/canvaskit.wasm',
   'flutter_service_worker.js',
   'flutter.js',
-  'index.html',
 ];
 
 async function main() {
-  let exitCode = 0;
+  let globalExitCode = 0;
 
   for (const app of APPS) {
     console.log(`\n=== ${app.name} ===`);
-    
+    let appOk = true;
+
+    // --- FASE 1: Recursos estaticos via HTTP ---
+    console.log('  [1/5] Recursos estaticos:');
     const browser = await chromium.launch({
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--enable-unsafe-swiftshader',
-        '--use-gl=angle',
-        '--use-angle=swiftshader',
-        '--ignore-gpu-blocklist',
-      ],
+      args: ['--no-sandbox', '--use-gl=swiftshader'],
     });
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
 
-    const errors = [];
-    const failedResources = [];
-    const consoleLogs = [];
-
-    page.on('console', msg => {
-      const text = msg.text();
-      if (msg.type() === 'error') errors.push(text.substring(0, 300));
-      if (text.includes('DASHBOARD') || text.includes('error') || text.includes('Error')) {
-        consoleLogs.push(`[${msg.type()}] ${text.substring(0, 200)}`);
-      }
-    });
-    page.on('pageerror', err => errors.push(`PAGE: ${err.message}`));
-    page.on('response', resp => {
-      const url = resp.url();
-      if (resp.status() >= 400 && url.includes(app.name)) {
-        failedResources.push(`${url.split('/').pop()} HTTP ${resp.status()}`);
-      }
-    });
-
-    // Fase 1: HTTP — verificar que los recursos clave sirven 200
-    console.log('  [HTTP] Recursos clave:');
     for (const res of KEY_RESOURCES) {
       try {
         const resp = await page.request.get(`${BASE}/${app.path}${res}`);
         const ok = resp.status() === 200;
         console.log(`    ${res}: ${ok ? '✅' : '❌'} (${resp.status()})`);
-        if (!ok) exitCode = 1;
+        if (!ok) appOk = false;
       } catch (e) {
         if (res !== 'flutter_service_worker.js' && res !== 'flutter.js') {
-          console.log(`    ${res}: ❌ (${e.message.substring(0, 50)})`);
+          console.log(`    ${res}: ❌ (${e.message.substring(0, 60)})`);
+          appOk = false;
         }
       }
     }
 
-    // Fase 2: Navegador — cargar la pagina y esperar a que Flutter monte el engine
-    console.log('  [NAV] Cargando pagina...');
-    await page.goto(`${BASE}${app.path}`, { waitUntil: 'networkidle', timeout: 30000 });
+    // --- FASE 2: Listeners de eventos ---
+    const pageErrors = [];
+    const consoleErrors = [];
+    const failedRequests = [];
 
-    // Esperar a que Flutter inyecte el glass-pane (engine montado)
-    // NOTA: En Flutter 3.44 sin GPU, el engine Dart no completa init (didCreateEngineInitializer nunca se llama).
-    //       pero el flt-glass-pane SÍ aparece porque es creado por el scaffold inicial del engine.
-    //       Esto verifica que main.dart.js se cargo sin errores fatales.
-    try {
-      await page.waitForSelector('flt-glass-pane', { timeout: 15000 });
-      console.log('    flt-glass-pane: ✅ (engine scaffolding montado)');
-    } catch {
-      console.log('    flt-glass-pane: ❌ (timeout - Flutter no respondio)');
-      console.log('    NOTA: En este entorno headless sin GPU,');
-      console.log('    main.dart.js puede abortar antes de inicializar.');
-      console.log('    Esto NO impide que la app funcione en navegadores con GPU.');
-      exitCode = 0; // No fallar por esto - es limitacion del entorno
-    }
-
-    // Dar tiempo para que el engine intente inicializar (si va a hacerlo)
-    // En vez de waitForTimeout fijo, esperamos un estado especifico
-    await page.waitForLoadState('networkidle');
-
-    // Fase 3: Engine — verificar estado de inicializacion
-    const initState = await page.evaluate(() => {
-      const fl = window._flutter?.loader;
-      return {
-        glassPane: !!document.querySelector('flt-glass-pane'),
-        flutterView: !!document.querySelector('flutter-view'),
-        engineInitCalled: fl?.didCreateEngineInitializer === null,
-        engineInitPending: typeof fl?.didCreateEngineInitializer === 'function',
-        hasCanvasKit: !!window.flutterCanvasKit,
-      };
+    page.on('pageerror', err => { pageErrors.push(err.message); console.log('    [PAGEERROR]', err.message.substring(0, 150)); });
+    page.on('console', msg => {
+      if (msg.type() === 'error') consoleErrors.push(msg.text());
+    });
+    page.on('requestfailed', req => {
+      const url = req.url();
+      if (!url.includes('ping')) {
+        failedRequests.push(`${url.split('/').pop()}: ${req.failure()?.errorText}`);
+      }
     });
 
-    console.log(`\n  [ENGINE] Estado Flutter:`);
-    console.log(`    glass-pane: ${initState.glassPane ? '✅' : '❌'}`);
-    console.log(`    flutter-view: ${initState.flutterView ? '✅' : '❌'}`);
-    console.log(`    engine init: ${initState.engineInitCalled ? '✅' : initState.engineInitPending ? '⏳ pendiente' : '❌ fallo'}`);
-    console.log(`    CanvasKit: ${initState.hasCanvasKit ? '✅' : '❌'}`);
+    // --- FASE 3: Carga de pagina con trazado ---
+    console.log('  [2/5] Navegando...');
+    await page.goto(`${BASE}${app.path}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    console.log('    DOM content loaded');
 
-    // Fase 4: Errores — reportar cualquier error capturado
-    if (errors.length > 0) {
-      console.log(`\n  [ERRORES] (${errors.length}):`);
-      errors.forEach(e => console.log(`    ❌ ${e}`));
-      // No marcar como error fatal - algunos errores de WebGL son esperados
-      // sin GPU
-    } else {
-      console.log(`\n  [ERRORES] ✅ ninguno`);
+    await page.waitForLoadState('networkidle');
+    console.log('    Network idle');
+
+    // --- FASE 4: Esperar engine ---
+    console.log('  [3/5] Esperando engine Flutter...');
+    let engineInitialized = false;
+    let engineWaitResult = 'timeout';
+
+    try {
+      await page.waitForFunction(
+        () => window._flutter?.loader?.didCreateEngineInitializer === null,
+        { timeout: 15000, polling: 500 }
+      );
+      engineInitialized = true;
+      engineWaitResult = 'inicializado';
+      console.log('    ✅ Engine inicializado (didCreateEngineInitializer fue llamado)');
+    } catch {
+      engineWaitResult = 'no llamado - timeout 15s';
+      console.log('    ⏳ Engine NO inicializado');
+      // Diagnostico: que estado tiene el engine?
+      const diag = await page.evaluate(() => {
+        const fl = window._flutter?.loader;
+        const ck = window.flutterCanvasKit;
+        const ckLoaded = window.flutterCanvasKitLoaded;
+        const view = document.querySelector('flutter-view');
+        const glassPane = document.querySelector('flt-glass-pane');
+        const scripts = Array.from(document.scripts).map(s => s.src?.split('/').pop());
+        return {
+          loaderType: typeof fl,
+          hasDidCreateEngineInitializer: fl ? 'didCreateEngineInitializer' in fl : false,
+          initType: typeof fl?.didCreateEngineInitializer,
+          initNull: fl?.didCreateEngineInitializer === null,
+          hasCanvasKit: !!ck,
+          canvasKitLoaded: ckLoaded?.toString()?.substring(0, 50) || 'undefined',
+          flutterView: !!view,
+          glassPane: !!glassPane,
+          scripts: scripts,
+        };
+      });
+      console.log('    Diagnostico:', JSON.stringify(diag, null, 2).replace(/\n/g, '\n    '));
     }
 
-    if (failedResources.length > 0) {
-      console.log(`\n  [RECURSOS] Fallidos: ${failedResources.length}`);
-      failedResources.forEach(r => console.log(`    ${r}`));
+    // --- FASE 5: Reporte ---
+    console.log(`  [4/5] Resultados:`);
+    console.log(`    Recursos HTTP: ${appOk ? '✅' : '❌'}`);
+    console.log(`    Engine: ${engineInitialized ? '✅' : '❌'}`);
+    console.log(`    Page errors: ${pageErrors.length > 0 ? `❌ (${pageErrors.length})` : '✅ 0'}`);
+    console.log(`    Console errors: ${consoleErrors.length > 0 ? `❌ (${consoleErrors.length})` : '✅ 0'}`);
+    console.log(`    Failed requests: ${failedRequests.length > 0 ? `❌ (${failedRequests.length})` : '✅ 0'}`);
+
+    if (pageErrors.length > 0) {
+      console.log('\n    Page errors:');
+      pageErrors.forEach(e => console.log(`      ❌ ${e.substring(0, 200)}`));
+    }
+    if (consoleErrors.length > 0) {
+      console.log('\n    Console errors:');
+      consoleErrors.forEach(e => console.log(`      ❌ ${e.substring(0, 200)}`));
     }
 
-    if (consoleLogs.length > 0) {
-      console.log(`\n  [LOGS] Relevantes:`);
-      consoleLogs.forEach(l => console.log(`    ${l}`));
+    const hasCriticalErrors = !appOk || !engineInitialized || pageErrors.length > 0;
+    console.log(`  [5/5] Veredicto: ${hasCriticalErrors ? '❌ FALLO' : '✅ PASO'}`);
+    if (hasCriticalErrors) {
+      globalExitCode = 1;
+      if (!engineInitialized) {
+        console.log('    -> didCreateEngineInitializer nunca se llamo');
+        console.log('    -> main.dart.js se cargo pero no ejecuto su codigo principal');
+      }
     }
-
-    // NOTA: El DOM de Flutter es principalmente un <canvas>.
-    // No se pueden buscar textos o botones en el DOM.
-    // Para validar UI real, usar:
-    //   - Widget tests (flutter test)
-    //   - Arbol de semantica de Flutter (accesibilidad)
-    //   - Navegador con GPU real
 
     await browser.close();
   }
 
-  console.log(`\n=== Smoke test ${exitCode === 0 ? '✅ PASO' : '❌ FALLO'} ===`);
-  process.exit(exitCode);
+  console.log(`\n========================================`);
+  console.log(`Smoke test ${globalExitCode === 0 ? '✅ PASO' : '❌ FALLO'}`);
+  console.log(`========================================`);
+  process.exit(globalExitCode);
 }
 
 main().catch(e => {
-  console.error('FATAL:', e.message);
+  console.error('FATAL:', e);
   process.exit(1);
 });
