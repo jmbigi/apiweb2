@@ -145,7 +145,7 @@ En este servidor (Chrome 148/149 + Flutter 3.44.4 + Ubuntu 20.04), el engine de 
 | Flags de Chrome incorrectos | ❌ **DESCARTADA** | Probadas 8 combinaciones de flags. |
 | El problema es específico de Chrome 148 | ❌ **DESCARTADA** | Chromium 149 (Playwright nativo) reproduce el mismo comportamiento. |
 | El problema es reproducible en otro entorno | ✅ **CONFIRMADO** | Arch Linux + Chromium 150 + Flutter 3.44.7 reproduce exactamente el mismo comportamiento (análisis independiente). Causa raíz: `CanvasKit.MakeWebGLContext()` retorna `null`. |
-| Otro renderer (Skwasm) | ❌ **DESCARTADA** | Probado con `--wasm` — mismo resultado. HTML renderer no disponible en Flutter 3.44. |
+| Otro renderer (Skwasm / `--wasm`) | ❌ **DESCARTADA** | `flutter build web --release --wasm` — mismo resultado: canvas no se crea. Nota: en entorno Arch + Chromium 150 + Flutter 3.44.7 el build `--wasm` sí resuelve el problema (skwasm no usa wrapper Emscripten). La diferencia podría deberse a la versión de Flutter (3.44.4 vs 3.44.7) o de Chromium (148 vs 150). |
 | Trace CDP completo | 🔲 **PENDIENTE** | Baja prioridad (no hay errores que capturar). |
 | Canvas se crea y luego se elimina | ❌ **DESCARTADA** | MutationObserver confirma que nunca se crea. |
 | El framework no llega al primer frame | ❌ **DESCARTADA** | `addPostFrameCallback` confirma frame renderizado. |
