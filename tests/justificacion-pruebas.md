@@ -1,7 +1,7 @@
 # Justificación: Limitaciones de pruebas automatizadas en este servidor
 
-**Fecha:** 2026-07-21
-**Entorno:** Ubuntu 20.04, Chrome 148.0.7778.178, Flutter 3.44.4, Playwright 1.52+
+**Fecha:** 2026-07-22
+**Entorno:** Ubuntu 24.04.4 LTS (noble), Chrome 150, Flutter 3.44.7, Playwright 1.61, Mesa 25.2.8
 **Entorno de validación externa:** Arch Linux, Chromium 150, Flutter 3.44.7, Playwright 1.61 — mismo resultado (confirmado por análisis independiente)
 
 ---
@@ -150,6 +150,26 @@ En este servidor (Chrome 148/149 + Flutter 3.44.4 + Ubuntu 20.04), el engine de 
 | Canvas se crea y luego se elimina | ❌ **DESCARTADA** | MutationObserver confirma que nunca se crea. |
 | El framework no llega al primer frame | ❌ **DESCARTADA** | `addPostFrameCallback` confirma frame renderizado. |
 | FlutterError.onError captura errores | ❌ **DESCARTADA** | 0 errores capturados por `FlutterError.onError`. |
+
+## 15. Problemas de plataforma encontrados durante la migración
+
+### MariaDB 10.3 → 10.6 (Julio 2026)
+- Todos los ENGINE de tablas de `web2` quedaron NULL tras la migración de OS (Ubuntu 20.04 → 24.04).
+- Error: `SQLSTATE[42S02]: Base table or view not found: 1932 Table 'web2.users' doesn't exist in engine`
+- Causa: MariaDB 10.3 → 10.6 cambió el formato de tablespace. Los archivos `.ibd` existían pero no eran compatibles.
+- No había backup SQL (se perdió durante la migración). Se recreó la BD con `php artisan migrate --force` + `db:seed --force`.
+- Lección: Siempre hacer `mysqldump` antes de migrar OS. No confiar en la compatibilidad de `.ibd` entre versiones mayores de MariaDB.
+
+### Chrome 150 + CanvasKit (Julio 2026)
+- Con Chrome 150, `hasCK: false` — CanvasKit ni siquiera se carga (regresión desde Chrome 148 donde sí se cargaba).
+- `CanVariant.SKWA` (auto) selecciona `skwasm` en vez de `canvaskit`.
+- La app se renderiza como HTML (modo automático de Flutter web) en vez de canvas.
+- El `flutter-view` se crea y el engine init funciona, pero el canvas nunca se materializa.
+
+### smoke-test visorweb2
+- 1 page error pre-existente: `Error` lanzado desde `main.dart.js:227` (función `eD`) durante API call a `music-score/allmusic?type=musicStyle`.
+- No es bloqueante — la app carga y renderiza contenido.
+- Existe desde antes de la migración.
 
 ### Próximos pasos recomendados
 

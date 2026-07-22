@@ -1495,6 +1495,7 @@ class MusicScoreController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => 'Music scores not found ',
+                    'data' => [],
                 ], 200);
             }
 
@@ -1602,6 +1603,7 @@ class MusicScoreController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => 'Music scores not found ',
+                    'data' => [],
                 ], 200);
             }
 

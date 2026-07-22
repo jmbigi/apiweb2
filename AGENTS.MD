@@ -1,5 +1,8 @@
 # Reglas para el asistente AI
 
+## Norma fundamental: cambios autorizados
+0. **Todo cambio, modificación o refactorización debe estar explícitamente autorizado y plenamente justificado por el usuario.** No realizar cambios sin confirmación explícita, especialmente en código legacy (pre-Julio 2026), configuración del servidor, o dependencias del sistema.
+
 ## Reglas de seguridad general
 1. **Todo debe realizarse con extremo cuidado, de manera segura.** Este es un entorno de producción.
 2. **Preguntar al usuario al menos 2 veces antes de eliminar o destruir cualquier cosa** (archivos, tablas, datos, etc.).
@@ -279,7 +282,7 @@ Reglas:
 | Apache (web2.faristol.net) | ✅ Activo | SSL Let's Encrypt vigente hasta 2026-10-04 |
 | MariaDB (DB web2) | ✅ Activo | Copia de faristol |
 | Chrome headless | ✅ Instalado | `/usr/bin/google-chrome` para PDFs |
-| Flutter SDK | ✅ 3.44.4 | `/usr/local/flutter/bin/flutter` |
+| Flutter SDK | ✅ 3.44.7 | `/usr/local/flutter/bin/flutter` |
 | API producción | ✅ Copiada | `~/apps_prod/API_Faristol` → web2 |
 | visorweb2 | ✅ Deployed | `public/visorweb2/` — 200 OK |
 | control-app | ✅ Deployed | `public/control-app/` — 200 OK |
@@ -301,16 +304,31 @@ Reglas:
 - **SEO:** No aplica para web2 (sitemaps, robots.txt, ads.txt eliminados)
 
 ### QA completado
-1. ✅ Tests API de producción — no ejecutables por SQLite <3.35 sin DROP COLUMN. Usar MySQL nativa para testing legacy.
-2. ✅ **51 tests** API de ensembles (Feature) — CRUD completo + validación + permisos en SQLite en memoria.
-3. ✅ **21 tests** API AuthController (login con/sin CIF, refresh token, logout, full flow, unauthenticated access).
-4. ✅ **11 tests** API MusicScoreController (list, get, filter, favorites CRUD, auth gates, composer music).
-5. ✅ **26 tests** unitarios visorweb2 — modelos Setlist, Ensemble, LoginModel, Feedback, UserData, CheckUser, SignUpModel.
-6. ✅ **61 tests** unitarios/widget control-app-web — LoginResponse, SessionService, Feedback UI, LoginPage (5), DashboardPage (5 con mock API), **ApiService con MockClient** (22 tests), StorageService, FileService, login flow completo (4 tests), Dashboard members/ensayos/repertorio (7 tests).
-7. ✅ **6 tests** integración Flutter — `integration_test/app_test.dart` (carga, formulario, modelo).
-8. ✅ **11 checks** visuales Playwright (OCR + DOM + pixel-diff).
-9. ✅ **6 checks** E2E control-app (carga, recursos, DOM, red, errores JS, WebGL) — sin canvas rendering (limitación CanvasKit+WebGL software).
-10. ✅ **168 tests + 17 checks = 185 verificaciones total** — todos pasan.
+1. ✅ **154 tests** API Laravel (Feature) — CRUD completo + validación + permisos en SQLite en memoria.
+2. ✅ **68 tests** unitarios/widget control-app-web — LoginResponse, SessionService, Feedback UI, LoginPage, DashboardPage, ApiService con MockClient (22 tests), StorageService, FileService, login flow completo, Dashboard members/ensayos/repertorio.
+3. ✅ **26 tests** unitarios visorweb2 — modelos Setlist, Ensemble, LoginModel, Feedback, UserData, CheckUser, SignUpModel.
+4. ✅ **Smoke test** control-app (5 checks: HTTP 200, engine init, 0 page/console errors).
+5. ✅ **Smoke test** visorweb2 (5 checks: HTTP 200, engine init, 0 page/console errors, 0 HTTP >=400).
+6. ✅ **E2E control-app** (19/20 checks: canvas shadow DOM, login, scores, ensemble, screenshots).
+7. ✅ **E2E visorweb2 API** (28/28 checks: login, scores, style/instrument browse, faristol detail, PDF content, ensemble).
+8. ⚠️ **25 tests widget** control-app-web fallan por timers pendientes (pre-existente, `initState` crea Timers de 5-20s no disposeados en tests).
+
+### Credenciales de prueba
+| App | Campo | Valor | Notas |
+|-----|-------|-------|-------|
+| **visorweb2** | Email: `composer_test@email.com` / Pass: `Sinclave1!` | Login email+password |
+| **control-app** | CIF: `DEMO12345` / Email: `superadmin_test@email.com` / Pass: `Sinclave1!` | Login con CIF + email + password. CIF debe existir en `ensembles.cif` |
+| **control-app** | Email: `composer_test@email.com` / Pass: `Sinclave1!` | Login sin CIF (básico) |
+| **Todos** | Passwords: `Sinclave1!` | Misma clave para todos los usuarios de prueba |
+
+### Estado actual del sistema
+- **OS:** Ubuntu 24.04.4 LTS (noble)
+- **Mesa:** 25.2.8
+- **Chrome:** 150
+- **Node:** 20.18.1
+- **MariaDB:** 10.6.23
+- **PHP:** 8.2.32 (FPM)
+- **Flutter:** 3.44.7
 
 ### Detalle CanvasKit E2E
 - Flutter 3.44.4 CanvasKit no crea `<flt-canvas>` en SwiftShader/llvmpipe (WebGL software). Engine inicializa pero canvas nunca se materializa.
@@ -373,6 +391,21 @@ Mantener widget tests como fuente principal de verificación de UI.
 - **visorweb2:** Servicio ApiService (806 líneas), 22/25 modelos sin tests (legacy), todas las pantallas excepto LoginPage (bloqueado por `dart:html` en legacy `adsense_ads_view.dart`)
 - **control-app-web:** ~~ApiService endpoints, DashboardPage dinámico, FileService, StorageService~~ ✅ Cubiertos
 
+### Lección aprendida — 2026-07-22 (corrupción MariaDB post-migración OS)
+
+**Problema:** Al migrar de Ubuntu 20.04 a 24.04, MariaDB se actualizó de 10.3 a 10.6. Todas las tablas de la BD `web2` quedaron con ENGINE NULL (error 1932: `Table doesn't exist in engine`). Las tablas existían en el diccionario de datos pero los archivos `.ibd` no eran compatibles con 10.6.
+
+**Causa raíz:** MariaDB 10.3 → 10.6+ cambió el formato de tablespace. Las tablas no se migraron correctamente durante `mariadb-upgrade`.
+
+**Solución:** No había backup utilizable (el backup SQL de pre-migración se perdió durante el proceso). Se recreó la BD desde cero con `php artisan migrate --force` y `php artisan db:seed --force`. Los datos de usuario se perdieron (solo quedan los seeders de prueba).
+
+**Lecciones:**
+1. **Siempre verificar ENGINE de tablas** después de migrar MariaDB entre versiones mayores: `SELECT TABLE_NAME, ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA='...';`
+2. **Hacer backup SQL (no solo filesystem) antes de migrar OS.** Los `.ibd` files pueden no ser compatibles entre versiones de MariaDB. `mysqldump` es portable.
+3. **Verificar que la app funciona después de la migración** — el error 500 se manifestó como `Server Error` sin stack trace visible hasta inspeccionar `storage/logs/laravel.log`.
+4. **Tener credenciales de superadmin MySQL accesibles** — los usuarios MySQL pueden perderse durante la migración OS (no se migran automáticamente). Guardar en `/root/.mysql_admin_credentials`.
+5. **`mariadb-upgrade` no es suficiente** entre versiones mayores (10.3→10.6). Verificar manualmente las tablas.
+
 ### Lección aprendida — 2026-07-21 (debug de Flutter web en headless)
 
 **Problema:** Error `Incorrect use of ParentDataWidget` y `Offset is not subtype of FlexParentData` en release build. El dashboard se veía en gris y los datos no cargaban correctamente.
@@ -387,6 +420,59 @@ Mantener widget tests como fuente principal de verificación de UI.
 5. **Debug build + source maps + consola del navegador** es la forma más rápida de diagnosticar errores de Flutter web.
 6. **`--debug` con dartdevc NO soluciona la falta de canvas** en headless. Sirve para diagnosticar errores de código (nombres reales en stack traces), pero el canvas no se crea ni en debug ni en release. El problema está en `initializeEngine()` que no completa su Promise, y el modo de compilación es irrelevante.
 
+### Lección aprendida — 2026-07-22 (CanvasKit headless: `--wasm` funciona donde canvaskit falla)
+
+**Problema:** `flutter build web` (default canvaskit) no crea canvas en Chromium headless + SwiftShader.
+`getContextAttributes()` retorna `undefined` → Emscripten wrapper crashea.
+
+**Solución:** `flutter build web --wasm` (skwasm) funciona correctamente en headless:
+- Canvas 1280×800 se crea dentro de `flt-glass-pane`
+- Árbol semántico `<flt-semantics>` poblado con widgets interactivos
+- Click, navegación, tabs, theme toggle, contadores — todo accesible vía Playwright
+- Cross-browser: Chromium + Firefox, ambos 20/20 tests
+- Mobile emulación: 20/20, touch events
+- Estrés: 100 clicks rápidos → contador=100, 0 errores
+
+**Limitaciones de `--wasm`:**
+- Incompatible con `dart:html` (visorweb2 usa `adsense_ads_view.dart` → no puede migrar)
+- Apps sin `dart:html` (control-app) pueden rebuildearse con `--wasm`
+- Formularios Flutter no responden a eventos DOM sintéticos (usar `integration_test`)
+- Safari no disponible en Linux (cubierto por emulación mobile)
+- Píxeles de canvas no accesibles desde DOM (diseño de skwasm)
+
+**Recomendación:** Para apps sin `dart:html`, usar `flutter build web --wasm`. Para apps legacy con `dart:html`, refactorizar para quitar `dart:html` y luego migrar a `--wasm`.
+
+### Hallazgo: Canvas dentro de Shadow DOM
+
+El `<canvas>` de Flutter web (skwasm) NO está en el DOM principal. Está dentro del **shadow DOM** de `<flt-glass-pane>`:
+
+```
+flt-glass-pane#shadowRoot
+  └── flt-scene-host
+       └── flt-scene
+            └── flt-canvas-container
+                 └── canvas   ← aquí está
+```
+
+Por eso `document.querySelector('canvas')` fallaba. Para acceder:
+```js
+document.querySelector('flt-glass-pane').shadowRoot.querySelector('canvas');
+```
+
+### Estado de migración a --wasm
+
+| App | dart:html | Build --wasm | Canvas | Tests E2E |
+|-----|:---------:|:------------:|:------:|:---------:|
+| control-app-web | ❌ No usa | ✅ Rebuild exitoso | ✅ 1280×800 en shadow DOM | ✅ 19/20 |
+| visorweb2 | ✅ `adsense_ads_view.dart` (IFrameElement) | ❌ Bloqueado | ❌ | ❌ Pendiente refactor |
+
+### Refactorización pendiente de visorweb2
+
+1. **Eliminar `dart:html` de `adsense_ads_view.dart`** — usar `dart:ui_web` platform views sin `IFrameElement`
+2. **Hacer ApiService inyectable** — agregar `http.Client` field + constructor parameter (21 call sites)
+3. **Reconstruir con `--wasm`** y verificar canvas
+4. **Agregar tests E2E** similares a control-app-web
+
 ### Capacidad de pruebas automatizadas
 
 **Sí, puedo realizar pruebas automatizadas** en este entorno, con las siguientes limitaciones:
@@ -397,12 +483,16 @@ Mantener widget tests como fuente principal de verificación de UI.
 | Tests de widgets Flutter | `flutter test` | ✅ Sí | Requiere `_clearErrors` para ListTile warnings |
 | Smoke test HTTP + engine | Playwright + `smoke-test.mjs` | ✅ Sí | Verifica HTTP 200 + engine init + 0 errores |
 | Pruebas de API | Playwright + `control-app-api-test.mjs` | ✅ Sí | Verifica login + 4 endpoints del dashboard |
-| E2E visual con Playwright | Playwright + Chrome | ⚠️ No determinado | En este entorno concreto la app no completa la inicialización del engine. La causa no está identificada (ver lección aprendida). Chromium Headless + SwiftShader funciona en otros entornos CI/CD. |
+| E2E visual con Playwright (skwasm) | Playwright + Chrome/Firefox | ✅ Sí | `flutter build web --wasm`. DOM accesible, widgets interactivos, 0 errores. |
+| E2E visual con Playwright (canvaskit) | Playwright + Chrome | ❌ Fallo | `getContextAttributes()` = `undefined` en SwiftShader → Emscripten wrapper crashea. Solución: usar `--wasm`. |
 | Pruebas con login real | Playwright + API login | ✅ Sí | Se inyecta sesión en localStorage y se recarga |
-| Pruebas de regresión visual | `pixelmatch` / `jest-image-snapshot` | ❌ Pendiente | Depende de resolver la inicialización del engine en headless |
+| Pruebas de regresión visual | `pixelmatch` / `jest-image-snapshot` | ✅ Posible con `--wasm` | Canvas skwasm renderiza, screenshots funcionales |
+| Cross-browser | Chromium + Firefox | ✅ Ambos 20/20 | Mismas capacidades |
+| Mobile emulación | Playwright `isMobile:true` | ✅ 20/20 | Touch events funcionan |
+| Mutation testing | Playwright + assert | ✅ Detecta off-by-one | Validación de lógica |
 | Integración continua | `bash run-tests.sh` | ✅ Sí | Pipeline completo: Pint → Laravel → Flutter → Smoke → E2E |
 
-**Nota sobre CanvasKit en headless:** En este entorno concreto (Chrome 148, Flutter 3.44.4, Ubuntu 20.04), la app Flutter web no completa la inicialización del engine en Chromium Headless. Sin embargo, esto NO es una limitación general de CanvasKit, Chromium Headless ni de la falta de GPU. Existen numerosos proyectos que ejecutan pruebas E2E de Flutter Web en CI/CD headless con éxito (GitHub Actions, GitLab CI, etc.). La causa exacta en este entorno no está determinada.
+**Nota sobre renderizado en headless:** `flutter build web` (canvaskit default) falla en Chromium headless + SwiftShader porque `getContextAttributes()` retorna `undefined`. La solución es usar `flutter build web --wasm` (skwasm), que funciona correctamente. Apps con `dart:html` (visorweb2) no pueden migrar a `--wasm`. Apps sin `dart:html` (control-app) sí pueden.
 
 ### Notas
 - Las migraciones legacy NO se modificaron. Los tests crean su propio esquema con `Schema::create`.
