@@ -249,6 +249,21 @@ class DemoDataSeeder extends Seeder
             }
         }
 
-        $this->command->info('Demo data seeded: planes, links, fav, trial, requests, subscriptions, orders, instrument-family.');
+        // 15. Webhook log
+        if (DB::table('webhook_log')->count() === 0) {
+            DB::table('webhook_log')->insert([
+                'response' => '{"status":"COMPLETED"}',
+                'plan_id' => 'P-DEMO-001',
+                'subscription_id' => 'SUB-DEMO-001',
+                'order_id' => 'ORD-DEMO-001',
+                'event_type' => 'BILLING.SUBSCRIPTION.RENEWED',
+                'status' => 'COMPLETED',
+                'user_id' => 3,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+
+        $this->command->info('Demo data seeded: all tables populated.');
     }
 }
