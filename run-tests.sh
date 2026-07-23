@@ -51,7 +51,7 @@ if [ -d "$FLUTTER_DIR" ]; then
     if flutter test test/ 2>&1; then
         echo -e "${VERDE}✓ Tests Flutter control-app OK${NC}"
     else
-        echo -e "${AMARILLO}⚠ Tests Flutter: 25 fallos pre-existentes por timers (no bloqueantes)${NC}"
+        echo -e "${AMARILLO}⚠ Tests Flutter: 13 fallos pre-existentes por aserciones (no bloqueantes)${NC}"
     fi
     cd - > /dev/null
 else
