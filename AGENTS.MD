@@ -466,7 +466,7 @@ document.querySelector('flt-glass-pane').shadowRoot.querySelector('canvas');
 | control-app-web | ❌ No usa | ✅ Rebuild exitoso | ✅ 1280×800 en shadow DOM | ✅ 29/29 |
 | visorweb2 | ❌ Eliminado (`adsense_ads_view.dart` refactorizado) | ✅ Rebuild exitoso | ✅ 1280×800 en shadow DOM | ✅ 29/29 |
 
-### Refactorización completada de visorweb2
+### Refactorización completada de visorweb2 (Julio 2026)
 
 1. ✅ **`adsense_ads_view.dart`** — reemplazado `IFrameElement` (dart:html) por `Card` + `url_launcher`
 2. ✅ **ApiService** — agregado `http.Client` field + constructor inyectable (`ApiService({http.Client? client})`)

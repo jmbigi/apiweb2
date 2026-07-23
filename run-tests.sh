@@ -106,17 +106,31 @@ else
 fi
 echo ""
 
-# 7. E2E visorweb2
-echo -e "${AMARILLO}[7/7] E2E visorweb2${NC}"
+# 7. E2E visorweb2 (navegador + canvas)
+echo -e "${AMARILLO}[7/8] E2E visorweb2 (browser)${NC}"
 if [ -f "tests/visual/visorweb2-e2e.mjs" ]; then
     if node tests/visual/visorweb2-e2e.mjs 2>&1; then
-        echo -e "${VERDE}✓ E2E visorweb2 OK${NC}"
+        echo -e "${VERDE}✓ E2E visorweb2 browser OK${NC}"
     else
-        echo -e "${ROJO}✗ E2E visorweb2 falló${NC}"
+        echo -e "${ROJO}✗ E2E visorweb2 browser falló${NC}"
         exit 1
     fi
 else
     echo -e "  visorweb2-e2e.mjs no disponible — saltando"
+fi
+echo ""
+
+# 8. E2E visorweb2 (API flow)
+echo -e "${AMARILLO}[8/8] E2E visorweb2 (API)${NC}"
+if [ -f "tests/visual/visorweb2-flow.mjs" ]; then
+    if node tests/visual/visorweb2-flow.mjs 2>&1; then
+        echo -e "${VERDE}✓ E2E visorweb2 API OK${NC}"
+    else
+        echo -e "${ROJO}✗ E2E visorweb2 API falló${NC}"
+        exit 1
+    fi
+else
+    echo -e "  visorweb2-flow.mjs no disponible — saltando"
 fi
 echo ""
 
