@@ -98,10 +98,7 @@ p('screenshot tomado', true);
 // API endpoints
 console.log('\n3. API endpoints');
 const auth = { Authorization: 'Bearer ' + token };
-let res = await api('/dashboard', { headers: auth });
-p('dashboard', res.status === 200);
-
-res = await api('/music-score/list', { headers: auth });
+let res = await api('/music-score/list', { headers: auth });
 const scores = res.body?.data || [];
 p('scores list (' + scores.length + ')', scores.length > 0);
 

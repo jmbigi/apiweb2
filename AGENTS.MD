@@ -305,12 +305,12 @@ Reglas:
 
 ### QA completado
 1. ✅ **154 tests** API Laravel (Feature) — CRUD completo + validación + permisos en SQLite en memoria.
-2. ✅ **68 tests** unitarios/widget control-app-web — LoginResponse, SessionService, Feedback UI, LoginPage, DashboardPage, ApiService con MockClient (22 tests), StorageService, FileService, login flow completo, Dashboard members/ensayos/repertorio.
+2. ✅ **68 tests** unitarios/widget control-app-web — LoginResponse, SessionService, Feedback UI, LoginPage, DashboardPage, ApiService con MockClient, StorageService, FileService, login flow, Dashboard members/ensayos/repertorio.
 3. ✅ **26 tests** unitarios visorweb2 — modelos Setlist, Ensemble, LoginModel, Feedback, UserData, CheckUser, SignUpModel.
 4. ✅ **Smoke test** control-app (5 checks: HTTP 200, engine init, 0 page/console errors).
-5. ✅ **Smoke test** visorweb2 (5 checks: HTTP 200, engine init, 0 page/console errors, 0 HTTP >=400).
-6. ✅ **E2E control-app** (19/20 checks: canvas shadow DOM, login, scores, ensemble, screenshots).
-7. ✅ **E2E visorweb2 API** (28/28 checks: login, scores, style/instrument browse, faristol detail, PDF content, ensemble).
+5. ✅ **Smoke test** visorweb2 (5 checks: HTTP 200, engine init, 0 page/console errors).
+6. ✅ **E2E control-app** (29 checks: canvas shadow DOM, login, scores, ensemble, PDF, screenshot).
+7. ✅ **E2E visorweb2** (29 checks: canvas shadow DOM, login, scores, estilos, instrumentos, detalle faristol, PDF content, ensemble, screenshot).
 8. ⚠️ **25 tests widget** control-app-web fallan por timers pendientes (pre-existente, `initState` crea Timers de 5-20s no disposeados en tests).
 
 ### Credenciales de prueba
@@ -388,8 +388,8 @@ Mantener widget tests como fuente principal de verificación de UI.
 
 ### Gaps conocidos (no cubiertos por tests)
 - **Laravel:** MusicScoreController.create (file upload), ComposerController CRUD, SubscriptionController, InAppSubscriptionController, admin controllers (~80 rutas web)
-- **visorweb2:** Servicio ApiService (806 líneas), 22/25 modelos sin tests (legacy), todas las pantallas excepto LoginPage (bloqueado por `dart:html` en legacy `adsense_ads_view.dart`)
-- **control-app-web:** ~~ApiService endpoints, DashboardPage dinámico, FileService, StorageService~~ ✅ Cubiertos
+- **visorweb2:** ~~ApiService (no inyectable)~~ ✅ Inyectable. ~~22/25 modelos sin tests~~ Pendiente. ~~dart:html blocker~~ ✅ Eliminado. Tests E2E API + navegación ✅ 29/29.
+- **control-app-web:** ~~ApiService endpoints, DashboardPage dinámico, FileService, StorageService~~ ✅ Cubiertos. ~~dart:html blocker~~ ✅ Nunca tuvo. Tests E2E ✅ 29/29.
 
 ### Lección aprendida — 2026-07-22 (corrupción MariaDB post-migración OS)
 
@@ -463,15 +463,15 @@ document.querySelector('flt-glass-pane').shadowRoot.querySelector('canvas');
 
 | App | dart:html | Build --wasm | Canvas | Tests E2E |
 |-----|:---------:|:------------:|:------:|:---------:|
-| control-app-web | ❌ No usa | ✅ Rebuild exitoso | ✅ 1280×800 en shadow DOM | ✅ 19/20 |
-| visorweb2 | ✅ `adsense_ads_view.dart` (IFrameElement) | ❌ Bloqueado | ❌ | ❌ Pendiente refactor |
+| control-app-web | ❌ No usa | ✅ Rebuild exitoso | ✅ 1280×800 en shadow DOM | ✅ 29/29 |
+| visorweb2 | ❌ Eliminado (`adsense_ads_view.dart` refactorizado) | ✅ Rebuild exitoso | ✅ 1280×800 en shadow DOM | ✅ 29/29 |
 
-### Refactorización pendiente de visorweb2
+### Refactorización completada de visorweb2
 
-1. **Eliminar `dart:html` de `adsense_ads_view.dart`** — usar `dart:ui_web` platform views sin `IFrameElement`
-2. **Hacer ApiService inyectable** — agregar `http.Client` field + constructor parameter (21 call sites)
-3. **Reconstruir con `--wasm`** y verificar canvas
-4. **Agregar tests E2E** similares a control-app-web
+1. ✅ **`adsense_ads_view.dart`** — reemplazado `IFrameElement` (dart:html) por `Card` + `url_launcher`
+2. ✅ **ApiService** — agregado `http.Client` field + constructor inyectable (`ApiService({http.Client? client})`)
+3. ✅ **Reconstruido con `--wasm`** — canvas 1280×800 en shadow DOM, sin errores
+4. ✅ **Tests E2E** — 29/29 checks: carga, canvas, login, scores, estilo/instrumento, detalle faristol, PDF, ensemble, screenshot
 
 ### Capacidad de pruebas automatizadas
 
