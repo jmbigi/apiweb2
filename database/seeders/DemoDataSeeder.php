@@ -182,9 +182,73 @@ class DemoDataSeeder extends Seeder
             ]);
         }
 
-        $composersCount = isset($composers) ? count($composers) : 0;
-        $scoresCount = isset($scoreIds) ? $scoreIds->count() : 0;
-        $rehearsalsCount = isset($rehearsals) ? count($rehearsals) : 0;
-        $this->command->info('Demo data seeded: '.$composersCount.' compositores, '.$scoresCount.' scores vinculados, 1 ensemble, 3 carpetas, '.$rehearsalsCount.' ensayos, '.count($planNames).' planes.');
+        // 11. Composer requests
+        if (DB::table('composer_request')->count() === 0) {
+            $requestStatusIds = DB::table('request_status')->pluck('id');
+            $composerStatusIds = DB::table('composer_status')->pluck('id');
+            $composerIds = DB::table('composers')->pluck('id');
+            if ($composerIds->isNotEmpty() && $requestStatusIds->isNotEmpty()) {
+                DB::table('composer_request')->insert([
+                    'composers_id' => $composerIds->first(),
+                    'request_date' => $now,
+                    'description' => 'Solicitud de registro como compositor en la plataforma Faristol.',
+                    'updated_by' => 1,
+                    'composer_status_id' => $composerStatusIds->first() ?? 1,
+                    'request_status_id' => $requestStatusIds->first() ?? 1,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+        }
+
+        // 12. Subscribed user
+        if (DB::table('subscribed_user')->count() === 0) {
+            $planIds = DB::table('subscription_plan')->pluck('id');
+            if ($planIds->isNotEmpty()) {
+                DB::table('subscribed_user')->insert([
+                    'user_id' => 3,
+                    'subscription_plan_id' => $planIds->first(),
+                    'subscription_end_date' => now()->addYear()->format('Y-m-d'),
+                    'paypal_plan_id' => 'P-DEMO-001',
+                    'paypal_subscription_id' => 'SUB-DEMO-001',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+        }
+
+        // 13. Order
+        if (DB::table('order')->count() === 0) {
+            DB::table('order')->insert([
+                'userId' => '3',
+                'subscription_plan_id' => '2',
+                'orderId' => 'ORD-DEMO-001',
+                'paymentSource' => 'paypal',
+                'subscriptionID' => 'SUB-DEMO-001',
+                'paypal_plan_id' => 'P-DEMO-001',
+                'paypal_plan_name' => 'Premium',
+                'paypal_plan_price' => '9.99',
+                'message' => 'Pago de prueba',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+
+        // 14. Instrument-family relationships
+        if (DB::table('fk_instrument_family_instrument')->count() === 0) {
+            $instruments = DB::table('instruments')->select('id', 'family_instruments_id')->get();
+            foreach ($instruments as $inst) {
+                if ($inst->family_instruments_id) {
+                    DB::table('fk_instrument_family_instrument')->insert([
+                        'instrument_id' => $inst->id,
+                        'family_instrument_id' => $inst->family_instruments_id,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ]);
+                }
+            }
+        }
+
+        $this->command->info('Demo data seeded: planes, links, fav, trial, requests, subscriptions, orders, instrument-family.');
     }
 }
