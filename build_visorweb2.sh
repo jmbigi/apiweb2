@@ -6,7 +6,7 @@
 set -euo pipefail
 
 FLUTTER_PROJECT="$HOME/apps_flutter/visorweb2"
-DEST="/var/www/web2.faristol.net/public/web"
+DEST="/var/www/web2.faristol.net/public/visorweb2"
 FLUTTER_BIN="/usr/local/flutter/bin/flutter"
 
 echo "=== Pull latest visorweb2 ==="
@@ -16,7 +16,7 @@ git pull origin main
 echo "=== Building Flutter web ==="
 # Nota: si falla por google_fonts u otras dependencias,
 # probar con: flutter clean && flutter pub upgrade
-$FLUTTER_BIN build web --release
+$FLUTTER_BIN build web --wasm --release --base-href=/visorweb2/
 
 echo "=== Deploying to web2 ==="
 rm -rf "$DEST"
