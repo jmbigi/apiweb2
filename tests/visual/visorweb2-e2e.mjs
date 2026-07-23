@@ -69,6 +69,7 @@ const r = await api('/auth/login', {
   body: { email: 'composer_test@email.com', password: 'Sinclave1!' },
 });
 const token = r.body?.token;
+const pdfPass = r.body?.pdf_password || '';
 p('API login 200', r.status === 200);
 p('token recibido', !!token);
 console.log('  user:', r.body?.user_name, '| member:', r.body?.subscription_data?.is_ensemble_member);
@@ -115,7 +116,7 @@ console.log('\n7. PDF content');
 res = await api('/music-score/getPdfContent', {
   method: 'POST',
   headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-  body: { scoreId: faristol[0].id, id: faristol[0].files?.[0]?.id || 1, password: '' },
+  body: { scoreId: faristol[0].id, id: faristol[0].files?.[0]?.id || 1, password: pdfPass },
 });
 p('PDF 200', res.status === 200);
 p('PDF status true', res.body?.status === true);
