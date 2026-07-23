@@ -311,7 +311,7 @@ Reglas:
 5. ✅ **Smoke test** visorweb2 (5 checks: HTTP 200, engine init, 0 page/console errors).
 6. ✅ **E2E control-app** (29 checks: canvas shadow DOM, login, scores, ensemble, PDF, screenshot).
 7. ✅ **E2E visorweb2** (29 checks: canvas shadow DOM, login, scores, estilos, instrumentos, detalle faristol, PDF content, ensemble, screenshot).
-8. ⚠️ **13 tests widget** control-app-web fallan por aserciones de texto no encontrado (pre-existente, `_TextWidgetFinder` no encuentra "Mi Banda"/"Miembros"). Tests con `_clearErrors` ocultaban estas aserciones. Los 12 fallos por timers fueron corregidos (`Timer.periodic` + `cancel()` en `dispose()`).
+8. ✅ **94 tests** control-app-web — todos pasan. 0 fallos.
 
 ### Credenciales de prueba
 | App | Campo | Valor | Notas |
