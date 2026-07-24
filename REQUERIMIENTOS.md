@@ -139,13 +139,15 @@ Se implementará sobre el sistema existente **Laratrust** (tablas `roles`, `perm
 
 ### 4.1. Roles Definidos
 
-| Rol | Permisos | Ámbito | Tabla |
-|-----|----------|--------|-------|
+> **Nota:** Los roles se almacenan en inglés en la base de datos (`ensemble_user.role`). La tabla muestra los nombres originales en español (documentación) y su valor almacenado en inglés.
+
+| Rol (valor DB) | Permisos | Ámbito | Tabla |
+|----------------|----------|--------|-------|
 | **Superadmin** | Administrador de Biblioscores/Faristol. Crear agrupaciones, activar/desactivar cuentas manualmente. Multi-cliente. | Global | `roles` (existente) |
-| **Archivero** | Digitalización, subida y actualización del repositorio privado de partituras. | Agrupación | `ensemble_user` |
-| **Administrador** | Gestión de usuarios, asignación de roles, subida de partituras, gestión integral de la agrupación. | Agrupación | `ensemble_user` |
-| **Maestro / Instructor** | Subida de partituras al repositorio (también desde app móvil, con selección de carpeta) y planificación de ensayos. | Agrupación | `ensemble_user` |
-| **Usuario básico** | Consulta de partituras y ensayos de su agrupación. Usa solo la app Faristol móvil. | Agrupación | `ensemble_user` |
+| **Archivero** (`archivist`) | Digitalización, subida y actualización del repositorio privado de partituras. | Agrupación | `ensemble_user` |
+| **Administrador** (`admin`) | Gestión de usuarios, asignación de roles, subida de partituras, gestión integral de la agrupación. | Agrupación | `ensemble_user` |
+| **Maestro / Instructor** (`teacher`) | Subida de partituras al repositorio (también desde app móvil, con selección de carpeta) y planificación de ensayos. | Agrupación | `ensemble_user` |
+| **Miembro** (`member`) | Consulta de partituras y ensayos de su agrupación. Usa solo la app Faristol móvil. | Agrupación | `ensemble_user` |
 
 ### 4.2. Reglas de Roles
 

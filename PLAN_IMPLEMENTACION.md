@@ -394,24 +394,36 @@ Modelo con `fromJson()` y `toJson()`, mismo patrón que `offline_score_model.dar
 
 ---
 
-## 8. Resumen de Cambios
+## 8. Resumen de Cambios (Implementado)
 
 | Archivo | Tipo de cambio | Líneas |
 |---------|---------------|--------|
-| Migraciones (4 nuevas + 1 sobre music_scores) | Nuevo | ~130 total |
+| Migraciones (4 nuevas + 1 sobre music_scores + 1 roles inglés) | Nuevo | ~150 total |
 | Modelos (4 nuevos + MusicScore actualizado) | Nuevo | ~40 total |
-| `api.php` | Agregar rutas | ~10 líneas |
-| `EnsembleController.php` | Nuevo | ~200 líneas |
+| `api.php` | Agregar rutas | ~40 líneas |
+| `EnsembleController.php` | Nuevo | ~399 líneas |
 | `SubscriptionService.php` | Agregar campo | ~5 líneas |
-| `menu_page.dart` | Agregar item | ~2 líneas |
-| `mainpage.dart` | Agregar case | ~3 líneas |
-| `api_service.dart` | Agregar constantes | ~2 líneas |
-| `api_constants.dart` | Agregar métodos | ~30 líneas |
-| `ensemble_model.dart` | Nuevo | ~30 líneas |
-| `ensembles_page.dart` | Nueva pantalla | ~100 líneas |
-| `SubscriptionTypeModel` | Agregar campo | ~3 líneas |
-| Control App | Proyecto nuevo | Independiente |
+| **visorweb2:** `menu_page.dart`, `ensembles_page.dart`, `ensemble_detail_page.dart`, `setlist_player_page.dart`, `search_page.dart`, `upload_score_page.dart`, `my_scores_page.dart`, `composer_request_page.dart` | Modificaciones | ~500 líneas |
+| **visorweb2:** `favorites_page.dart`, `offline_scores_page.dart`, `pdf_store_service.dart` | Nuevos | ~200 líneas |
+| **visorweb2:** `pdf_viewer.dart` (save offline button) | Modificado | ~10 líneas |
+| **visorweb2:** `api_service.dart` (+6 métodos), `api_constants.dart` | Modificado | ~150 líneas |
+| **control-app:** `dashboard_page.dart` (roles inglés) | Modificado | ~5 líneas |
+| **Tests:** `EnsembleTest.php`, `ApiAuthTest.php`, `ApiSubscriptionTest.php` | Actualizados roles | ~30 líneas |
+| **Tests:** `visorweb2-features-e2e.mjs` | Nuevo E2E | ~100 líneas |
+| **Tests:** `ocr_basic.py` | Nuevo OCR | ~50 líneas |
+| **Documentación:** Todos los docs actualizados | 2026-07-23 | — |
 
-**Archivos existentes modificados:** ~6 (solo para agregar, nunca eliminar ni refactorizar)
+**Archivos existentes modificados:** ~15
 **Archivos nuevos:** ~10
-**Código existente refactorizado:** **0 líneas**
+**Código legacy refactorizado:** **0 líneas**
+
+### Estado final de tests
+
+| Suite | Tests | Resultado |
+|-------|-------|-----------|
+| Laravel Feature | 155 (420 assertions) | ✅ |
+| visorweb2 Flutter | 76 | ✅ |
+| control-app Flutter | 93 | ✅ |
+| E2E Playwright visorweb2 | 29 | ✅ |
+| E2E Playwright nuevas features | 14 | ✅ |
+| **Total** | **367** | **✅** |

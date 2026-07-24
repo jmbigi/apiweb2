@@ -24,9 +24,8 @@ class TestUserSeeder extends Seeder
             //$this->seedUser('composer', 'composer_test@email.com', 'Sinclave1!', ['composer', 'musician']);
             $this->seedUser('composer', 'composer_test@email.com', 'Sinclave1!', ['musician']);
             $this->seedUser('musician', 'musician_test@email.com', 'Sinclave1!', ['musician']);
-
-            // Agrega más llamadas a seedUser si necesitas más usuarios de prueba con diferentes roles.
-            // $this->seedUser('otro_rol', 'otro_email', 'otra_clave', ['otro_rol1', 'otro_rol2']);
+            $this->seedUser('teacher', 'teacher_test@email.com', 'Sinclave1!', ['musician']);
+            $this->seedUser('archivist', 'archivist_test@email.com', 'Sinclave1!', ['musician']);
 
             // Commiteamos cambios
             DB::commit();

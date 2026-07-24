@@ -40,7 +40,7 @@ class EnsembleController extends Controller
         ]);
 
         // Add creator as admin
-        $ensemble->members()->attach($request->user()->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($request->user()->id, ['role' => 'admin']);
 
         return response()->json(['status' => true, 'data' => $ensemble], 201);
     }
@@ -86,7 +86,7 @@ class EnsembleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|exists:users,id',
-            'role' => 'required|in:archivero,administrador,maestro,usuario',
+            'role' => 'required|in:admin,archivist,teacher,member',
         ]);
 
         if ($validator->fails()) {
@@ -107,7 +107,7 @@ class EnsembleController extends Controller
     public function updateMember(Request $request, Ensemble $ensemble, User $user)
     {
         $validator = Validator::make($request->all(), [
-            'role' => 'required|in:archivero,administrador,maestro,usuario',
+            'role' => 'required|in:admin,archivist,teacher,member',
             'status' => 'sometimes|boolean',
         ]);
 
@@ -207,8 +207,23 @@ class EnsembleController extends Controller
         return response()->json(['status' => true, 'data' => $scores]);
     }
 
+    private function userCanUploadToEnsemble(Request $request, Ensemble $ensemble): bool
+    {
+        $member = $ensemble->members()
+            ->wherePivot('user_id', $request->user()->id)
+            ->wherePivot('status', true)
+            ->first();
+        if (!$member) return false;
+        $role = $member->pivot->role;
+        return in_array($role, ['admin', 'archivist', 'teacher']);
+    }
+
     public function storeScore(Request $request, Ensemble $ensemble)
     {
+        if (!$this->userCanUploadToEnsemble($request, $ensemble)) {
+            return response()->json(['status' => false, 'message' => 'No tienes permiso para subir partituras'], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'ensemble_folder_id' => 'nullable|exists:ensemble_folders,id',

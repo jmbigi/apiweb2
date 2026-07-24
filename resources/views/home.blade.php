@@ -78,7 +78,7 @@
             <h2>Control App</h2>
             <p>Rehearsal and ensemble management for instructors</p>
         </a>
-        <a href="/dashboard" class="card">
+        <a href="/dashboard" target="_blank" rel="noopener" class="card">
             <div class="icon icon-admin">⚙</div>
             <h2>Faristol Admin</h2>
             <p>Platform administration, user management, and content control panel</p>

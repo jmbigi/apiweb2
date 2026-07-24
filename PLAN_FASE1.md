@@ -251,7 +251,7 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 |---------|-------------|
 | Crear ensemble | Solo superadmin (desde backend) |
 | Listar partituras privadas del ensemble | Miembros activos |
-| Subir/actualizar partituras privadas | Archivero, admin, instructor |
+| Subir/actualizar partituras privadas | Archivero (`archivist`), admin (`admin`), instructor (`teacher`) |
 | Gestionar miembros y roles | Admin |
 | Planificar ensayos | Admin, instructor |
 | Ver ensayos | Todos los miembros |
@@ -261,13 +261,15 @@ cp -r build/web/* /var/www/web2.faristol.net/public/control-app/
 
 ---
 
-## 9. QA y Verificación
+## 9. QA y Verificación (Completado)
 
-- [ ] Tests de producción existentes siguen pasando
-- [ ] Tests nuevos para API de ensembles, miembros, rehearsals
-- [ ] Verificar: partituras privadas NO listables por no miembros
-- [ ] Verificar: premium automático eleva plan en app
-- [ ] Verificar: visor secuencial de setlist funciona
-- [ ] Verificar: landing page carga correctamente
-- [ ] Verificar: ambas apps Flutter funcionan en sus rutas
-- [ ] Verificar: API de producción responde correctamente en web2
+- [x] Tests de producción existentes siguen pasando (155 ✅)
+- [x] Tests nuevos para API de ensembles, miembros, rehearsals
+- [x] Verificar: partituras privadas NO listables por no miembros
+- [x] Verificar: premium automático eleva plan en app
+- [x] Verificar: visor secuencial de setlist funciona
+- [x] Verificar: landing page carga correctamente
+- [x] Verificar: ambas apps Flutter funcionan en sus rutas
+- [x] Verificar: API de producción responde correctamente en web2
+- [x] E2E nuevas features (favoritos, offline, ensemble upload) — 14 checks
+- [x] OCR básico (Tesseract) instalado y funcional

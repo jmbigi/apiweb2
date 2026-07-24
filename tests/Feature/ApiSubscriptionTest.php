@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Order;
@@ -141,7 +143,7 @@ class ApiSubscriptionTest extends TestCase
         Schema::create('ensemble_user', function ($table) {
             $table->foreignId('ensemble_id')->constrained('ensembles')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('role')->default('usuario');
+            $table->string('role')->default('member');
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->primary(['ensemble_id', 'user_id']);

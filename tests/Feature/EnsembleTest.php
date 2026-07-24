@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Ensemble;
@@ -82,7 +84,7 @@ class EnsembleTest extends TestCase
         Schema::create('ensemble_user', function ($table) {
             $table->foreignId('ensemble_id')->constrained('ensembles')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('role')->default('usuario');
+            $table->string('role')->default('member');
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->primary(['ensemble_id', 'user_id']);
@@ -208,7 +210,7 @@ class EnsembleTest extends TestCase
     public function test_show_ensemble()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         $response = $this->actingAs($this->user)->getJson("/api/ensembles/{$ensemble->id}");
 
@@ -252,7 +254,7 @@ class EnsembleTest extends TestCase
 
         $response = $this->actingAs($this->user)->postJson("/api/ensembles/{$ensemble->id}/members", [
             'user_id' => $this->otherUser->id,
-            'role' => 'maestro',
+            'role' => 'teacher',
         ]);
 
         $response->assertStatus(201);
@@ -264,7 +266,7 @@ class EnsembleTest extends TestCase
 
         $response = $this->actingAs($this->user)->postJson("/api/ensembles/{$ensemble->id}/members", [
             'user_id' => 9999,
-            'role' => 'maestro',
+            'role' => 'teacher',
         ]);
 
         $response->assertStatus(422);
@@ -273,11 +275,11 @@ class EnsembleTest extends TestCase
     public function test_update_member_role()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->otherUser->id, ['role' => 'usuario']);
+        $ensemble->members()->attach($this->otherUser->id, ['role' => 'member']);
 
         $response = $this->actingAs($this->user)->putJson(
             "/api/ensembles/{$ensemble->id}/members/{$this->otherUser->id}",
-            ['role' => 'archivero']
+            ['role' => 'archivist']
         );
 
         $response->assertStatus(200);
@@ -286,7 +288,7 @@ class EnsembleTest extends TestCase
     public function test_remove_member()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->otherUser->id, ['role' => 'usuario']);
+        $ensemble->members()->attach($this->otherUser->id, ['role' => 'member']);
 
         $response = $this->actingAs($this->user)->deleteJson(
             "/api/ensembles/{$ensemble->id}/members/{$this->otherUser->id}"
@@ -298,7 +300,7 @@ class EnsembleTest extends TestCase
     public function test_my_ensembles()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         $response = $this->actingAs($this->user)->getJson('/api/my-ensembles');
 
@@ -449,7 +451,7 @@ class EnsembleTest extends TestCase
     public function test_scope_public_or_accessible_filters_correctly()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         MusicScore::factory()->create(['name' => 'No Ensemble', 'ensemble_id' => null, 'public' => true, 'owner_id' => $this->user->id]);
         MusicScore::factory()->create(['name' => 'Ensemble Public', 'ensemble_id' => $ensemble->id, 'public' => true, 'owner_id' => $this->user->id]);
@@ -469,7 +471,7 @@ class EnsembleTest extends TestCase
     public function test_ensemble_scores_visible_to_member()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         MusicScore::factory()->count(3)->create([
             'ensemble_id' => $ensemble->id,
@@ -493,7 +495,7 @@ class EnsembleTest extends TestCase
     public function test_ensemble_status_member_returns_true()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'usuario', 'status' => true]);
+        $ensemble->members()->attach($this->user->id, ['role' => 'member', 'status' => true]);
 
         $response = $this->actingAs($this->user)->getJson('/api/user/ensemble-status');
 
@@ -584,11 +586,11 @@ class EnsembleTest extends TestCase
     public function test_add_member_already_member()
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->otherUser->id, ['role' => 'usuario']);
+        $ensemble->members()->attach($this->otherUser->id, ['role' => 'member']);
 
         $response = $this->actingAs($this->user)->postJson("/api/ensembles/{$ensemble->id}/members", [
             'user_id' => $this->otherUser->id,
-            'role' => 'maestro',
+            'role' => 'teacher',
         ]);
 
         $response->assertStatus(409);
@@ -612,7 +614,7 @@ class EnsembleTest extends TestCase
 
         $response = $this->actingAs($this->user)->putJson(
             "/api/ensembles/{$ensemble->id}/members/99999",
-            ['role' => 'archivero']
+            ['role' => 'archivist']
         );
 
         $response->assertStatus(404);
@@ -690,7 +692,7 @@ class EnsembleTest extends TestCase
     {
         Ensemble::factory()->create(['owner_id' => $this->otherUser->id]);
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         $response = $this->actingAs($this->user)->getJson('/api/my-ensembles');
 
@@ -795,8 +797,8 @@ class EnsembleTest extends TestCase
     public function test_list_members_returns_member_list(): void
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
-        $ensemble->members()->attach($this->otherUser->id, ['role' => 'maestro']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
+        $ensemble->members()->attach($this->otherUser->id, ['role' => 'teacher']);
 
         $response = $this->actingAs($this->user)
             ->getJson("/api/ensembles/{$ensemble->id}/members");
@@ -817,7 +819,7 @@ class EnsembleTest extends TestCase
     public function test_store_score_creates_single_score(): void
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         $response = $this->actingAs($this->user)
             ->postJson("/api/ensembles/{$ensemble->id}/scores", [
@@ -848,7 +850,7 @@ class EnsembleTest extends TestCase
     public function test_store_score_validation_error(): void
     {
         $ensemble = Ensemble::factory()->create(['owner_id' => $this->user->id]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         $response = $this->actingAs($this->user)
             ->postJson("/api/ensembles/{$ensemble->id}/scores", []);

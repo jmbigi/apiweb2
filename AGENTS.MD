@@ -304,22 +304,42 @@ Reglas:
 - **SEO:** No aplica para web2 (sitemaps, robots.txt, ads.txt eliminados)
 
 ### QA completado
-1. ✅ **154 tests** API Laravel (Feature) — CRUD completo + validación + permisos en SQLite en memoria.
-2. ✅ **68 tests** unitarios/widget control-app-web — LoginResponse, SessionService, Feedback UI, LoginPage, DashboardPage, ApiService con MockClient, StorageService, FileService, login flow, Dashboard members/ensayos/repertorio.
-3. ✅ **26 tests** unitarios visorweb2 — modelos Setlist, Ensemble, LoginModel, Feedback, UserData, CheckUser, SignUpModel.
+1. ✅ **155 tests** API Laravel (Feature) — CRUD completo + validación + permisos + roles en SQLite en memoria.
+2. ✅ **93 tests** control-app-web — LoginResponse, SessionService, Feedback UI, LoginPage, DashboardPage, ApiService con MockClient, StorageService, FileService, login flow, Dashboard members/ensayos/repertorio.
+3. ✅ **76 tests** visorweb2 — modelos Setlist, Ensemble, LoginModel, Feedback, UserData, CheckUser, SignUpModel + widgets Search, Upload, MyScores, ComposerRequest, SetlistPlayer, Favorites, OfflineScores + API service.
 4. ✅ **Smoke test** control-app (5 checks: HTTP 200, engine init, 0 page/console errors).
 5. ✅ **Smoke test** visorweb2 (5 checks: HTTP 200, engine init, 0 page/console errors).
 6. ✅ **E2E control-app** (29 checks: canvas shadow DOM, login, scores, ensemble, PDF, screenshot).
 7. ✅ **E2E visorweb2** (29 checks: canvas shadow DOM, login, scores, estilos, instrumentos, detalle faristol, PDF content, ensemble, screenshot).
-8. ✅ **94 tests** control-app-web — todos pasan. 0 fallos.
+8. ✅ **E2E nuevas features** visorweb2 (14 checks: favoritos add/list/remove, ensemble scores/members, canvas carga).
+9. ✅ **OCR básico** — Tesseract 4.1.1 + pytesseract + Pillow instalados. Script `tests/visual/ocr_basic.py` funcional.
 
 ### Credenciales de prueba
 | App | Campo | Valor | Notas |
 |-----|-------|-------|-------|
-| **visorweb2** | Email: `composer_test@email.com` / Pass: `Sinclave1!` | Login email+password |
-| **control-app** | CIF: `DEMO12345` / Email: `superadmin_test@email.com` / Pass: `Sinclave1!` | Login con CIF + email + password. CIF debe existir en `ensembles.cif` |
+| **visorweb2** | Email: `composer_test@email.com` / Pass: `Sinclave1!` | Login email+password. Es miembro de ensemble con rol `member`. |
+| **control-app** | CIF: `DEMO12345` / Email: `superadmin_test@email.com` / Pass: `Sinclave1!` | Login con CIF + email + password. CIF debe existir en `ensembles.cif`. Rol `admin` del ensemble. |
 | **control-app** | Email: `composer_test@email.com` / Pass: `Sinclave1!` | Login sin CIF (básico) |
 | **Todos** | Passwords: `Sinclave1!` | Misma clave para todos los usuarios de prueba |
+
+## Convenciones del proyecto
+
+### Roles de ensemble
+- Almacenados en `ensemble_user.role` como string en **inglés**.
+- Valores válidos: `admin` (administrador), `archivist` (archivero), `teacher` (maestro/instructor), `member` (miembro básico).
+- Solo `admin`, `archivist`, `teacher` pueden subir partituras al repositorio del ensemble.
+- `member` es solo lectura (visualizar scores y ensayos).
+- La lista de miembros NO es visible en visorweb2 (privacidad). Solo visible en Control App.
+
+### Visor PDF (visorweb2)
+- Solo usuarios logueados pueden ver PDFs.
+- Restricción actual: solo partituras de compositor interno Faristol (`owner_id=109`).
+- **Excepción:** partituras de ensemble visibles para sus miembros.
+- **Migración Android (15 Ago 2026):** eliminar restricción `owner_id=109`. Mantener: solo usuarios logueados, ensemble scores para miembros.
+
+### Setlist
+- Local (Hive), sin backend.
+- Puede mezclar partituras globales + privadas de ensemble si el usuario tiene permisos.
 
 ### Estado actual del sistema
 - **OS:** Ubuntu 24.04.4 LTS (noble)
@@ -329,6 +349,8 @@ Reglas:
 - **MariaDB:** 10.6.23
 - **PHP:** 8.2.32 (FPM)
 - **Flutter:** 3.44.7
+- **Tesseract OCR:** 4.1.1 (eng+spa)
+- **Python3:** 3.12 + Pillow 12.3.0 + pytesseract 0.3.13
 
 ### Detalle CanvasKit E2E
 - Flutter 3.44.4 CanvasKit no crea `<flt-canvas>` en SwiftShader/llvmpipe (WebGL software). Engine inicializa pero canvas nunca se materializa.
@@ -344,9 +366,14 @@ Reglas:
 15. ✅ Tests de flujo real de usuario — login → API → navegación a Dashboard (control-app-web).
 16. ✅ Tests de flujo real de API — login → refresh → logout (Laravel ApiAuthTest).
 17. ❌ Ensemble folders en UI de visorweb2 — Descartado. Futura App Móvil: Maestro elige carpeta al subir.
-18. ⏳ Conversión Control App a escritorio real (Electron/Windows) — Pendiente Agosto.
-19. 🔵 OCR avanzado — Sin implementar. Validación PDF experimental sin presupuesto asignado.
-20. 🔵 Visión IA — Sin implementar. Sin requisitos en la versión actual.
+18. ⏳ Conversión Control App a escritorio real (Electron/Windows) — Pendiente 15 Agosto.
+19. ✅ OCR básico — Tesseract 4.1.1 + script `tests/visual/ocr_basic.py`. Sin API key.
+20. ✅ Roles ensemble en inglés — `admin`, `archivist`, `teacher`, `member`. Migrados desde español.
+21. ✅ Favoritos en visorweb2 — lista + API add/remove con endpoints reales.
+22. ✅ Offline Scores en visorweb2 — `PdfStoreService` + botón en visor + lista.
+23. ✅ Setlist→PDF conexión real — fetch pdfId vía `getSingleScoreDetail()`.
+24. ✅ Ensemble upload con carpeta — selector `ensemble_folder_id` en upload.
+25. ✅ Restricción upload por rol — solo `admin`/`archivist`/`teacher` pueden subir.
 
 ### Objetivos activos
 

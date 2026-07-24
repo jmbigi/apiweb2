@@ -97,11 +97,36 @@ class DemoDataSeeder extends Seeder
                 ]);
             }
 
-            foreach ([3, 4] as $uid) {
+            $memberIds = [3, 4];
+            foreach ($memberIds as $uid) {
                 DB::table('ensemble_user')->insert([
                     'ensemble_id' => $ensembleId,
                     'user_id' => $uid,
-                    'role' => 'usuario',
+                    'role' => 'member',
+                    'status' => 1,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+
+            $teacherId = DB::table('users')->where('email', 'teacher_test@email.com')->value('id');
+            if ($teacherId) {
+                DB::table('ensemble_user')->insert([
+                    'ensemble_id' => $ensembleId,
+                    'user_id' => $teacherId,
+                    'role' => 'teacher',
+                    'status' => 1,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+
+            $archivistId = DB::table('users')->where('email', 'archivist_test@email.com')->value('id');
+            if ($archivistId) {
+                DB::table('ensemble_user')->insert([
+                    'ensemble_id' => $ensembleId,
+                    'user_id' => $archivistId,
+                    'role' => 'archivist',
                     'status' => 1,
                     'created_at' => $now,
                     'updated_at' => $now,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Ensemble;
@@ -127,7 +129,7 @@ class ApiAuthTest extends TestCase
         Schema::create('ensemble_user', function ($table) {
             $table->foreignId('ensemble_id')->constrained('ensembles')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('role')->default('usuario');
+            $table->string('role')->default('member');
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->primary(['ensemble_id', 'user_id']);
@@ -215,7 +217,7 @@ class ApiAuthTest extends TestCase
             'owner_id' => $this->user->id,
             'cif' => 'CIF12345',
         ]);
-        $ensemble->members()->attach($this->user->id, ['role' => 'administrador']);
+        $ensemble->members()->attach($this->user->id, ['role' => 'admin']);
 
         $response = $this->postJson('/api/auth/login', [
             'email' => 'test@example.com',
@@ -227,7 +229,7 @@ class ApiAuthTest extends TestCase
             ->assertJsonPath('status', true)
             ->assertJsonStructure(['ensemble' => ['id', 'name', 'cif', 'role']])
             ->assertJsonPath('ensemble.cif', 'CIF12345')
-            ->assertJsonPath('ensemble.role', 'administrador');
+            ->assertJsonPath('ensemble.role', 'admin');
     }
 
     public function test_login_with_invalid_cif_returns_401(): void

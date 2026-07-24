@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('ensemble_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('role')->default('usuario');
+            $table->string('role')->default('member');
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('ensemble_id')->references('id')->on('ensembles')->onDelete('cascade');
